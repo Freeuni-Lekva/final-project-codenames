@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Archive" />
+      <artifact name="Codenames:war exploded" />
     </artifacts-to-build>
   </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="46158f3c-81e0-4b96-9849-dc9162007ac8" name="Changes" comment="" />
+    <list default="true" id="46158f3c-81e0-4b96-9849-dc9162007ac8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,7 +41,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/keti/final-project-codenames&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/keti/hw-05-KetiBego/StoreWebsite&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
@@ -141,6 +147,8 @@
       <updated>1657828248072</updated>
       <workItem from="1657828249628" duration="929000" />
       <workItem from="1657829202674" duration="320000" />
+      <workItem from="1657872701884" duration="5718000" />
+      <workItem from="1657913962172" duration="67000" />
     </task>
     <servers />
   </component>
