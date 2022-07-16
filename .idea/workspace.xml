@@ -9,8 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="159b2cd9-aa31-46c9-b51d-818f9feb367b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="159b2cd9-aa31-46c9-b51d-818f9feb367b" name="Changes" comment="added login servlet">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +49,7 @@
     </option>
   </component>
   <component name="ProjectId" id="2BzsroXntR1Yb3YEi7oLa4vbWRU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -65,7 +68,7 @@
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="Tomcat 9.0.64" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.64" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="17 (2)" nameIsGenerated="true">
+    <configuration name="Tomcat 9.0.64" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.64" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="17" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="Codenames:war exploded">
@@ -162,10 +165,50 @@
       <option name="presentableId" value="Default" />
       <updated>1657920449824</updated>
       <workItem from="1657920451172" duration="4011000" />
+      <workItem from="1657972503950" duration="5500000" />
     </task>
+    <task id="LOCAL-00001" summary="added css">
+      <created>1657972837056</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1657972837056</updated>
+    </task>
+    <task id="LOCAL-00002" summary="basic design for index page">
+      <created>1657976028619</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1657976028619</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added login servlet">
+      <created>1657977267037</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1657977267037</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added css" />
+    <MESSAGE value="basic design for index page" />
+    <MESSAGE value="added login servlet" />
+    <option name="LAST_COMMIT_MESSAGE" value="added login servlet" />
   </component>
 </project>
