@@ -10,7 +10,7 @@
 <p> Please log in: </p>
 <form>
     User Name: <input type="text" name="Username"> <br>
-    Password: <input type="password" name="Password">
+    Password:&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="Password"> <br>
     <input type="submit" name="Login" value="Login">
 </form>
 <p> If you do not have an account, please <a href="register.jsp">register.</a> </p>

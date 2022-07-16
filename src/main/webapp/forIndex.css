@@ -1,3 +1,30 @@
 body {
-    background-color: lightblue;
+    background-image: url("backgroundForIndex.jpg");
+    overflow: scroll;
 }
+h1 {
+    margin-top: 100px;
+    text-align: center;
+    color: black;
+}
+p{
+    text-align: center;
+    font-size: 24px;
+}
+
+form{
+    text-align: center;
+    margin-right: 60px;
+}
+
+input[type=submit] {
+    margin-top: 12px;
+    margin-left: 80px;
+    padding:5px 15px;
+    background:#ccc;
+    border:black 5px;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
