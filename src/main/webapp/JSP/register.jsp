@@ -8,13 +8,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="forRegister.css">
 <head>
     <title>Register</title>
 </head>
 <body>
 <h1>Please Register! </h1> <br/>
-<form action="RegistrationServlet" method="post">
+<form action="../RegistrationServlet" method="post">
     User Name: <input type="text" name="Username"> <br>
     Password:&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="Password"> <br>
     <input type="submit" name="Register" value="Register">
