@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="JSP/forIndex.css">
 <head>
     <title>Codenames</title>
 </head>
@@ -13,6 +13,6 @@
     Password:&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="Password"> <br>
     <input type="submit" name="Login" value="Login">
 </form>
-<p> If you do not have an account, please <a href="register.jsp">register.</a> </p>
+<p> If you do not have an account, please <a href="JSP/register.jsp">register.</a> </p>
 </body>
 </html>
