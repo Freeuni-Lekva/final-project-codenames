@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: keti
+  Model.User: keti
   Date: 16.07.22
   Time: 02:15
   To change this template use File | Settings | File Templates.
@@ -15,7 +15,7 @@
 <body>
 <h1>Please Register! </h1> <br/>
 <form action="../RegistrationServlet" method="post">
-    User Name: <input type="text" name="Username"> <br>
+    Model.User Name: <input type="text" name="Username"> <br>
     Password:&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="Password"> <br>
     <input type="submit" name="Register" value="Register">
 </form>

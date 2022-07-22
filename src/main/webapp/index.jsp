@@ -9,7 +9,7 @@
 <h1>Welcome to Codenames! </h1> <br/>
 <p> Please log in: </p>
 <form action="LoginServlet" method="post">
-    User Name: <input type="text" name="Username"> <br>
+    Model.User Name: <input type="text" name="Username"> <br>
     Password:&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="Password"> <br>
     <input type="submit" name="Login" value="Login">
 </form>

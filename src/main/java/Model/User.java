@@ -1,8 +1,11 @@
+package Model;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
-public class Player implements User{
+public class User{
+    private int userID;
     private String username;
     private String hashedPassword;
     private int gamesWon;
@@ -11,9 +14,9 @@ public class Player implements User{
     private double winningRate;
     private int blackWordCounter;
     private Date registrationDate;
-    private boolean isAdmin;
+    private Role role;
 
-    public Player(String username, String password) {
+    public User(String username, String password) {
         this.username = username;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA");
@@ -22,6 +25,7 @@ public class Player implements User{
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+        role = Role.PLAYER;
     }
 
     private String hexToString(byte[] bytes) {
@@ -35,6 +39,10 @@ public class Player implements User{
         return buff.toString();
     }
 
+    public int getUserID() {
+        return userID;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -43,7 +51,6 @@ public class Player implements User{
         this.username = username;
     }
 
-    @Override
     public String getHashedPassword() {
         return hashedPassword;
     }
@@ -52,7 +59,6 @@ public class Player implements User{
         return gamesWon;
     }
 
-    @Override
     public void setGamesWon(int gamesWon) {
         this.gamesWon = gamesWon;
     }
@@ -61,7 +67,6 @@ public class Player implements User{
         return gamesLost;
     }
 
-    @Override
     public void setGamesLost(int gamesLost) {
         this.gamesLost = gamesLost;
     }
@@ -70,7 +75,6 @@ public class Player implements User{
         return gamesPlayed;
     }
 
-    @Override
     public void setGamesPlayed(int gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
     }
@@ -79,28 +83,27 @@ public class Player implements User{
         return winningRate;
     }
 
-    @Override
     public void setWinningRate(double winningRate) {
         this.winningRate = winningRate;
     }
 
-    @Override
     public int getBlackWordCounter() {
         return blackWordCounter;
     }
 
-    @Override
     public void setBlackWordCounter(int blackWordCounter) {
         this.blackWordCounter = blackWordCounter;
     }
 
-    @Override
     public Date getRegistrationDate() {
         return registrationDate;
     }
 
-    @Override
-    public boolean isAdmin() {
-        return isAdmin;
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public Role getRole() {
+        return role;
     }
 }
