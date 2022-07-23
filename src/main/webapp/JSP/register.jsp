@@ -15,7 +15,7 @@
 <body>
 <h1>Please Register! </h1> <br/>
 <form action="../RegistrationServlet" method="post">
-    Model.User Name: <input type="text" name="Username"> <br>
+    User Name: <input type="text" name="Username"> <br>
     Password:&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="Password"> <br>
     <input type="submit" name="Register" value="Register">
 </form>

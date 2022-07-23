@@ -14,7 +14,7 @@ public class User{
     private double winningRate;
     private int blackWordCounter;
     private Date registrationDate;
-    private Role role;
+    private Role role = Role.PLAYER;
 
     public User(String username, String password) {
         this.username = username;
@@ -25,7 +25,6 @@ public class User{
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-        role = Role.PLAYER;
     }
 
     private String hexToString(byte[] bytes) {
