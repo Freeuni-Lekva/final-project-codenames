@@ -17,15 +17,15 @@ CREATE TABLE users(
     winning_rate            DECIMAL      NOT NULL,
     black_word_selected     BIGINT       NOT NULL,
     registration_date       DATE         NOT NULL,
-    is_admin                BIT          NOT NULL,
+    status                  VARCHAR(50)  NOT NULL,
     PRIMARY KEY (id)
 
 );
 
 CREATE TABLE game_history(
     id                      BIGINT       NOT NULL AUTO_INCREMENT,
-    winner                  VARCHAR(50)      NOT NULL,
-    loser                   VARCHAR(50)     NOT NULL,
+    winner                  VARCHAR(50)  NOT NULL,
+    loser                   VARCHAR(50)  NOT NULL,
     black_word_selected     BIT          NOT NULL,
     date_played             DATE         NOT NULL,
     PRIMARY KEY (id)

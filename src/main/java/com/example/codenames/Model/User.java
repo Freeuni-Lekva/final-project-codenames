@@ -1,18 +1,18 @@
-package Model;
+package com.example.codenames.Model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 public class User{
-    private int userID;
+    private Long userID;
     private String username;
     private String hashedPassword;
-    private int gamesWon;
-    private int gamesLost;
-    private int gamesPlayed;
-    private double winningRate;
-    private int blackWordCounter;
+    private Long gamesWon = 0L;
+    private Long gamesLost = 0L;
+    private Long gamesPlayed = 0L;
+    private double winningRate = 0.0;
+    private Long blackWordCounter = 0L;
     private Date registrationDate;
     private Role role = Role.PLAYER;
 
@@ -27,6 +27,19 @@ public class User{
         }
     }
 
+    public User(Long userID, String username, String hashedPassword, Long gamesWon, Long gamesLost, Long gamesPlayed, double winningRate, Long blackWordCounter, Date registrationDate, Role role) {
+        this.userID = userID;
+        this.username = username;
+        this.hashedPassword = hashedPassword;
+        this.gamesWon = gamesWon;
+        this.gamesLost = gamesLost;
+        this.gamesPlayed = gamesPlayed;
+        this.winningRate = winningRate;
+        this.blackWordCounter = blackWordCounter;
+        this.registrationDate = registrationDate;
+        this.role = role;
+    }
+
     private String hexToString(byte[] bytes) {
         StringBuffer buff = new StringBuffer();
         for (int i = 0; i < bytes.length; i++) {
@@ -38,7 +51,7 @@ public class User{
         return buff.toString();
     }
 
-    public int getUserID() {
+    public Long getUserID() {
         return userID;
     }
 
@@ -54,27 +67,27 @@ public class User{
         return hashedPassword;
     }
 
-    public int getGamesWon() {
+    public Long getGamesWon() {
         return gamesWon;
     }
 
-    public void setGamesWon(int gamesWon) {
+    public void setGamesWon(Long gamesWon) {
         this.gamesWon = gamesWon;
     }
 
-    public int getGamesLost() {
+    public Long getGamesLost() {
         return gamesLost;
     }
 
-    public void setGamesLost(int gamesLost) {
+    public void setGamesLost(Long gamesLost) {
         this.gamesLost = gamesLost;
     }
 
-    public int getGamesPlayed() {
+    public Long getGamesPlayed() {
         return gamesPlayed;
     }
 
-    public void setGamesPlayed(int gamesPlayed) {
+    public void setGamesPlayed(Long gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
     }
 
@@ -86,11 +99,11 @@ public class User{
         this.winningRate = winningRate;
     }
 
-    public int getBlackWordCounter() {
+    public Long getBlackWordCounter() {
         return blackWordCounter;
     }
 
-    public void setBlackWordCounter(int blackWordCounter) {
+    public void setBlackWordCounter(Long blackWordCounter) {
         this.blackWordCounter = blackWordCounter;
     }
 
