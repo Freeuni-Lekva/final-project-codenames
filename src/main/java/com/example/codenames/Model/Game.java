@@ -3,13 +3,13 @@ package com.example.codenames.Model;
 import java.util.Date;
 
 public class Game {
-    private int gameID;
+    private Long gameID;
     private String winner;
     private String loser;
     private boolean blackWordSelected;
     private Date date;
     
-    public Game(int gameID, String winner, String loser, boolean blackWordSelected, Date date) {
+    public Game(Long gameID, String winner, String loser, boolean blackWordSelected, Date date) {
         this.gameID = gameID;
         this.winner = winner;
         this.loser = loser;
@@ -17,7 +17,7 @@ public class Game {
         this.date = date;
     }
 
-    public int getGameID() {
+    public Long getGameID() {
         return gameID;
     }
 
