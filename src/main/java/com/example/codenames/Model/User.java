@@ -1,4 +1,4 @@
-package Model;
+package com.example.codenames.Model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
