@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlPlayerHistoryDao implements PlayerHistoryDao {
-    public static final String TABLE_NAME = "player_history";
+    public static final String PLAYER_TABLE_NAME = "player_history";
+    public static final String GAME_TABLE_NAME = "game_history";
     private DBConnection dbconnection;
 
     public SqlPlayerHistoryDao(DBConnection connection) {
@@ -24,11 +25,21 @@ public class SqlPlayerHistoryDao implements PlayerHistoryDao {
         try {
             Connection connection = dbconnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM " + TABLE_NAME + " WHERE user_id = ? ;");
-            statement.setInt(1, userID);
+                    "SELECT * FROM " + PLAYER_TABLE_NAME +
+                       " JOIN " + GAME_TABLE_NAME +
+                       " ON ?.game_id = ?.game_id"+
+                       " WHERE user_id = ? " +
+                        "ORDER BY ?.date_played DESC");
+            statement.setString(1, PLAYER_TABLE_NAME);
+            statement.setString(2, GAME_TABLE_NAME);
+            statement.setInt(3, userID);
+            statement.setString(4, GAME_TABLE_NAME);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 result.add(resultSet.getInt(1));
+                if(result.size() == num){
+                    return result;
+                }
             }
             return result;
         }
@@ -42,7 +53,7 @@ public class SqlPlayerHistoryDao implements PlayerHistoryDao {
         try {
             Connection connection = dbconnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO " + TABLE_NAME + " (game_id, user_id, team) " +
+                    "INSERT INTO " + PLAYER_TABLE_NAME + " (game_id, user_id, team) " +
                             "VALUES (?, ?, ?);");
             statement.setInt(1, data.getGameID());
             statement.setInt(2, data.getUserID());
