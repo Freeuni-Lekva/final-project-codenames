@@ -6,7 +6,6 @@ public class GameInfoDto {
     private String winner;
     private String loser;
     private boolean blackWordSelected;
-    private Date date;
 
     public GameInfoDto(String winner, String loser, boolean blackWordSelected, Date date) {
         this.winner = winner;
