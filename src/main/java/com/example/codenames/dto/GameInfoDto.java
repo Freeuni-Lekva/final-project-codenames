@@ -12,7 +12,6 @@ public class GameInfoDto {
         this.winner = winner;
         this.loser = loser;
         this.blackWordSelected = blackWordSelected;
-        this.date = date;
     }
 
     public String getWinner() {
@@ -25,9 +24,5 @@ public class GameInfoDto {
 
     public boolean isBlackWordSelected() {
         return blackWordSelected;
-    }
-
-    public Date getDate() {
-        return date;
     }
 }
