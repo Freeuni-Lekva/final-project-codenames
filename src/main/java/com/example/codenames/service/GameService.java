@@ -5,5 +5,5 @@ import java.util.Date;
 
 public interface GameService {
     Game addGame(String winner, String loser, boolean blackWordSelected, Date date);
-    Game getGameByID(int gameID);
+    Game getGameByID(Long gameID);
 }

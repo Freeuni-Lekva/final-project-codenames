@@ -5,5 +5,5 @@ import com.example.codenames.dto.GameInfoDto;
 
 public interface GameDao {
     Game addGame(GameInfoDto gameInfo);
-    Game getGameByID(int ID);
+    Game getGameByID(Long gameID);
 }

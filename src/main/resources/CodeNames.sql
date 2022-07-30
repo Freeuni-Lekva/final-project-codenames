@@ -26,7 +26,7 @@ CREATE TABLE game_history(
     id                      BIGINT       NOT NULL AUTO_INCREMENT,
     winner                  VARCHAR(50)      NOT NULL,
     loser                   VARCHAR(50)     NOT NULL,
-    black_word_selected     BIT          NOT NULL,
+    black_word_selected     BOOLEAN          NOT NULL,
     date_played             DATE         NOT NULL,
     PRIMARY KEY (id)
 );
