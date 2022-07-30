@@ -16,7 +16,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game addGame(String winner, String loser, boolean blackWordSelected, Date date) {
-        GameInfoDto gameInfoDto = new GameInfoDto(winner, loser, blackWordSelected, date);
+        GameInfoDto gameInfoDto = new GameInfoDto(winner, loser, blackWordSelected);
         return gameDao.addGame(gameInfoDto);
     }
 
