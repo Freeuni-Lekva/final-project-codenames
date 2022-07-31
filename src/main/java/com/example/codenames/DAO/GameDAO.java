@@ -1,11 +1,11 @@
-package com.example.codenames.dao;
+package com.example.codenames.DAO;
 
 import com.example.codenames.Model.Game;
-import com.example.codenames.dto.GameInfoDto;
+import com.example.codenames.DTO.GameInfoDTO;
 import com.example.codenames.exception.GameNotAddedException;
 import com.example.codenames.exception.GameNotFoundException;
 
-public interface GameDao {
-    Game addGame(GameInfoDto gameInfo) throws GameNotAddedException;
+public interface GameDAO {
+    Game addGame(GameInfoDTO gameInfo) throws GameNotAddedException;
     Game getGameByID(Long gameID) throws GameNotFoundException;
 }

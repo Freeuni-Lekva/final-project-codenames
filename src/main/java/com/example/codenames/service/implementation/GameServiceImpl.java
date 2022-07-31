@@ -1,16 +1,16 @@
 package com.example.codenames.service.implementation;
 
 import com.example.codenames.Model.Game;
-import com.example.codenames.dao.GameDao;
-import com.example.codenames.dto.GameInfoDto;
+import com.example.codenames.DAO.GameDAO;
+import com.example.codenames.DTO.GameInfoDTO;
 import com.example.codenames.exception.InvalidTeamsException;
 import com.example.codenames.service.GameService;
 
 public class GameServiceImpl implements GameService {
-    private final GameDao gameDao;
+    private final GameDAO gameDAO;
 
-    public GameServiceImpl(GameDao gameDao) {
-        this.gameDao = gameDao;
+    public GameServiceImpl(GameDAO gameDAO) {
+        this.gameDAO = gameDAO;
     }
 
     @Override
@@ -18,12 +18,12 @@ public class GameServiceImpl implements GameService {
         if (!((winner.equals("RED") && loser.equals("BLUE")) || (winner.equals("BLUE") && loser.equals("RED")))) {
             throw new InvalidTeamsException(winner + " " + loser);
         }
-        GameInfoDto gameInfoDto = new GameInfoDto(winner, loser, blackWordSelected);
-        return gameDao.addGame(gameInfoDto);
+        GameInfoDTO gameInfoDto = new GameInfoDTO(winner, loser, blackWordSelected);
+        return gameDAO.addGame(gameInfoDto);
     }
 
     @Override
     public Game getGameByID(Long gameID) {
-        return gameDao.getGameByID(gameID);
+        return gameDAO.getGameByID(gameID);
     }
 }

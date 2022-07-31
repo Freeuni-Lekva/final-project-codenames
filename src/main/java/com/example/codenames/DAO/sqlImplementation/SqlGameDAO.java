@@ -1,9 +1,9 @@
-package com.example.codenames.dao.sqlImplementation;
+package com.example.codenames.DAO.sqlImplementation;
 
 import com.example.codenames.Model.Game;
-import com.example.codenames.dao.GameDao;
+import com.example.codenames.DAO.GameDAO;
 import com.example.codenames.database.DBConnection;
-import com.example.codenames.dto.GameInfoDto;
+import com.example.codenames.DTO.GameInfoDTO;
 import com.example.codenames.exception.GameNotAddedException;
 import com.example.codenames.exception.GameNotFoundException;
 
@@ -13,16 +13,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class SqlGameDao implements GameDao {
+public class SqlGameDAO implements GameDAO {
     public static final String TABLE_NAME = "game_history";
     private DBConnection dbconnection;
 
-    public SqlGameDao(DBConnection connection) {
+    public SqlGameDAO(DBConnection connection) {
         this.dbconnection = connection;
     }
 
     @Override
-    public Game addGame(GameInfoDto gameInfo) throws GameNotAddedException{
+    public Game addGame(GameInfoDTO gameInfo) throws GameNotAddedException{
         Connection connection = dbconnection.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(

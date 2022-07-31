@@ -1,13 +1,11 @@
-package com.example.codenames.dto;
+package com.example.codenames.DTO;
 
-import java.util.Date;
-
-public class GameInfoDto {
+public class GameInfoDTO {
     private String winner;
     private String loser;
     private boolean blackWordSelected;
 
-    public GameInfoDto(String winner, String loser, boolean blackWordSelected) {
+    public GameInfoDTO(String winner, String loser, boolean blackWordSelected) {
         this.winner = winner;
         this.loser = loser;
         this.blackWordSelected = blackWordSelected;
