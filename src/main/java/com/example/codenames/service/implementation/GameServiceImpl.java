@@ -1,6 +1,6 @@
 package com.example.codenames.service.implementation;
 
-import com.example.codenames.Model.Game;
+import com.example.codenames.model.Game;
 import com.example.codenames.DAO.GameDAO;
 import com.example.codenames.DTO.GameInfoDTO;
 import com.example.codenames.exception.InvalidTeamsException;
@@ -14,7 +14,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game addGame(String winner, String loser, boolean blackWordSelected) throws InvalidTeamsException {
+    public int addGame(String winner, String loser, boolean blackWordSelected) throws InvalidTeamsException {
         if (!((winner.equals("RED") && loser.equals("BLUE")) || (winner.equals("BLUE") && loser.equals("RED")))) {
             throw new InvalidTeamsException(winner + " " + loser);
         }
@@ -23,7 +23,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game getGameByID(Long gameID) {
+    public Game getGameByID(int gameID) {
         return gameDAO.getGameByID(gameID);
     }
 }

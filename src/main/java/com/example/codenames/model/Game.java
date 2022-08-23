@@ -1,15 +1,15 @@
-package com.example.codenames.Model;
+package com.example.codenames.model;
 
 import java.util.Date;
 
 public class Game {
-    private Long gameID;
+    private int gameID;
     private String winner;
     private String loser;
     private boolean blackWordSelected;
     private Date date;
     
-    public Game(Long gameID, String winner, String loser, boolean blackWordSelected, Date date) {
+    public Game(int gameID, String winner, String loser, boolean blackWordSelected, Date date) {
         this.gameID = gameID;
         this.winner = winner;
         this.loser = loser;
@@ -17,7 +17,7 @@ public class Game {
         this.date = date;
     }
 
-    public Long getGameID() {
+    public int getGameID() {
         return gameID;
     }
 

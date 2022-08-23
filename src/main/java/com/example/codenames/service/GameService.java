@@ -1,11 +1,15 @@
 package com.example.codenames.service;
 
-import com.example.codenames.Model.Game;
+import com.example.codenames.model.Game;
 import com.example.codenames.exception.InvalidTeamsException;
 
-import java.util.Date;
-
 public interface GameService {
-    Game addGame(String winner, String loser, boolean blackWordSelected) throws InvalidTeamsException;
-    Game getGameByID(Long gameID);
+    /**
+     @return ID of the game added
+     */
+    int addGame(String winner, String loser, boolean blackWordSelected) throws InvalidTeamsException;
+    /**
+     @return Game object with the given ID
+     */
+    Game getGameByID(int gameID);
 }

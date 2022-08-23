@@ -1,16 +1,13 @@
 package com.example.codenames.DAO.sqlImplementation;
 
-import com.example.codenames.Model.Game;
+import com.example.codenames.model.Game;
 import com.example.codenames.DAO.GameDAO;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.DTO.GameInfoDTO;
 import com.example.codenames.exception.GameNotAddedException;
 import com.example.codenames.exception.GameNotFoundException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Date;
 
 public class SqlGameDAO implements GameDAO {
@@ -22,38 +19,49 @@ public class SqlGameDAO implements GameDAO {
     }
 
     @Override
-    public Game addGame(GameInfoDTO gameInfo) throws GameNotAddedException{
+    public int addGame(GameInfoDTO gameInfo) throws GameNotAddedException{
         Connection connection = dbconnection.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO " + TABLE_NAME + " (winner, loser, black_word_selected, date_played) " +
-                    "VALUES (?, ?, ?, sysdate());");
-                statement.setString(1, gameInfo.getWinner());
-                statement.setString(2, gameInfo.getLoser());
-                statement.setString(3, "" + gameInfo.isBlackWordSelected());
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO " + TABLE_NAME + " (winner, loser, black_word_selected) " +
+                    "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, gameInfo.getWinner());
+            preparedStatement.setString(2, gameInfo.getLoser());
+            preparedStatement.setBoolean(3, gameInfo.isBlackWordSelected());
+            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            int lastInsertedID = 0;
+            if (resultSet.next()) {
+                lastInsertedID = resultSet.getInt(1);
+            }
+            resultSet.close();
+            return lastInsertedID;
         } catch (SQLException e) {
             throw new GameNotAddedException("");
         }
-        return null;
     }
 
     @Override
-    public Game getGameByID(Long gameID) throws GameNotFoundException {
+    public Game getGameByID(int gameID) throws GameNotFoundException {
         Connection connection = dbconnection.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM " + TABLE_NAME + " WHERE id = ?;"
             );
-            statement.setLong(1, gameID);
+            statement.setInt(1, gameID);
             ResultSet resultSet = statement.executeQuery();
+            Game game = null;
             if(resultSet.next()){
-
-                return new Game(resultSet.getLong(1), resultSet.getString(2),resultSet.getString(3),
+                game = new Game(resultSet.getInt(1), resultSet.getString(2),resultSet.getString(3),
                         resultSet.getBoolean(4), new Date(resultSet.getDate(5).getTime()));
+            } else {
+                resultSet.close();
+                throw new GameNotFoundException("Game with an ID " + gameID + " was not found");
             }
+            resultSet.close();
+            return game;
         } catch (SQLException e) {
             throw new GameNotFoundException("Game with an ID " + gameID + " was not found");
         }
-        return null;
     }
 }

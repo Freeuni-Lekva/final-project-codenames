@@ -7,13 +7,26 @@ import java.sql.Statement;
 
 public class DBConnection {
     private Connection connection;
+    private String databaseName;
+    private String defaultDatabaseName = "codenames";
 
-    public DBConnection(){
+    public DBConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/codenames", "root",  "RameParoli#11");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "rootroot");
             Statement statement = connection.createStatement();
-            statement.execute("USE codenames");
+            statement.execute("USE " + defaultDatabaseName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public DBConnection(String databaseName){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "rootroot");
+            Statement statement = connection.createStatement();
+            statement.execute("USE " + databaseName);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
