@@ -21,7 +21,7 @@ CREATE TABLE users(
     winning_rate            DECIMAL                             NOT NULL,
     black_word_selected     INT                                 NOT NULL,
     registration_date       TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    status                  VARCHAR(50)  NOT NULL,
+    status                  VARCHAR(50)                         NOT NULL,
     PRIMARY KEY (id)
 );
 
