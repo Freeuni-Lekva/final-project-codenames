@@ -1,8 +1,9 @@
 package com.example.codenames.service;
 
-import com.example.codenames.Model.PlayerHistory;
+import com.example.codenames.model.PlayerHistory;
 import com.example.codenames.exception.InvalidNumberOfGamesException;
 import com.example.codenames.exception.InvalidTeamSpecifier;
+import com.example.codenames.model.PlayerHistory;
 
 import java.util.List;
 

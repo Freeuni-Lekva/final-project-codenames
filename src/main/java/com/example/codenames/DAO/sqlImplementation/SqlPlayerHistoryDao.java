@@ -1,9 +1,10 @@
-package com.example.codenames.DAO.sqlImpementation;
+package com.example.codenames.DAO.sqlImplementation;
 
-import com.example.codenames.Model.PlayerHistory;
+import com.example.codenames.model.PlayerHistory;
 import com.example.codenames.DAO.PlayerHistoryDao;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.DTO.PlayerHistoryDto;
+import com.example.codenames.model.PlayerHistory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

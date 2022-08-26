@@ -1,8 +1,8 @@
 package com.example.codenames.DAO;
 
 
-import com.example.codenames.Model.PlayerHistory;
 import com.example.codenames.DTO.PlayerHistoryDto;
+import com.example.codenames.model.PlayerHistory;
 
 import java.util.List;
 
