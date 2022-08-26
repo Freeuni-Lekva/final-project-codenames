@@ -32,9 +32,10 @@ public class GameServiceImplTest extends TestCase {
         runner.setLogWriter(null);
         Reader reader = new BufferedReader(new FileReader("src/main/resources/For_Testing.sql"));
         runner.runScript(reader);
-
+        
         DBConnection dbConnection = new DBConnection("testingdb");
         GameDAO gameDAO = new SqlGameDAO(dbConnection);
+        GameDAO gameDAO = new SqlGameDAO(connection);
         gameService = new GameServiceImpl(gameDAO);
     }
 
