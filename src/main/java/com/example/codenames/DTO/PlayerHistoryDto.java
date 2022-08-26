@@ -1,4 +1,4 @@
-package com.example.codenames.dto;
+package com.example.codenames.DTO;
 
 public class PlayerHistoryDto {
     private int gameID;

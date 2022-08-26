@@ -11,9 +11,20 @@ public class DBConnection {
     public DBConnection(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/codenames", "root",  "RameParoli#11");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "sqlsql123");
             Statement statement = connection.createStatement();
             statement.execute("USE codenames");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public DBConnection(String databaseName){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "sqlsql123");
+            Statement statement = connection.createStatement();
+            statement.execute("USE " + databaseName);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

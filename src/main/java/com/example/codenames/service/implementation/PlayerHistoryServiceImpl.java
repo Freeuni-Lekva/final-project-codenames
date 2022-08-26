@@ -1,8 +1,8 @@
 package com.example.codenames.service.implementation;
 
 import com.example.codenames.Model.PlayerHistory;
-import com.example.codenames.dao.PlayerHistoryDao;
-import com.example.codenames.dto.PlayerHistoryDto;
+import com.example.codenames.DAO.PlayerHistoryDao;
+import com.example.codenames.DTO.PlayerHistoryDto;
 import com.example.codenames.exception.InvalidNumberOfGamesException;
 import com.example.codenames.exception.InvalidTeamSpecifier;
 import com.example.codenames.service.PlayerHistoryService;
@@ -18,7 +18,7 @@ public class PlayerHistoryServiceImpl implements PlayerHistoryService {
 
     @Override
     public PlayerHistory addPlayerHistoryEntry(int gameID, int userID, String team) throws InvalidTeamSpecifier {
-        if(!team.equals("red") && !team.equals("blue")){
+        if(!team.equals("RED") && !team.equals("BLUE")){
             throw new InvalidTeamSpecifier(team);
         }
         PlayerHistoryDto data = new PlayerHistoryDto(gameID, userID, team);
