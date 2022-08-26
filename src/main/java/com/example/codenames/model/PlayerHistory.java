@@ -1,4 +1,4 @@
-package com.example.codenames.Model;
+package com.example.codenames.model;
 
 public class PlayerHistory {
 
