@@ -1,16 +1,14 @@
-package com.example.codenames.service.test;
+package com.example.codenames.DAO.test;
 
 import com.example.codenames.DAO.GameDAO;
 import com.example.codenames.DAO.sqlImplementation.SqlGameDAO;
+import com.example.codenames.DTO.GameInfoDTO;
 import com.example.codenames.model.Game;
 import com.example.codenames.database.DBConnection;
-import com.example.codenames.exception.InvalidTeamsException;
-import com.example.codenames.service.GameService;
-import com.example.codenames.service.implementation.GameServiceImpl;
+import com.example.codenames.exception.GameNotFoundException;
 import junit.framework.TestCase;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.Reader;
@@ -19,9 +17,9 @@ import java.sql.DriverManager;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class GameServiceImplTest extends TestCase {
+public class SqlGameDAOTest extends TestCase {
 
-    private GameService gameService;
+    private GameDAO gameDAO;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -32,43 +30,45 @@ public class GameServiceImplTest extends TestCase {
         runner.setLogWriter(null);
         Reader reader = new BufferedReader(new FileReader("src/main/resources/For_Testing.sql"));
         runner.runScript(reader);
-        
+
         DBConnection dbConnection = new DBConnection("testingdb");
-        GameDAO gameDAO = new SqlGameDAO(dbConnection);
-        GameDAO gameDAO = new SqlGameDAO(connection);
-        gameService = new GameServiceImpl(gameDAO);
+        gameDAO = new SqlGameDAO(dbConnection);
     }
 
     public void testAddAndGetGame() {
-        int id1 = gameService.addGame("RED", "BLUE", true);
-        Game game1 = gameService.getGameByID(id1);
+        GameInfoDTO gameInfo1 = new GameInfoDTO("RED", "BLUE", true);
+        int id1 = gameDAO.addGame(gameInfo1);
+        Game game1 = gameDAO.getGameByID(id1);
         assertEquals("RED", game1.getWinner());
         assertEquals("BLUE", game1.getLoser());
         assertTrue(game1.isBlackWordSelected());
 
-        int id2 = gameService.addGame("RED", "BLUE", false);
-        Game game2 = gameService.getGameByID(id2);
+        GameInfoDTO gameInfo2 = new GameInfoDTO("RED", "BLUE", false);
+        int id2 = gameDAO.addGame(gameInfo2);
+        Game game2 = gameDAO.getGameByID(id2);
         assertEquals("RED", game2.getWinner());
         assertEquals("BLUE", game2.getLoser());
         assertFalse(game2.isBlackWordSelected());
 
-        int id3 = gameService.addGame("BLUE", "RED", true);
-        Game game3 = gameService.getGameByID(id3);
+        GameInfoDTO gameInfo3 = new GameInfoDTO("BLUE", "RED", true);
+        int id3 = gameDAO.addGame(gameInfo3);
+        Game game3 = gameDAO.getGameByID(id3);
         assertEquals("BLUE", game3.getWinner());
         assertEquals("RED", game3.getLoser());
         assertTrue(game3.isBlackWordSelected());
 
-        int id4 = gameService.addGame("BLUE", "RED", false);
-        Game game4 = gameService.getGameByID(id4);
+        GameInfoDTO gameInfo4 = new GameInfoDTO("BLUE", "RED", false);
+        int id4 = gameDAO.addGame(gameInfo4);
+        Game game4 = gameDAO.getGameByID(id4);
         assertEquals("BLUE", game4.getWinner());
         assertEquals("RED", game4.getLoser());
         assertFalse(game4.isBlackWordSelected());
     }
 
-    public void testInvalidTeamsException() {
-        assertThrows(InvalidTeamsException.class, () -> gameService.addGame("A", "BLUE", false));
-        assertThrows(InvalidTeamsException.class, () -> gameService.addGame("BLUE", "BLUE", true));
-        assertThrows(InvalidTeamsException.class, () -> gameService.addGame("RED", "RED", true));
-        assertThrows(InvalidTeamsException.class, () -> gameService.addGame("RED", "ABC", false));
+    public void testGameNotFoundException() {
+        assertThrows(GameNotFoundException.class, () -> gameDAO.getGameByID(-3));
+        assertThrows(GameNotFoundException.class, () -> gameDAO.getGameByID(-1));
+        assertThrows(GameNotFoundException.class, () -> gameDAO.getGameByID(2));
+        assertThrows(GameNotFoundException.class, () -> gameDAO.getGameByID(0));
     }
 }
