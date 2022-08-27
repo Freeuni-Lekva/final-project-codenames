@@ -2,13 +2,12 @@ package com.example.codenames.service.test;
 
 import com.example.codenames.DAO.GameDAO;
 import com.example.codenames.DAO.sqlImplementation.SqlGameDAO;
-import com.example.codenames.model.Game;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.exception.InvalidTeamsException;
+import com.example.codenames.model.Game;
 import com.example.codenames.service.GameService;
 import com.example.codenames.service.implementation.GameServiceImpl;
 import junit.framework.TestCase;
-
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import java.io.BufferedReader;

@@ -8,18 +8,17 @@ DROP TABLE IF EXISTS categories;
 
 
 CREATE TABLE users(
-    id                      INT          NOT NULL AUTO_INCREMENT,
-    user_name               VARCHAR(50)  NOT NULL UNIQUE,
-    hashed_password         VARCHAR(64)  NOT NULL,
-    games_won               INT          NOT NULL,
-    games_lost              INT          NOT NULL,
-    games_played            INT          NOT NULL,
-    winning_rate            DECIMAL      NOT NULL,
-    black_word_selected     INT          NOT NULL,
-    registration_date       TIMESTAMP DEFAULT CURRENT_TIMESTAMP         NOT NULL,
+    id                      INT                                     NOT NULL AUTO_INCREMENT,
+    user_name               VARCHAR(50)                             NOT NULL UNIQUE,
+    hashed_password         VARCHAR(64)                             NOT NULL,
+    games_won               INT                                     NOT NULL,
+    games_lost              INT                                     NOT NULL,
+    games_played            INT                                     NOT NULL,
+    winning_rate            DECIMAL                                 NOT NULL,
+    black_word_selected     INT                                     NOT NULL,
+    registration_date       TIMESTAMP DEFAULT CURRENT_TIMESTAMP     NOT NULL,
     status                  VARCHAR(50)  NOT NULL,
     PRIMARY KEY (id)
-
 );
 
 CREATE TABLE game_history(
