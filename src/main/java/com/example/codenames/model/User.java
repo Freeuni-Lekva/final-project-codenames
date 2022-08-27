@@ -2,22 +2,42 @@ package com.example.codenames.model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class User{
+    public static final String TABLE_NAME = "users";
+    public static final String TABLE_USER_NAME = "user_name";
+    public static final String TABLE_PASSWORD = "hashed_password";
+    public static final String TABLE_GAMES_WON = "games_won";
+    public static final String TABLE_GAMES_LOST = "games_lost";
+    public static final String TABLE_GAMES_PLAYED = "games_played";
+    public static final String TABLE_WINNING_RATE = "winning_rate";
+    public static final String TABLE_BLACK_WORD_SELECTED = "black_word_selected";
+    public static final String TABLE_REGISTRATION_DATE = "registration_date";
+    public static final String TABLE_STATUS = "status";
+
+
+
+
     private int userID;
     private String username;
     private String hashedPassword;
-    private int gamesWon;
-    private int gamesLost;
-    private int gamesPlayed;
-    private double winningRate;
-    private int blackWordCounter;
-    private Date registrationDate;
+    private Long gamesWon = 0L;
+    private Long gamesLost = 0L;
+    private Long gamesPlayed = 0L;
+    private double winningRate = 0.0;
+    private Long blackWordCounter = 0L;
+    private java.sql.Timestamp registrationDate;
     private Role role = Role.PLAYER;
+
 
     public User(String username, String password) {
         this.username = username;
+        hashPassword(password);
+    }
+
+    private void hashPassword(String password){
         try {
             MessageDigest md = MessageDigest.getInstance("SHA");
             byte[] bytes = password.getBytes();
@@ -25,6 +45,19 @@ public class User{
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+    public User(int userID, String username, String password, Long gamesWon, Long gamesLost, Long gamesPlayed, double winningRate, Long blackWordCounter, java.sql.Timestamp registrationDate, Role role) {
+        this.userID = userID;
+        this.username = username;
+        this.gamesWon = gamesWon;
+        this.gamesLost = gamesLost;
+        this.gamesPlayed = gamesPlayed;
+        this.winningRate = winningRate;
+        this.blackWordCounter = blackWordCounter;
+        this.registrationDate = registrationDate;
+        this.role = role;
+        hashPassword(password);
+
     }
 
     private String hexToString(byte[] bytes) {
@@ -46,6 +79,10 @@ public class User{
         return username;
     }
 
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -54,27 +91,31 @@ public class User{
         return hashedPassword;
     }
 
-    public int getGamesWon() {
+    public Long getGamesWon() {
         return gamesWon;
     }
 
-    public void setGamesWon(int gamesWon) {
+    public void setGamesWon(Long gamesWon) {
         this.gamesWon = gamesWon;
     }
 
-    public int getGamesLost() {
+    public Long getGamesLost() {
         return gamesLost;
     }
 
-    public void setGamesLost(int gamesLost) {
+    public void setGamesLost(Long gamesLost) {
         this.gamesLost = gamesLost;
     }
 
-    public int getGamesPlayed() {
+    public Long getGamesPlayed() {
         return gamesPlayed;
     }
 
-    public void setGamesPlayed(int gamesPlayed) {
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setGamesPlayed(Long gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
     }
 
@@ -86,23 +127,39 @@ public class User{
         this.winningRate = winningRate;
     }
 
-    public int getBlackWordCounter() {
+    public Long getBlackWordCounter() {
         return blackWordCounter;
     }
 
-    public void setBlackWordCounter(int blackWordCounter) {
+    public void setBlackWordCounter(Long blackWordCounter) {
         this.blackWordCounter = blackWordCounter;
     }
 
-    public Date getRegistrationDate() {
+    public Timestamp getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(java.sql.Timestamp registrationDate) {
         this.registrationDate = registrationDate;
     }
 
     public Role getRole() {
         return role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", username='" + username + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", gamesWon=" + gamesWon +
+                ", gamesLost=" + gamesLost +
+                ", gamesPlayed=" + gamesPlayed +
+                ", winningRate=" + winningRate +
+                ", blackWordCounter=" + blackWordCounter +
+                ", registrationDate=" + registrationDate +
+                ", role=" + role +
+                '}';
     }
 }

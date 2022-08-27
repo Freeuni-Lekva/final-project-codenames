@@ -27,15 +27,11 @@ public class SqlPlayerHistoryDao implements PlayerHistoryDao {
         try {
             Connection connection = dbconnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM " + PLAYER_TABLE_NAME);// +
-                       //" JOIN " + GAME_TABLE_NAME +
-                       //" ON "+ PLAYER_TABLE_NAME + ".game_id = " + GAME_TABLE_NAME +".id"+
-                       //" WHERE user_id = " + userID);
-            //+" ORDER BY " + GAME_TABLE_NAME + " .date_played DESC");
-            //statement.setString(1, PLAYER_TABLE_NAME);
-            //statement.setString(2, GAME_TABLE_NAME);
-            //statement.setInt(3, userID);
-            //statement.setString(4, GAME_TABLE_NAME);
+                    "SELECT * FROM " + PLAYER_TABLE_NAME +
+                       " JOIN " + GAME_TABLE_NAME +
+                       " ON "+ PLAYER_TABLE_NAME + ".game_id = " + GAME_TABLE_NAME +".id"+
+                       " WHERE user_id = " + userID +
+                       " ORDER BY " + GAME_TABLE_NAME + " .date_played DESC");
             ResultSet resultSet = statement.executeQuery();
             System.out.println(resultSet.getFetchSize());
             while (resultSet.next()) {
@@ -62,11 +58,6 @@ public class SqlPlayerHistoryDao implements PlayerHistoryDao {
            statement.setInt(2, data.getUserID());
            statement.setString(3, data.getTeam());
            statement.executeUpdate();
-//            System.out.println("111");
-//            PreparedStatement statement1 = connection.prepareStatement(
-//                    "SELECT * FROM " + PLAYER_TABLE_NAME);
-//            ResultSet resultSet = statement1.executeQuery();
-//            System.out.println(resultSet.getFetchSize());
             return new PlayerHistory(data.getGameID(), data.getUserID(), data.getTeam());
         }
         catch (Exception e){
