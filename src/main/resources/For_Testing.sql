@@ -8,7 +8,6 @@ DROP TABLE IF EXISTS player_history;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS game_history;
 DROP TABLE IF EXISTS words;
-DROP TABLE IF EXISTS categories;
 
 
 CREATE TABLE users(
@@ -42,16 +41,8 @@ CREATE TABLE player_history(
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE categories (
-    id                  INT             NOT NULL AUTO_INCREMENT,
-    name                VARCHAR(50)     NOT NULL,
-    number_of_words     INT             NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE      (name)
-);
-
 CREATE TABLE words(
     word            VARCHAR(50) NOT NULL,
-    category_id     INT         NOT NULL,
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    category        VARCHAR(50) NOT NULL,
+    PRIMARY KEY     (word, category)
 );
