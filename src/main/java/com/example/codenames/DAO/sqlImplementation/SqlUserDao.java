@@ -83,14 +83,14 @@ public class SqlUserDao implements UserDao {
     private Role role = Role.PLAYER;
 
     private User toUser(ResultSet resultSet) throws SQLException {
-        return new User(resultSet.getLong(1), resultSet.getString(2), resultSet.getString(3),
+        return new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
                 resultSet.getLong(4), resultSet.getLong(5), resultSet.getLong(6),
                 resultSet.getDouble(7), resultSet.getLong(8), resultSet.getTimestamp(9),
                 Role.valueOf(resultSet.getString(10)));
     }
 
     private void changeUser(ResultSet resultSet, User user) throws SQLException {
-        user.setUserID(resultSet.getLong(1));
+        user.setUserID(resultSet.getInt(1));
         user.setGamesWon(resultSet.getLong(4));
         user.setGamesLost(resultSet.getLong(5));
         user.setGamesPlayed(resultSet.getLong(6));

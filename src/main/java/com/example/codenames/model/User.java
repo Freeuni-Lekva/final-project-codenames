@@ -20,7 +20,7 @@ public class User{
 
 
 
-    private Long userID;
+    private int userID;
     private String username;
     private String hashedPassword;
     private Long gamesWon = 0L;
@@ -46,7 +46,7 @@ public class User{
             throw new RuntimeException(e);
         }
     }
-    public User(Long userID, String username, String password, Long gamesWon, Long gamesLost, Long gamesPlayed, double winningRate, Long blackWordCounter, java.sql.Timestamp registrationDate, Role role) {
+    public User(int userID, String username, String password, Long gamesWon, Long gamesLost, Long gamesPlayed, double winningRate, Long blackWordCounter, java.sql.Timestamp registrationDate, Role role) {
         this.userID = userID;
         this.username = username;
         this.gamesWon = gamesWon;
@@ -71,7 +71,7 @@ public class User{
         return buff.toString();
     }
 
-    public Long getUserID() {
+    public int getUserID() {
         return userID;
     }
 
@@ -79,7 +79,7 @@ public class User{
         return username;
     }
 
-    public void setUserID(Long userID) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 

@@ -2,19 +2,18 @@ package com.example.codenames.service.test;
 
 import com.example.codenames.DAO.GameDAO;
 import com.example.codenames.DAO.sqlImplementation.SqlGameDAO;
+import com.example.codenames.model.Game;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.exception.InvalidTeamsException;
-import com.example.codenames.model.Game;
 import com.example.codenames.service.GameService;
 import com.example.codenames.service.implementation.GameServiceImpl;
 import junit.framework.TestCase;
+
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.Reader;
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -25,15 +24,12 @@ public class GameServiceImplTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "rootroot");
-        ScriptRunner runner = new ScriptRunner(connection);
+        DBConnection connection = new DBConnection("testingdb");
+        ScriptRunner runner = new ScriptRunner(connection.getConnection());
         runner.setLogWriter(null);
         Reader reader = new BufferedReader(new FileReader("src/main/resources/For_Testing.sql"));
         runner.runScript(reader);
-        
-        DBConnection dbConnection = new DBConnection("testingdb");
-        GameDAO gameDAO = new SqlGameDAO(dbConnection);
+
         GameDAO gameDAO = new SqlGameDAO(connection);
         gameService = new GameServiceImpl(gameDAO);
     }
@@ -62,6 +58,10 @@ public class GameServiceImplTest extends TestCase {
         assertEquals("BLUE", game4.getWinner());
         assertEquals("RED", game4.getLoser());
         assertFalse(game4.isBlackWordSelected());
+
+        assertNull(gameService.getGameByID(-1));
+        assertNull(gameService.getGameByID(-73));
+        assertNull(gameService.getGameByID(0));
     }
 
     public void testInvalidTeamsException() {
