@@ -41,8 +41,9 @@ CREATE TABLE player_history(
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE words(
-    word            VARCHAR(50) NOT NULL,
-    category        VARCHAR(50) NOT NULL,
-    PRIMARY KEY     (word, category)
+CREATE TABLE words
+(
+    word     VARCHAR(50) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    PRIMARY KEY (word, category)
 );

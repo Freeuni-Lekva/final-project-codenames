@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  Model.User: keti
+  com.example.codenames.Model.User: keti
   Date: 16.07.22
   Time: 02:15
   To change this template use File | Settings | File Templates.
