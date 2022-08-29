@@ -2,6 +2,9 @@ package com.example.codenames.service.implementation;
 
 import com.example.codenames.DAO.WordDAO;
 import com.example.codenames.exception.NotEnoughWordsException;
+import com.example.codenames.exception.WordNotAddedException;
+import com.example.codenames.exception.WordNotFoundException;
+import com.example.codenames.exception.WordNotRemovedException;
 import com.example.codenames.model.Word;
 import com.example.codenames.service.WordService;
 
@@ -9,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.random.RandomGenerator;
 
 public class WordServiceImpl implements WordService {
 
@@ -23,17 +25,29 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public boolean addWord(String name, String category) {
-        return wordDAO.addWord(name, category);
+        try {
+            return wordDAO.addWord(name, category);
+        } catch (WordNotAddedException e) {
+            return false;
+        }
     }
 
     @Override
     public boolean removeWord(String name) {
-        return wordDAO.removeWord(name);
+        try {
+            return wordDAO.removeWord(name);
+        } catch (WordNotRemovedException e) {
+            return false;
+        }
     }
 
     @Override
     public boolean removeWordFromCategory(String name, String category) {
-        return wordDAO.removeWordFromCategory(name, category);
+        try {
+            return wordDAO.removeWordFromCategory(name, category);
+        } catch (WordNotRemovedException e) {
+            return false;
+        }
     }
 
     @Override
@@ -52,6 +66,10 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public Word getWordByName(String name) {
-        return wordDAO.getWordByName(name);
+        try {
+            return wordDAO.getWordByName(name);
+        } catch (WordNotFoundException e) {
+            return null;
+        }
     }
 }

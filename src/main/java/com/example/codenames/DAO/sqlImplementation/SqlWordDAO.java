@@ -29,9 +29,7 @@ public class SqlWordDAO implements WordDAO {
                     "VALUES (?, ?);");
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, category);
-            if (preparedStatement.executeUpdate() == 1) {
-                return true;
-            } else return false;
+            return preparedStatement.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new WordNotAddedException("Word " + name + " was not added in category " + category);
         }
@@ -45,7 +43,7 @@ public class SqlWordDAO implements WordDAO {
                     "DELETE FROM " + TABLE_NAME + " WHERE word = ?;"
             );
             preparedStatement.setString(1, name);
-            return preparedStatement.executeUpdate() == 1;
+            return preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             throw new WordNotRemovedException("Word " + name + " was not removed");
         }
@@ -60,9 +58,9 @@ public class SqlWordDAO implements WordDAO {
             );
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, category);
-            if (preparedStatement.executeUpdate() == 1) return true;
-            return true;
-        } catch (SQLException e) {            throw new WordNotRemovedException("Word " + name + " was not removed");
+            return preparedStatement.executeUpdate() == 1;
+        } catch (SQLException e) {
+            throw new WordNotRemovedException("Word " + name + " was not removed");
         }
     }
 
@@ -71,12 +69,10 @@ public class SqlWordDAO implements WordDAO {
         Connection connection = dbconnection.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM " + TABLE_NAME + " WHERE category = ?;",
-                    Statement.RETURN_GENERATED_KEYS
+                    "SELECT * FROM " + TABLE_NAME + " WHERE category = ?;"
             );
             preparedStatement.setString(1, category);
-            if (preparedStatement.executeUpdate() != 1) return new ArrayList<>();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<String> toReturn = new ArrayList<>();
             while (resultSet.next()) {
                 toReturn.add(resultSet.getString(1));
@@ -92,16 +88,15 @@ public class SqlWordDAO implements WordDAO {
         Connection connection = dbconnection.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM " + TABLE_NAME + " WHERE word = ?;",
-                    Statement.RETURN_GENERATED_KEYS
+                    "SELECT * FROM " + TABLE_NAME + " WHERE word = ?;"
             );
             preparedStatement.setString(1, name);
-            if (preparedStatement.executeUpdate() != 1) return null;
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            ResultSet resultSet = preparedStatement.executeQuery();
             List<String> categories = new ArrayList<>();
             while (resultSet.next()) {
                 categories.add(resultSet.getString(2));
             }
+            if (categories.size() == 0) return null;
             return new Word(name, categories);
         } catch (SQLException e) {
             throw new WordNotFoundException("Word " + name + " not found");
