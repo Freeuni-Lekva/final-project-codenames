@@ -1,4 +1,4 @@
-package com.example.codenames.DAO.test;
+package com.example.codenames.testing;
 
 import com.example.codenames.DAO.GameDAO;
 import com.example.codenames.DAO.sqlImplementation.SqlGameDAO;
@@ -17,7 +17,7 @@ import java.sql.DriverManager;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SqlGameDAOTest extends TestCase {
+public class GameDAOTest extends TestCase {
 
     private GameDAO gameDAO;
 

@@ -1,4 +1,4 @@
-package com.example.codenames.service.test;
+package com.example.codenames.testing;
 
 import com.example.codenames.DAO.GameDAO;
 import com.example.codenames.DAO.sqlImplementation.SqlGameDAO;
@@ -17,7 +17,7 @@ import java.io.Reader;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class GameServiceImplTest extends TestCase {
+public class GameServiceTest extends TestCase {
 
     private GameService gameService;
 
