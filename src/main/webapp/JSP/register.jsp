@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.example.codenames.model.User" %>
+<%@ page import="com.example.codenames.listener.NameConstants" %><%--
   Created by IntelliJ IDEA.
   com.example.codenames.Model.User: keti
   Date: 16.07.22
@@ -10,6 +11,11 @@
 <html>
 <link rel="stylesheet" href="forRegister.css">
 <head>
+    <% String er = (String) request.getAttribute(NameConstants.REGISTRATION_ERROR);
+        if (er != null) {
+            out.print(er);
+        }
+    %>
     <title>Register</title>
 </head>
 <body>

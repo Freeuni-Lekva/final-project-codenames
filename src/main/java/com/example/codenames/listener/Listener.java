@@ -1,19 +1,38 @@
 package com.example.codenames.listener;
 
+import com.example.codenames.DAO.UserDao;
+import com.example.codenames.DAO.sqlImplementation.SqlUserDao;
 import com.example.codenames.database.DBConnection;
+import com.example.codenames.service.UserService;
+import com.example.codenames.service.implementation.UserServiceImpl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 import java.sql.SQLException;
 
+@WebListener
 public class Listener implements ServletContextListener, HttpSessionListener, HttpSessionAttributeListener {
     private DBConnection dbConnection;
 
+    public Listener(){
+
+    }
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        System.out.println(1111);
         dbConnection = new DBConnection();
+        System.out.println(1111);
+        ServletContext servletContext = sce.getServletContext();
+
+        UserDao userDao = new SqlUserDao(dbConnection);
+        UserService userService = new UserServiceImpl(userDao);
+        servletContext.setAttribute(NameConstants.USER_SERVICE, userService);
+
+
 
     }
 
