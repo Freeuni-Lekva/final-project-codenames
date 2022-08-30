@@ -10,6 +10,7 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.List;
 
 public class UserDaoTest extends TestCase {
 
@@ -51,4 +52,33 @@ public class UserDaoTest extends TestCase {
         userDao.registerUser(new User("Rame", "RameParoli"));
         assertTrue(userDao.getByUserName("Rame") != null);
     }
+
+    public void testUsersByPoints() {
+        User user1 = new User("User1", "rootroot");
+        User user2 = new User("User2", "rootroot");
+        User user3 = new User("User3", "rootroot");
+        user1 = userDao.registerUser(user1);
+        user2 = userDao.registerUser(user2);
+        user3 = userDao.registerUser(user3);
+        user1.setPoints(10);
+        user2.setPoints(2);
+        user3.setPoints(9);
+        assertTrue(userDao.updateUser(user1));
+        assertEquals(Integer.valueOf(10), userDao.getByUserName(user1.getUsername()).getPoints());
+        assertTrue(userDao.updateUser(user2));
+        assertTrue(userDao.updateUser(user3));
+        assertEquals(Integer.valueOf(2), userDao.getByUserName(user2.getUsername()).getPoints());
+        assertEquals(Integer.valueOf(9), userDao.getByUserName(user3.getUsername()).getPoints());
+        List<User> userList = userDao.getUsersByPoints(String.valueOf("ASC"));
+        assertEquals(user1.getUsername(), userList.get(2).getUsername());
+        assertEquals(user2.getUsername(), userList.get(0).getUsername());
+        assertEquals(user3.getUsername(), userList.get(1).getUsername());
+
+
+
+    }
+
+
+
+
 }

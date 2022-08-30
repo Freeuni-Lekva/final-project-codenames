@@ -2,17 +2,18 @@ package com.example.codenames.service.implementation;
 
 import com.example.codenames.DAO.UserDao;
 import com.example.codenames.DTO.UserCredentialsDto;
-import com.example.codenames.exception.InvalidCredentialsException;
-import com.example.codenames.exception.UserNameRepeatedException;
-import com.example.codenames.exception.UserPasswordException;
-import com.example.codenames.exception.UserRegistrationException;
+import com.example.codenames.exception.*;
 import com.example.codenames.model.User;
 import com.example.codenames.service.UserService;
+
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
     private final int  MINIMUM_PASSWORD_LENGTH = 8;
+    private final String ASCENDING = "ASC";
+    private final String DESCENDING = "DESC";
 
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
@@ -57,4 +58,29 @@ public class UserServiceImpl implements UserService {
         System.out.println(user);
         return user;
     }
+
+    @Override
+    public List<User> getUsersByPoints(Boolean flag) {
+        List<User> answer;
+        if(flag){
+            answer = userDao.getUsersByPoints(ASCENDING);
+        }
+        else{
+            answer = userDao.getUsersByPoints(DESCENDING);
+        }
+        return answer;
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        User tmp = userDao.getByUserName(user.getUsername());
+        if(tmp != null){
+            return userDao.updateUser(user);
+        }
+        else{
+            throw new UserNotFoundException(user.getUsername());
+        }
+    }
+
+
 }

@@ -7,7 +7,9 @@ import com.example.codenames.model.Role;
 import com.example.codenames.model.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class SqlUserDao implements UserDao {
     public static final String TABLE_NAME = "users";
@@ -22,7 +24,7 @@ public class SqlUserDao implements UserDao {
         try{
             Connection connection = dbconnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    String.format("INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+                    String.format("INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
                             User.TABLE_NAME,
                             User.TABLE_USER_NAME,
                             User.TABLE_PASSWORD,
@@ -31,7 +33,7 @@ public class SqlUserDao implements UserDao {
                             User.TABLE_GAMES_PLAYED,
                             User.TABLE_WINNING_RATE,
                             User.TABLE_BLACK_WORD_SELECTED,
-                            User.TABLE_STATUS), Statement.RETURN_GENERATED_KEYS);
+                            User.TABLE_STATUS, User.TABLE_POINTS), Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getHashedPassword());
             statement.setLong(3, 0L);
@@ -40,14 +42,10 @@ public class SqlUserDao implements UserDao {
             statement.setDouble(6, 0.0);
             statement.setLong(7, 0L);
             statement.setString(8, Role.PLAYER.toString());
+            statement.setLong(9, 0);
 
 
             if(statement.executeUpdate() == 1){
-                ResultSet resultSet = statement.getGeneratedKeys();
-               /* if(resultSet.next()) {
-                    System.out.println(resultSet.getString(2));
-                    return toUser(resultSet);
-                }*/
                 return getByUserName(user.getUsername());
             }
         }
@@ -86,7 +84,7 @@ public class SqlUserDao implements UserDao {
         return new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
                 resultSet.getLong(4), resultSet.getLong(5), resultSet.getLong(6),
                 resultSet.getDouble(7), resultSet.getLong(8), resultSet.getTimestamp(9),
-                Role.valueOf(resultSet.getString(10)));
+                Role.valueOf(resultSet.getString(10)), resultSet.getInt(11));
     }
 
     private void changeUser(ResultSet resultSet, User user) throws SQLException {
@@ -98,6 +96,7 @@ public class SqlUserDao implements UserDao {
         user.setBlackWordCounter(resultSet.getLong(8));
         user.setRegistrationDate(resultSet.getTimestamp(9));
         user.setRole(Role.valueOf(resultSet.getString(10)));
+        user.setPoints(resultSet.getInt(11));
 
 
     }
@@ -120,4 +119,61 @@ public class SqlUserDao implements UserDao {
         }
         return null;
     }
+
+    @Override
+    public List<User> getUsersByPoints(String order) {
+        Connection connection = dbconnection.getConnection();
+        List<User> userList = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(String.format(
+                    "SELECT * FROM " + TABLE_NAME + " ORDER BY %s " + order + " ;",
+                    User.TABLE_POINTS));
+            System.out.println(statement.toString());
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                User currUser = toUser(resultSet);
+                userList.add(currUser);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userList;
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        Connection connection = dbconnection.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(String.format(
+                    "UPDATE %s SET  %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ? " +
+                            "WHERE %s = ?;",
+                    User.TABLE_NAME,
+                    User.TABLE_GAMES_WON,
+                    User.TABLE_GAMES_LOST,
+                    User.TABLE_GAMES_PLAYED,
+                    User.TABLE_WINNING_RATE,
+                    User.TABLE_BLACK_WORD_SELECTED,
+                    User.TABLE_POINTS,
+                    User.TABLE_USER_ID),  Statement.RETURN_GENERATED_KEYS);
+                    statement.setLong(1, user.getGamesWon());
+                    statement.setLong(2, user.getGamesLost());
+                    statement.setLong(3, user.getGamesPlayed());
+                    statement.setDouble(4, user.getWinningRate());
+                    statement.setLong(5, user.getBlackWordCounter());
+                    statement.setLong(6, user.getPoints());
+                    statement.setLong(7, user.getUserID());
+
+                    if(statement.executeUpdate() == 1){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 }

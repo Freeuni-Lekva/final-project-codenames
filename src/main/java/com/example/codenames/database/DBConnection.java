@@ -22,7 +22,7 @@ public class DBConnection {
     public DBConnection(String databaseName){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "rootroot");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "RameParoli#11");
             Statement statement = connection.createStatement();
             statement.execute("USE " + databaseName);
         } catch (Exception e) {
