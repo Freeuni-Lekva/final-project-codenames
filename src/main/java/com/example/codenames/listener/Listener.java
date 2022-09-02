@@ -23,11 +23,8 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
     }
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println(1111);
         dbConnection = new DBConnection();
-        System.out.println(1111);
         ServletContext servletContext = sce.getServletContext();
-
         UserDao userDao = new SqlUserDao(dbConnection);
         UserService userService = new UserServiceImpl(userDao);
         servletContext.setAttribute(NameConstants.USER_SERVICE, userService);

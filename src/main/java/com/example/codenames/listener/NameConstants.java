@@ -7,5 +7,5 @@ public class NameConstants {
     public static final String USERNAME_PARAMETER = "Username";
     public static final String PASSWORD_PARAMETER = "Password";
     public static final String REGISTRATION_ERROR = "Registration_Error";
-
+    public static final String LOGIN_ERROR = "Login_Error";
 }

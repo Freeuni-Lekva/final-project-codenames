@@ -1,17 +1,11 @@
 <%@ page import="com.example.codenames.model.User" %>
-<%@ page import="com.example.codenames.listener.NameConstants" %><%--
-  Created by IntelliJ IDEA.
-  com.example.codenames.Model.User: keti
-  Date: 16.07.22
-  Time: 02:15
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.codenames.listener.NameConstants" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="forRegister.css">
+<style><%@include file="/JSP/forRegister.css"%></style>
 <head>
-    <% String er = (String) request.getAttribute(NameConstants.REGISTRATION_ERROR);
+    <% String er = (String) (request.getSession()).getAttribute(NameConstants.REGISTRATION_ERROR);
         if (er != null) {
             out.print(er);
         }
