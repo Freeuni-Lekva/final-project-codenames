@@ -16,6 +16,7 @@ public class User{
     public static final String TABLE_BLACK_WORD_SELECTED = "black_word_selected";
     public static final String TABLE_REGISTRATION_DATE = "registration_date";
     public static final String TABLE_STATUS = "status";
+    public static final String ATTRIBUTE = "User_Attribute";
 
 
 
