@@ -1,0 +1,64 @@
+body{
+    background-color: #ff9d3c;
+}
+h1 {
+    margin-top: 25px;
+    text-align: center;
+    color: black;
+    font-size: 100px;
+}
+h2{
+    font-size: 50px;
+}
+
+.alignleft {
+    float: left;
+    width:33.33333%;
+    text-align:left;
+}
+.aligncenter {
+    float: left;
+    width:33.33333%;
+    text-align:center;
+}
+.alignright {
+    float: left;
+    width: 33.33333%;
+    text-align: right;
+}
+/*#myTable table {*/
+/*    border: none;*/
+/*    width:100%*/
+/*}*/
+/*#myTable tr {*/
+/*    background: linear-gradient(to right, #ff9d2a, #ff9d3c);*/
+/*}*/
+/*#myTable td {*/
+/*    color: white;*/
+/*    border: none;*/
+/*    padding: 15px 8px 15px 8px;*/
+/*    text-align: center;*/
+/*}*/
+/*#myTable th {*/
+/*    font-size: 50px;*/
+/*    color: #FFCC00;*/
+/*    border: none;*/
+/*}*/
+
+.column {
+    display: inline-block;
+    width: 33.333333%;
+}
+table {
+    display: table;
+    width: 100%;
+}
+table tr {
+    display: table-cell;
+}
+table tr td {
+    display: block;
+}
+table th {
+    font-size: xxx-large;
+}

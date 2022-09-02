@@ -7,32 +7,32 @@ DROP TABLE IF EXISTS words;
 
 
 CREATE TABLE users(
-    id                      BIGINT       NOT NULL AUTO_INCREMENT,
+    id                      INT       NOT NULL AUTO_INCREMENT,
     user_name               VARCHAR(50)  NOT NULL UNIQUE,
     hashed_password         VARCHAR(64)  NOT NULL,
-    games_won               BIGINT       NOT NULL,
-    games_lost              BIGINT       NOT NULL,
-    games_played            BIGINT       NOT NULL,
+    games_won               INT       NOT NULL,
+    games_lost              INT       NOT NULL,
+    games_played            INT       NOT NULL,
     winning_rate            DECIMAL      NOT NULL,
-    black_word_selected     BIGINT       NOT NULL,
-    registration_date       DATE         NOT NULL,
-    is_admin                BIT          NOT NULL,
+    black_word_selected     INT       NOT NULL,
+    registration_date       TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    status                  VARCHAR(50)  NOT NULL,
     PRIMARY KEY (id)
 
 );
 
 CREATE TABLE game_history(
-    id                      BIGINT       NOT NULL AUTO_INCREMENT,
+    id                      INT       NOT NULL AUTO_INCREMENT,
     winner                  VARCHAR(50)      NOT NULL,
     loser                   VARCHAR(50)     NOT NULL,
     black_word_selected     BIT          NOT NULL,
-    date_played             DATE         NOT NULL,
+    date_played             TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE player_history(
-    game_id     BIGINT      NOT NULL,
-    user_id     BIGINT      NOT NULL,
+    game_id     INT      NOT NULL,
+    user_id     INT      NOT NULL,
     team        VARCHAR(50) NOT NULL,
     FOREIGN KEY (game_id) REFERENCES game_history(id),
     FOREIGN KEY (user_id) REFERENCES users(id)

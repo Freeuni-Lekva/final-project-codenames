@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(UserCredentialsDto credentials) throws UserRegistrationException,UserNameRepeatedException {
+    public User registerUser(UserCredentialsDto credentials) throws UserRegistrationException {
         //System.out.println(credentials.getUsername() + " " + credentials.getPassword());
         if(credentials.getPassword().length() < MINIMUM_PASSWORD_LENGTH){
             throw new UserPasswordException("");
