@@ -22,7 +22,7 @@ public class WordDAOTest extends TestCase {
         super.setUp();
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "rootroot");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "RameParoli#11");
         ScriptRunner runner = new ScriptRunner(connection);
         runner.setLogWriter(null);
         Reader reader = new BufferedReader(new FileReader("src/main/resources/For_Testing.sql"));
