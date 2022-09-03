@@ -2,6 +2,9 @@ package com.example.codenames.listener;
 
 import com.example.codenames.DAO.UserDao;
 import com.example.codenames.DAO.sqlImplementation.SqlUserDao;
+import com.example.codenames.DTO.UserCredentialsDto;
+import com.example.codenames.database.DBConnection;
+import com.example.codenames.model.User;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.service.UserService;
 import com.example.codenames.service.implementation.UserServiceImpl;

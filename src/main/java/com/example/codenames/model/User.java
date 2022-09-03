@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class User{
     public static final String TABLE_NAME = "users";
+    public static final String TABLE_USER_ID = "id";
     public static final String TABLE_USER_NAME = "user_name";
     public static final String TABLE_PASSWORD = "hashed_password";
     public static final String TABLE_GAMES_WON = "games_won";
@@ -16,6 +17,7 @@ public class User{
     public static final String TABLE_BLACK_WORD_SELECTED = "black_word_selected";
     public static final String TABLE_REGISTRATION_DATE = "registration_date";
     public static final String TABLE_STATUS = "status";
+    public static final String TABLE_POINTS = "points";
     public static final String ATTRIBUTE = "User_Attribute";
 
 
@@ -31,6 +33,7 @@ public class User{
     private Long blackWordCounter = 0L;
     private java.sql.Timestamp registrationDate;
     private Role role = Role.PLAYER;
+    private Integer points = 0;
 
 
     public User(String username, String password) {
@@ -57,8 +60,20 @@ public class User{
         this.blackWordCounter = blackWordCounter;
         this.registrationDate = registrationDate;
         this.role = role;
-        hashPassword(password);
-
+        this.hashedPassword = password;
+    }
+    public User(int userID, String username, String password, Long gamesWon, Long gamesLost, Long gamesPlayed, double winningRate, Long blackWordCounter, java.sql.Timestamp registrationDate, Role role, Integer points) {
+        this.userID = userID;
+        this.username = username;
+        this.gamesWon = gamesWon;
+        this.gamesLost = gamesLost;
+        this.gamesPlayed = gamesPlayed;
+        this.winningRate = winningRate;
+        this.blackWordCounter = blackWordCounter;
+        this.registrationDate = registrationDate;
+        this.role = role;
+        this.points = points;
+        this.hashedPassword = password;
     }
 
     private String hexToString(byte[] bytes) {
@@ -110,6 +125,14 @@ public class User{
 
     public Long getGamesPlayed() {
         return gamesPlayed;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 
     public void setRole(Role role) {
