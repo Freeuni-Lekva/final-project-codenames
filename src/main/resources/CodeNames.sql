@@ -23,24 +23,24 @@ CREATE TABLE users(
 );
 
 CREATE TABLE game_history(
-     id                      INT                                 NOT NULL AUTO_INCREMENT,
-     winner                  VARCHAR(50)                         NOT NULL,
-     loser                   VARCHAR(50)                         NOT NULL,
-     black_word_selected     BOOLEAN                             NOT NULL,
-     date_played             TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-     PRIMARY KEY (id)
+    id                      INT       NOT NULL AUTO_INCREMENT,
+    winner                  VARCHAR(50)      NOT NULL,
+    loser                   VARCHAR(50)     NOT NULL,
+    black_word_selected     BIT          NOT NULL,
+    date_played             TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE player_history(
-    game_id     INT         NOT NULL,
-    user_id     INT         NOT NULL,
+    game_id     INT      NOT NULL,
+    user_id     INT      NOT NULL,
     team        VARCHAR(50) NOT NULL,
     FOREIGN KEY (game_id) REFERENCES game_history(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE words(
-    word     VARCHAR(50) NOT NULL,
-    category VARCHAR(50) NOT NULL,
-    PRIMARY KEY (word, category)
+    word            VARCHAR(50) NOT NULL,
+    category        VARCHAR(50) NOT NULL,
+    PRIMARY KEY     (word, category)
 );

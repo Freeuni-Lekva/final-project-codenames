@@ -8,19 +8,18 @@ import com.example.codenames.exception.WordNotRemovedException;
 import com.example.codenames.model.Word;
 import com.example.codenames.service.WordService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class WordServiceImpl implements WordService {
 
     private static final int WORDS_NUM = 25;
 
     private WordDAO wordDAO;
+    private Random rgen;
 
     public WordServiceImpl(WordDAO wordDAO) {
         this.wordDAO = wordDAO;
+        this.rgen = new Random();
     }
 
     @Override
@@ -56,12 +55,17 @@ public class WordServiceImpl implements WordService {
         for (String category : categories) {
             allWords.addAll(wordDAO.getWordsFromCategory(category));
         }
-        List<String> finalWords = new ArrayList<>();
-        for (String word : allWords) {
-            finalWords.add(word);
-            if (finalWords.size() == WORDS_NUM) return finalWords;
+        List<String> allWordsList = new ArrayList<>(allWords);
+        if (allWordsList.size() < WORDS_NUM) {
+            throw new NotEnoughWordsException("You cannot randomize " + WORDS_NUM + " words from selected categories");
         }
-        throw new NotEnoughWordsException("You cannot randomize " + WORDS_NUM + " words from selected categories");
+        List<String> finalWords = new ArrayList<>();
+        while(finalWords.size() < WORDS_NUM){
+            int index = rgen.nextInt(allWordsList.size());
+            finalWords.add(allWordsList.get(index));
+            allWordsList.remove(index);
+        }
+        return finalWords;
     }
 
     @Override

@@ -1,8 +1,14 @@
+<%@ page import="com.example.codenames.listener.NameConstants" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="JSP/forIndex.css">
 <head>
+    <% String er = (String) (request.getSession()).getAttribute(NameConstants.LOGIN_ERROR);
+        if (er != null) {
+            out.print(er);
+        }
+    %>
     <title>Codenames</title>
 </head>
 <body>

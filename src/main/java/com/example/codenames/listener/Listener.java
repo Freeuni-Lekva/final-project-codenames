@@ -5,6 +5,7 @@ import com.example.codenames.DAO.sqlImplementation.SqlUserDao;
 import com.example.codenames.DTO.UserCredentialsDto;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.model.User;
+import com.example.codenames.database.DBConnection;
 import com.example.codenames.service.UserService;
 import com.example.codenames.service.implementation.UserServiceImpl;
 
@@ -29,8 +30,6 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         ServletContext servletContext = sce.getServletContext();
         UserDao userDao = new SqlUserDao(dbConnection);
         UserService userService = new UserServiceImpl(userDao);
-
-
         servletContext.setAttribute(NameConstants.USER_SERVICE, userService);
 
 
