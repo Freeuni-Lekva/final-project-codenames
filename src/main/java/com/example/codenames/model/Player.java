@@ -6,6 +6,9 @@ public class Player {
     private String roomID;
     private PlayerRole playerRole;
 
+    public Player(User user, String roomID){
+        this(user, roomID, PlayerRole.NOT_SELECTED);
+    }
     public Player(User user, String roomID, PlayerRole playerRole) {
         this.user = user;
         this.roomID = roomID;

@@ -9,4 +9,6 @@ public class NameConstants {
     public static final String REGISTRATION_ERROR = "Registration_Error";
     public static final String LOGIN_ERROR = "Login_Error";
     public static final String ROOM_MAP = "ROOM_MAP";
+    public static final String ROOM_ID = "roomID";
+    public static final String JSON = "JSON";
 }

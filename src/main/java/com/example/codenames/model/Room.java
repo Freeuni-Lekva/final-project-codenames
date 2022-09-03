@@ -9,12 +9,23 @@ import java.util.concurrent.BlockingQueue;
 public class Room {
 
     private Player owner;
+    private String ID;
     BlockingQueue<Player> allPlayers;
     private static final int SIZE = 10;
 
-    public Room(Player owner, String id) {
+    public Room(Player owner, String ID) {
         this.owner = owner;
+        this.ID = ID;
         allPlayers = new ArrayBlockingQueue<>(SIZE);
+        allPlayers.add(owner);
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public String getID() {
+        return ID;
     }
 
     public List<Player> getRedSpymasters() {
@@ -89,7 +100,7 @@ public class Room {
         return allPlayers.add(player);
     }
 
-    public boolean removeUser(Player player) {
+    public boolean removePlayer(Player player) {
         return allPlayers.remove(player);
     }
 }
