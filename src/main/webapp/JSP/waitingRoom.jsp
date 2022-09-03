@@ -13,30 +13,20 @@
 </head>
 <body>
 <h1>Waiting Room </h1> <br/>
-
-<table style="margin-left: auto; margin-right: auto; text-align: center">
-    <tr>
-        <th style="color: red">Red Team</th>
-        <td style="color: red; font-size: 35px">Spymasters</td>
-        <td>row 1, cell 1</td>
-        <td>row 2, cell 1</td>
-        <td style="color: red; font-size: 35px">Operatives</td>
-    </tr>
-    <tr>
-        <th style="color: black">Users</th>
-        <td>row 1, cell 2</td>
-        <td>row 2, cell 2</td>
-        <td>empty</td>
-        <td>empty</td>
-    </tr>
-    <tr>
-        <th style="color: blue">Blue Team</th>
-        <td style="color: blue; font-size: 35px">Spymasters</td>
-        <td>row 1, cell 3</td>
-        <td>row 2, cell 3</td>
-        <td style="color: blue; font-size: 35px">Operatives</td>
-    </tr>
-</table>
-
+<ul class ="tableColumn">
+    <li style="color: red">Red Team</li>
+    <li style="color: red; font-size: 35px">Spymasters</li>
+    <%-- --%>
+    <li style="color: red; font-size: 35px">Operatives</li>
+</ul>
+<ul class ="tableColumn">
+    <li> Users </li>
+</ul>
+<ul class ="tableColumn">
+    <li style="color: blue">Blue Team</li>
+    <li style="color: blue; font-size: 35px">Spymasters</li>
+    <%-- --%>
+    <li style="color: blue; font-size: 35px">Operatives</li>
+</ul>
 </body>
 </html>

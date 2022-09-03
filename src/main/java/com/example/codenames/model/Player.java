@@ -27,4 +27,8 @@ public class Player {
     public void setPlayerRole(PlayerRole playerRole) {
         this.playerRole = playerRole;
     }
+
+    public boolean equals(Player player) {
+        return user.equals(player.getUser());
+    }
 }
