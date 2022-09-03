@@ -10,6 +10,8 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.Reader;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.List;
 
 public class UserDaoTest extends TestCase {
@@ -18,14 +20,17 @@ public class UserDaoTest extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-
-        DBConnection connection = new DBConnection("testingdb");
-        ScriptRunner runner = new ScriptRunner(connection.getConnection());
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "RameParoli#11");
+        ScriptRunner runner = new ScriptRunner(connection);
         runner.setLogWriter(null);
         Reader reader = new BufferedReader(new FileReader("src/main/resources/For_Testing.sql"));
         runner.runScript(reader);
 
-        userDao = new SqlUserDao(connection);
+        DBConnection dbConnection = new DBConnection("testingdb");
+
+        userDao = new SqlUserDao(dbConnection);
+
     }
 
     public void testRegisterAndLoginUser() {
@@ -53,7 +58,7 @@ public class UserDaoTest extends TestCase {
         assertTrue(userDao.getByUserName("Rame") != null);
     }
 
-    public void testUsersByPoints() {
+   public void testUsersByPoints() {
         User user1 = new User("User1", "rootroot");
         User user2 = new User("User2", "rootroot");
         User user3 = new User("User3", "rootroot");

@@ -14,5 +14,6 @@
     <input type="submit" name="Login" value="Login">
 </form>
 <p> If you do not have an account, please <a href="JSP/register.jsp">register.</a> </p>
+
 </body>
 </html>

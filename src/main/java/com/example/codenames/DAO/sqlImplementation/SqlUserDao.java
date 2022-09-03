@@ -128,7 +128,6 @@ public class SqlUserDao implements UserDao {
             PreparedStatement statement = connection.prepareStatement(String.format(
                     "SELECT * FROM " + TABLE_NAME + " ORDER BY %s " + order + " ;",
                     User.TABLE_POINTS));
-            System.out.println(statement.toString());
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 User currUser = toUser(resultSet);
