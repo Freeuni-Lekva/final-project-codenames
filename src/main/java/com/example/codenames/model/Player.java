@@ -27,6 +27,10 @@ public class Player {
         return playerRole;
     }
 
+    public void setRoomID(String roomID) {
+        this.roomID = roomID;
+    }
+
     public void setPlayerRole(PlayerRole playerRole) {
         this.playerRole = playerRole;
     }
