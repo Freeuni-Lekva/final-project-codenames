@@ -28,6 +28,7 @@ public class JoinRoomServlet extends HttpServlet {
         Map<String, Room> roomMap = (Map<String, Room>) servletContext.getAttribute(NameConstants.ROOM_MAP);
         String roomID = (String) request.getParameter(NameConstants.ROOM_ID);
         if(roomMap.containsKey(roomID)){
+            System.out.println("contains");
             Room room = roomMap.get(roomID);
             Player player = new Player(user, roomID);
             room.addPlayer(player);
