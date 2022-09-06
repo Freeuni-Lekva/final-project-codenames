@@ -2,6 +2,7 @@
     var mySocket = undefined;
 
     window.onload = () => {
+        document.getElementById("chatarea").style.backgroundColor= "red";
         var mySocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/GameplayServlet");
         mySocket.onmessage = function (event) {
             const myMessage = JSON.parse(event.data);

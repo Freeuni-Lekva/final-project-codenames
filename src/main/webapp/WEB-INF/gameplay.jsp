@@ -13,7 +13,7 @@
 <html>
 <link rel="stylesheet" href="JSP/forGameplay.css">
 <%--<script type="application/javascript" src="gameroom.js"></script>--%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--%>
 <head>
     <title>Title</title>
 </head>
@@ -28,15 +28,16 @@
 <html>
 <head>
     <script>
-        var mySocket = undefined;
+        var mySocket = undefined
 
         window.onload = () => {
-            var mySocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/GameplayServlet");
+            mySocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/GameplayServlet");
             mySocket.onmessage = function (event) {
                 const myMessage = JSON.parse(event.data);
                 document.getElementById("chatarea").style.backgroundColor= "red";
                 document.getElementById("chatarea").value = myMessage;
             }
+
         }
         function changeBack(index){
             var x = document.getElementById("mytable").getElementsByTagName("td");
@@ -45,7 +46,7 @@
         }
 
         function sendMessage(){
-
+            document.getElementById("chatarea").style.backgroundColor= "blue";
             // prev = document.getElementById("chatarea").value;
             text = document.getElementById("usermessage").value + "\n";
             // value = prev + text;
@@ -53,7 +54,9 @@
                 content: text,
                 type: "text"
             }
-            mySocket.send(JSON.stringify(myMessage));
+
+            //mySocket.send(JSON.stringify(myMessage));
+
         }
     </script>
 </head>
