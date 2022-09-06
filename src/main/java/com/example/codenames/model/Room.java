@@ -1,22 +1,18 @@
 package com.example.codenames.model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.*;
 
 public class Room {
 
     private Player owner;
     private String ID;
-    BlockingQueue<Player> allPlayers;
-    private static final int SIZE = 10;
+    Set<Player> allPlayers;
+    private static final int SIZE = 2;
 
     public Room(Player owner, String ID) {
         this.owner = owner;
         this.ID = ID;
-        allPlayers = new ArrayBlockingQueue<>(SIZE);
+        allPlayers = new HashSet<>(SIZE);
         allPlayers.add(owner);
     }
 
@@ -76,7 +72,7 @@ public class Room {
         return blueOperatives;
     }
 
-    public BlockingQueue<Player> getAllPlayers() {
+    public Set<Player> getAllPlayers() {
         return allPlayers;
     }
 
@@ -97,6 +93,7 @@ public class Room {
     }
 
     public boolean addPlayer(Player player) {
+        if (allPlayers.size() >= SIZE) return false;
         return allPlayers.add(player);
     }
 

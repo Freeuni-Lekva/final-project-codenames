@@ -85,39 +85,27 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public List<WordColor> getScheme() {
-        List<WordColor> lst = new ArrayList<>(WORDS_NUM);
-        Set<Integer> exclude = new HashSet<>();
-        int blackInd = rgen.nextInt(0, WORDS_NUM);
-        exclude.add(blackInd);
-        lst.set(blackInd, WordColor.BLACK);
-        for(int i = 0; i < BEIGE_WORDS_NUM; i++){
-            while(true){
-                int beigeInd = rgen.nextInt(0, WORDS_NUM);
-                if(!exclude.contains(beigeInd)){
-                    lst.set(beigeInd, WordColor.BEIGE);
-                    exclude.add(beigeInd);
-                    break;
-                }
-            }
+        List<Integer> lst = new ArrayList<>();
+        for(int i = 0; i < WORDS_NUM; i++){
+            lst.add(i);
+        }
+        Collections.shuffle(lst);
+        List<WordColor> ans = new ArrayList<>();
+        for(int i = 0; i < WORDS_NUM; i++){
+            ans.add(WordColor.NONE);
+        }
+        ans.set(lst.get(0), WordColor.BLACK);
+        for(int i = 1; i < 1 + BEIGE_WORDS_NUM; i++){
+            ans.set(lst.get(i), WordColor.BEIGE);
         }
         WordColor startTeam = rgen.nextBoolean() ? WordColor.BLUE : WordColor.RED;
         WordColor secondTeam = startTeam.equals(WordColor.BLUE) ? WordColor.RED : WordColor.BLUE;
-        for(int i = 0; i < START_TEAM_NUM; i++) {
-            int startTeamInd = rgen.nextInt(0, WORDS_NUM);
-            if (!exclude.contains(startTeamInd)) {
-                lst.set(startTeamInd, startTeam);
-                exclude.add(startTeamInd);
-                break;
-            }
+        for(int i = 1 + BEIGE_WORDS_NUM; i < 1 + BEIGE_WORDS_NUM + START_TEAM_NUM; i++) {
+            ans.set(lst.get(i), startTeam);
         }
-        for(int i = 0; i < SECOND_TEAM_NUM; i++) {
-            int secondTeamInd = rgen.nextInt(0, WORDS_NUM);
-            if (!exclude.contains(secondTeamInd)) {
-                lst.set(secondTeamInd, startTeam);
-                exclude.add(secondTeamInd);
-                break;
-            }
+        for(int i = 1 + BEIGE_WORDS_NUM + START_TEAM_NUM; i < WORDS_NUM; i++) {
+            ans.set(lst.get(i), secondTeam);
         }
-        return lst;
+        return ans;
     }
 }

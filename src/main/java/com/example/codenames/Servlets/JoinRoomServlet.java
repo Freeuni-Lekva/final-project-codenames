@@ -31,10 +31,13 @@ public class JoinRoomServlet extends HttpServlet {
             System.out.println("contains");
             Room room = roomMap.get(roomID);
             Player player = new Player(user, roomID);
-            room.addPlayer(player);
-            String json = new Gson().toJson(room);
-            request.setAttribute(NameConstants.JSON, json);
-            request.getRequestDispatcher("/JSP/waitingRoom.jsp?" + NameConstants.ROOM_ID + "=" + roomID).forward(request, response);
+            if (room.addPlayer(player)) {
+                String json = new Gson().toJson(room);
+                request.setAttribute(NameConstants.JSON, json);
+                request.getRequestDispatcher("/JSP/waitingRoom.jsp?" + NameConstants.ROOM_ID + "=" + roomID).forward(request, response);
+            } else {
+                response.getWriter().println("Cannot join room");
+            }
         }
     }
 

@@ -35,7 +35,16 @@ public class Player {
         this.playerRole = playerRole;
     }
 
-    public boolean equals(Player player) {
-        return user.equals(player.getUser());
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) return false;
+        if(!(obj instanceof Player)) return false;
+        Player other = (Player) obj;
+        return other.user.equals(user);
+    }
+
+    @Override
+    public int hashCode() {
+        return user.getUsername().hashCode();
     }
 }

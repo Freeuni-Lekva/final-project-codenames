@@ -1,14 +1,18 @@
 package com.example.codenames.listener;
 
 import com.example.codenames.DAO.UserDao;
+import com.example.codenames.DAO.WordDAO;
 import com.example.codenames.DAO.sqlImplementation.SqlUserDao;
+import com.example.codenames.DAO.sqlImplementation.SqlWordDAO;
 import com.example.codenames.DTO.UserCredentialsDto;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.model.User;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.model.Room;
 import com.example.codenames.service.UserService;
+import com.example.codenames.service.WordService;
 import com.example.codenames.service.implementation.UserServiceImpl;
+import com.example.codenames.service.implementation.WordServiceImpl;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -36,6 +40,9 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         servletContext.setAttribute(NameConstants.USER_SERVICE, userService);
         Map<String, Room> roomMap = new HashMap<>();
         servletContext.setAttribute(NameConstants.ROOM_MAP, roomMap);
+        WordDAO wordDAO = new SqlWordDAO(dbConnection);
+        WordService wordService = new WordServiceImpl(wordDAO);
+        servletContext.setAttribute(NameConstants.WORD_SERVICE, wordService);
 
     }
 
