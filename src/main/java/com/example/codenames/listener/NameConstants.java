@@ -2,6 +2,7 @@ package com.example.codenames.listener;
 
 public class NameConstants {
     public static final String USER_SERVICE = "USER_SERVICE";
+    public static final String WORD_SERVICE = "WORD_SERVICE";
     public static final String DB_CONNECTION = "DB_CONNECTION";
     public static final String USER_DAO = "USER_DAO";
     public static final String USERNAME_PARAMETER = "Username";
@@ -12,4 +13,6 @@ public class NameConstants {
     public static final String ROOM_MAP = "ROOM_MAP";
     public static final String ROOM_ID = "roomID";
     public static final String JSON = "JSON";
+    public static final String BOARD = "BOARD";
+    public static final String SESSION = "SESSION";
 }
