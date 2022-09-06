@@ -16,9 +16,12 @@
     <title>LeaderBoard</title>
 </head>
 <body>
+    <div align="center">
     <h1>Leaderboard </h1> <br/>
+    </div>
 
-    <table>
+    <div align="center">
+    <table border="1" cellpadding="5"  WIDTH=700>
         <tr>
             <th>Rating</th>
             <th>Username</th>
@@ -29,9 +32,7 @@
             UserServiceImpl service = (UserServiceImpl) sc.getAttribute(NameConstants.USER_SERVICE);
             List<User> users = service.getUsersByPoints(true);
             int i = 1;
-            for(User user : users) {
-                System.out.println(user.getUsername());
-            %>
+            for(User user : users) {%>
             <tr>
                 <td><%=i%></td>
                 <td><%=user.getUsername()%></td>
@@ -41,6 +42,7 @@
             } %>
 
     </table>
+    </div>
 
 
 </body>

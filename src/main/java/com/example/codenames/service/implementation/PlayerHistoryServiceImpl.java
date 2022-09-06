@@ -1,9 +1,14 @@
 package com.example.codenames.service.implementation;
 
 import com.example.codenames.DAO.PlayerHistoryDao;
+import com.example.codenames.DAO.UserDao;
+import com.example.codenames.DAO.sqlImplementation.SqlUserDao;
 import com.example.codenames.DTO.PlayerHistoryDto;
+import com.example.codenames.DTO.UserGamesDto;
+import com.example.codenames.exception.GameNotFoundException;
 import com.example.codenames.exception.InvalidNumberOfGamesException;
 import com.example.codenames.exception.InvalidTeamSpecifier;
+import com.example.codenames.model.Game;
 import com.example.codenames.model.PlayerHistory;
 import com.example.codenames.service.PlayerHistoryService;
 
@@ -33,5 +38,16 @@ public class PlayerHistoryServiceImpl implements PlayerHistoryService {
         }
         List<Integer> result = playerHistoryDao.getGames(num, userID);
         return result;
+    }
+
+    @Override
+    public List<UserGamesDto> getSortedGames(int userID) {
+        List<UserGamesDto> result = playerHistoryDao.getSortedGames(userID);
+        if(result == null){
+            throw  new GameNotFoundException("No games found for this userID");
+        }
+        else{
+            return result;
+        }
     }
 }

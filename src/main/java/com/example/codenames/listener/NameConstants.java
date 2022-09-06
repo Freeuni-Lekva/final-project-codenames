@@ -8,9 +8,11 @@ public class NameConstants {
     public static final String PASSWORD_PARAMETER = "Password";
     public static final String REGISTRATION_ERROR = "Registration_Error";
     public static final String LOGIN_ERROR = "Login_Error";
+    public static final String PLAYER_HISTORY_SERVICE = "PLAYER_HISTORY_SERVICE";
     public static final String BOARD = "BOARD";
-
+    public static final String WORD_SERVICE = "WORD_SERVICE";
     public static final String ROOM_MAP = "ROOM_MAP";
     public static final String ROOM_ID = "roomID";
     public static final String JSON = "JSON";
+    public static final String SESSION = "SESSION";
 }

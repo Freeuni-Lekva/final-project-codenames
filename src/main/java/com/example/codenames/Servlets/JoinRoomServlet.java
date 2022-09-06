@@ -27,17 +27,17 @@ public class JoinRoomServlet extends HttpServlet {
         ServletContext servletContext = request.getServletContext();
         Map<String, Room> roomMap = (Map<String, Room>) servletContext.getAttribute(NameConstants.ROOM_MAP);
         String roomID = (String) request.getParameter(NameConstants.ROOM_ID);
-        System.out.println(roomID);
         if(roomMap.containsKey(roomID)){
             System.out.println("contains");
             Room room = roomMap.get(roomID);
             Player player = new Player(user, roomID);
-            room.addPlayer(player);
-            String json = new Gson().toJson(room);
-            request.setAttribute(NameConstants.JSON, json);
-            request.getRequestDispatcher("/JSP/waitingRoom.jsp?" + NameConstants.ROOM_ID + "=" + roomID).forward(request, response);
-        } else {
-            System.out.println("doesnt");
+            if (room.addPlayer(player)) {
+                String json = new Gson().toJson(room);
+                request.setAttribute(NameConstants.JSON, json);
+                request.getRequestDispatcher("/JSP/waitingRoom.jsp?" + NameConstants.ROOM_ID + "=" + roomID).forward(request, response);
+            } else {
+                response.getWriter().println("Cannot join room");
+            }
         }
     }
 
