@@ -8,7 +8,9 @@ import com.example.codenames.DAO.sqlImplementation.SqlPlayerHistoryDao;
 import com.example.codenames.DAO.sqlImplementation.SqlUserDao;
 import com.example.codenames.DTO.GameInfoDTO;
 import com.example.codenames.DTO.PlayerHistoryDto;
+import com.example.codenames.DTO.UserGamesDto;
 import com.example.codenames.database.DBConnection;
+import com.example.codenames.model.Game;
 import com.example.codenames.model.PlayerHistory;
 import com.example.codenames.model.User;
 import junit.framework.TestCase;
@@ -56,5 +58,10 @@ public class PlayerHistoryDaoTest extends TestCase {
         playerHistoryDao.addPlayerHistoryEntry(new PlayerHistoryDto(gameID, user4ID, "BLUE"));
         List<Integer> games = playerHistoryDao.getGames(1, user1ID);
         assertEquals(games.get(0), (Integer) gameID);
+
+        List<UserGamesDto> gameList = playerHistoryDao.getSortedGames(user2ID);
+        assertEquals(gameID, gameList.get(0).getGames().getGameID());
+
+
     }
 }
