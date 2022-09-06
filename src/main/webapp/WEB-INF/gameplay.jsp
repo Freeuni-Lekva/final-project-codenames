@@ -29,7 +29,6 @@
         function changeBack(index, color){
             var x = document.getElementById("mytable").getElementsByTagName("td");
             var colorss = JSON.parse('${colors}');
-           // var key = 'a';
             x[index].style.backgroundColor = colorss[index];
         }
     </script>
