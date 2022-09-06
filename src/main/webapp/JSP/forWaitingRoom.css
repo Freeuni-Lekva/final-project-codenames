@@ -1,0 +1,25 @@
+body{
+    background-color: #ff9d3c;
+}
+
+h1 {
+    margin-top: 25px;
+    text-align: center;
+    color: black;
+    font-size: 100px;
+}
+
+h2{
+    font-size: 50px;
+}
+
+.tableColumn {
+    border: none;
+    display: inline-table;
+    width: 30%;
+    text-align: center;
+}
+
+ul{
+    list-style: none;
+}
