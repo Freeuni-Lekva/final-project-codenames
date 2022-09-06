@@ -20,7 +20,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         UserService userService = (UserService) servletContext.getAttribute(NameConstants.USER_SERVICE);
         String username = request.getParameter(NameConstants.USERNAME_PARAMETER);
@@ -35,7 +35,7 @@ public class RegistrationServlet extends HttpServlet {
             User user = userService.registerUser(userCredentialsDto);
             request.getSession().setAttribute(User.ATTRIBUTE, user);
             System.out.println(user.toString());
-            //Take to profile
+            request.getRequestDispatcher(ServletUtils.USER_PAGE).forward(request, response);
         } catch (UserRegistrationException e){
             request.getSession().setAttribute(NameConstants.REGISTRATION_ERROR, e.getMessage());
             response.setHeader("Refresh", "0; URL=http://localhost:8080/Codenames_war_exploded/JSP/register.jsp");

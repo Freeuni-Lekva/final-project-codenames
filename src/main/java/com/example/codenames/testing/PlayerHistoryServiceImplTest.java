@@ -7,8 +7,10 @@ import com.example.codenames.DAO.sqlImplementation.SqlPlayerHistoryDao;
 import com.example.codenames.DAO.sqlImplementation.SqlGameDAO;
 import com.example.codenames.DAO.sqlImplementation.SqlUserDao;
 import com.example.codenames.DTO.UserCredentialsDto;
+import com.example.codenames.DTO.UserGamesDto;
 import com.example.codenames.exception.InvalidNumberOfGamesException;
 import com.example.codenames.exception.InvalidTeamSpecifier;
+import com.example.codenames.model.Game;
 import com.example.codenames.model.PlayerHistory;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.model.User;
@@ -124,6 +126,13 @@ public class PlayerHistoryServiceImplTest extends TestCase {
         assertEquals(ph12.getGameID(), gameID3);
         assertEquals(ph12.getUserID(), user3ID);
         assertEquals(ph12.getTeam(), "BLUE");
+
+        List<UserGamesDto> gameList = playerHistoryService.getSortedGames(user1ID);
+        assertEquals(gameID1, gameList.get(0).getGames().getGameID());
+        assertEquals(gameID2, gameList.get(1).getGames().getGameID());
+        assertEquals(gameID3, gameList.get(2).getGames().getGameID());
+
+
 
         checkGamesList(user1ID, gameID1, gameID2, gameID3);
         checkGamesList(user2ID, gameID1, gameID2, gameID3);

@@ -8,4 +8,5 @@ public class NameConstants {
     public static final String PASSWORD_PARAMETER = "Password";
     public static final String REGISTRATION_ERROR = "Registration_Error";
     public static final String LOGIN_ERROR = "Login_Error";
+    public static final String PLAYER_HISTORY_SERVICE = "PLAYER_HISTORY_SERVICE";
 }
