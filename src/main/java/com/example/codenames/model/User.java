@@ -171,7 +171,11 @@ public class User{
         return role;
     }
 
-    @Override
+    public boolean equals(User user) {
+        return userID == user.getUserID();
+    }
+
+        @Override
     public String toString() {
         return "User{" +
                 "userID=" + userID +

@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
         UserService userService = (UserService) servletContext.getAttribute(NameConstants.USER_SERVICE);
         String username = request.getParameter(NameConstants.USERNAME_PARAMETER);
         String password = request.getParameter(NameConstants.PASSWORD_PARAMETER);
-        if(username.isBlank() || password.isBlank()){
+        if(username.equals("") || password.equals("")){
             request.getSession().setAttribute(NameConstants.LOGIN_ERROR, "Blank Fields");
             response.setHeader("Refresh", "0; URL=http://localhost:8080/Codenames_war_exploded/");
             return;

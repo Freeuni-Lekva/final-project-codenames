@@ -13,6 +13,7 @@ import com.example.codenames.model.User;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.service.GameService;
 import com.example.codenames.service.PlayerHistoryService;
+import com.example.codenames.model.Room;
 import com.example.codenames.service.UserService;
 import com.example.codenames.service.implementation.GameServiceImpl;
 import com.example.codenames.service.implementation.PlayerHistoryServiceImpl;
@@ -26,6 +27,8 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebListener
 public class Listener implements ServletContextListener, HttpSessionListener, HttpSessionAttributeListener {
@@ -41,13 +44,11 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         UserDao userDao = new SqlUserDao(dbConnection);
         UserService userService = new UserServiceImpl(userDao);
         servletContext.setAttribute(NameConstants.USER_SERVICE, userService);
-
         PlayerHistoryDao playerHistoryDAO = new SqlPlayerHistoryDao(dbConnection);
         PlayerHistoryService playerHistoryService = new PlayerHistoryServiceImpl(playerHistoryDAO);
-
         servletContext.setAttribute(NameConstants.PLAYER_HISTORY_SERVICE, playerHistoryService);
-
-
+        Map<String, Room> roomMap = new HashMap<>();
+        servletContext.setAttribute(NameConstants.ROOM_MAP, roomMap);
     }
 
     @Override
