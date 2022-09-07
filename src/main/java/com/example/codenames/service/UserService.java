@@ -13,6 +13,5 @@ public interface UserService {
     User loginUser(UserCredentialsDto credentials) throws InvalidCredentialsException;
     User getUserByUsername(String userName);
     List<User> getUsersByPoints(Boolean flag);
-
     boolean updateUser(User user);
 }

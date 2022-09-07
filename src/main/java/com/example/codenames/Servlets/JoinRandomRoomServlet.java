@@ -33,15 +33,13 @@ public class JoinRandomRoomServlet extends HttpServlet {
         boolean roomFound = false;
         for (String ID : roomMap.keySet()) {
             if (roomMap.get(ID).addPlayer(player)) {
-                if (roomMap.get(ID).addPlayer(player)) {
-                    roomFound = true;
-                    player.setRoomID(ID);
-                    String json = new Gson().toJson(roomMap.get(ID));
-                    request.setAttribute(NameConstants.JSON, json);
-                    request.getRequestDispatcher("/JSP/waitingRoom.jsp?" + NameConstants.ROOM_ID + "=" + ID).forward(request, response);
-                    System.out.println("found");
-                    break;
-                }
+                roomFound = true;
+                player.setRoomID(ID);
+                String json = new Gson().toJson(roomMap.get(ID));
+                request.setAttribute(NameConstants.JSON, json);
+                request.getRequestDispatcher("/JSP/waitingRoom.jsp?" + NameConstants.ROOM_ID + "=" + ID).forward(request, response);
+                System.out.println("found");
+                break;
             }
         }
         if (!roomFound) response.getWriter().print("No available room found, please try again");
