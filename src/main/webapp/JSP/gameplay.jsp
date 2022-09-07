@@ -12,28 +12,51 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <link rel="stylesheet" href="JSP/forGameplay.css">
+<%--<script type="application/javascript" src="gameroom.js"></script>--%>
+<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--%>
 <head>
     <title>Title</title>
 </head>
 <body>
 <%  Board board = (Board) request.getAttribute(NameConstants.BOARD);
     List<String> words = board.getWords();
-    List<WordColor> colors = board.getColors();
 
 %>
 
 
 <html>
-<head>
-    <script>
-        function changeBack(index, color){
-            var x = document.getElementById("mytable").getElementsByTagName("td");
-            var colorss = JSON.parse('${colors}');
-           // var key = 'a';
-            x[index].style.backgroundColor = colorss[index];
-        }
-    </script>
-</head>
+<script>
+    function onMessageColorSocket (event) {
+        console.log(event.data);
+        let index = parseInt(event.data);
+        var x = document.getElementById("mytable").getElementsByTagName("td");
+        var colorss = JSON.parse('${colors}');
+        x[index].style.backgroundColor = colorss[index];
+    }
+
+    function onMessageChatSocket (event) {
+        console.log(event.data);
+    }
+
+    let colorSocket = null;
+    let chatSocket = null;
+    window.onload = () => {
+        colorSocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/gameplay_ws?${NameConstants.ROOM_ID}=${roomID}");
+        colorSocket.onmessage = onMessageColorSocket;
+
+        chatSocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/chat_ws?${NameConstants.ROOM_ID}=${roomID}");
+        chatSocket.onmessage = onMessageChatSocket;
+    }
+
+    function changeBack(index){
+        colorSocket.send(index);
+    }
+
+    function sendMessage(){
+        document.getElementById("chatarea").style.backgroundColor= "blue";
+        chatSocket.send("message");
+    }
+</script>
 
 </html>
 <table id="mytable">
@@ -73,5 +96,25 @@
         <td onclick="changeBack(24);"> <% out.print(words.get(24)); %></td>
     </tr>
 </table>
+
+
+
+<br>
+
+<textarea id="chatarea" rows="20" cols="30">
+    </textarea>
+<br>
+
+
+<div id="wrapper">
+    <%--    <div id="chatbox"></div>--%>
+
+    <form name="message" action="">
+        <input name="usermessage" type="text" id="usermessage" />
+        <input onclick="sendMessage();" name="submitmessage" type="button" id="submitmessage" value="Send" />
+    </form>
+</div>
+
+
 </body>
 </html>
