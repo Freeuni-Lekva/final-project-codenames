@@ -105,7 +105,7 @@ public class SqlUserDao implements UserDao {
         try {
             Connection connection = dbconnection.getConnection();
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM " + TABLE_NAME + " WHERE user_name = ? and hashed_password = ?; ");
+                    "SELECT * FROM " + TABLE_NAME + " WHERE BINARY user_name = ? and hashed_password = ?; ");
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getHashedPassword());
             ResultSet resultSet = statement.executeQuery();
