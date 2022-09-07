@@ -22,9 +22,19 @@
 </h2>
 <ul class ="tableColumn">
     <li style="color: red; font-size: 35px">Red Team</li>
-    <li style="color: red; font-size: 35px">Spymasters</li>
+    <div id="button1" onclick="setRole('Red Spymaster')">
+        <li style="color: red; font-size: 35px">Spymasters</li>
+    </div>
+    <div id="redSpymasters">
+
+    </div>
     <%-- --%>
-    <li style="color: red; font-size: 35px">Operatives</li>
+    <div id="button2" onclick="setRole('Red Operative')">
+        <li style="color: red; font-size: 35px">Operatives</li>
+    </div>
+    <div id="redOperatives">
+
+    </div>
 </ul>
 <ul class ="tableColumn">
     <li style="color: black; font-size: 35px"> Users </li>
@@ -34,9 +44,15 @@
 </ul>
 <ul class ="tableColumn">
     <li style="color: blue; font-size: 35px">Blue Team</li>
-    <li style="color: blue; font-size: 35px">Spymasters</li>
+    <div id="button3" onclick="setRole('Blue Spymaster')"> <li style="color: blue; font-size: 35px">Spymasters</li> </div>
+    <div id="blueSpymasters">
+
+    </div>
     <%-- --%>
-    <li style="color: blue; font-size: 35px">Operatives</li>
+    <div id="button4" onclick="setRole('Blue Operative')"> <li style="color: blue; font-size: 35px">Operatives</li> </div>
+    <div id="blueOperatives">
+
+    </div>
 </ul>
 <%--<script src="<%=request.getContextPath()%>/JSP/waitingRoom.js"> </script>--%>
 </body>
@@ -44,6 +60,10 @@
 <script>
     var socket = undefined
     var users = document.querySelector("#users");
+    var redSpymasters = document.querySelector("#redSpymasters");
+    var redOperatives = document.querySelector("#redOperatives");
+    var blueSpymasters = document.querySelector("#blueSpymasters");
+    var blueOperatives = document.querySelector("#blueOperatives");
     window.onload = () => {
         var room = JSON.parse('${JSON}');
         socket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/room?roomID="+room.ID);
@@ -69,19 +89,15 @@
 
     function onMessage(e){
         const message = e.data;
-        while(users.hasChildNodes()){
-            users.removeChild(users.lastChild);
-        }
         var type = e.data.substr(0, e.data.indexOf(" "));
-        if(type == "NewUser" || type == "RemoveUser"){
-            if(type == "RemoveUser"){
-                console.log("sdfmjssdf");
+        if (type == "NewUser" || type == "RemoveUser"){
+            while (users.hasChildNodes()){
+                users.removeChild(users.lastChild);
             }
             var data = JSON.parse(e.data.substr(e.data.indexOf(" ") + 1));
             var fragment = document.createDocumentFragment();
-            for(var i=0; i<data.allPlayers.length; i++){
+            for (var i=0; i<data.allPlayers.length; i++){
                 var name = data.allPlayers[i].user.username;
-                console.log(name + ' is name');
                 var li = document.createElement("li");
                 li.id = name;
                 li.textContent = name;
@@ -90,10 +106,63 @@
                 fragment.appendChild(li);
             }
             users.appendChild(fragment);
+            displayMembers(redSpymasters, e);
+            displayMembers(redOperatives, e);
+            displayMembers(blueSpymasters, e);
+            displayMembers(blueOperatives, e);
+        } else if (type == "AddUserRole") {
+            displayMembers(redSpymasters, e);
+            displayMembers(redOperatives, e);
+            displayMembers(blueSpymasters, e);
+            displayMembers(blueOperatives, e);
         }
     }
 
     function onClose(e){
         socket = undefined;
+    }
+
+    function setRole(role) {
+        let socketMessage = {
+            role
+        }
+        socket.send(JSON.stringify(socketMessage));
+    }
+
+    function displayMembers(role, e) {
+        while (role.hasChildNodes()) {
+            role.removeChild(role.lastChild);
+        }
+        var data = JSON.parse(e.data.substr(e.data.indexOf(" ") + 1));
+        var fragment = document.createDocumentFragment();
+        for (var i=0; i<data.allPlayers.length; i++){
+            var name = data.allPlayers[i].user.username;
+            var userRole = data.allPlayers[i].playerRole;
+            var roleStr = roleToString(role);
+            console.log(userRole + " " + roleStr);
+            if (userRole !== roleStr) {
+                console.log("not equal");
+                continue;
+            };
+            var li = document.createElement("li");
+            li.textContent = name;
+            li.style.color = "black";
+            li.style.fontSize = "35px";
+            fragment.appendChild(li);
+        }
+        role.appendChild(fragment);
+    }
+
+    function roleToString(role){
+        if (role === redSpymasters) {
+            return "RED_SPYMASTER";
+        } else if (role === redOperatives) {
+            return "RED_OPERATIVE";
+        } else if (role === blueSpymasters) {
+            return "BLUE_SPYMASTER";
+        } else if (role === blueOperatives) {
+            return "BLUE_OPERATIVE";
+        }
+        return "NOT_SELECTED";
     }
 </script>
