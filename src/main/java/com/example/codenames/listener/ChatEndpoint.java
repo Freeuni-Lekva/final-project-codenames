@@ -7,7 +7,7 @@ import javax.websocket.server.ServerEndpoint;
 public class ChatEndpoint {
 
     @OnOpen
-    public void onOpen(Session session, ChatConfigurator config) throws SessionException {
+    public void onOpen(Session session) throws SessionException {
 
 
     }

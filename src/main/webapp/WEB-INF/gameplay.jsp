@@ -26,7 +26,6 @@
 
 
 <html>
-<head>
     <script>
         var mySocket = undefined
 
@@ -48,18 +47,17 @@
         function sendMessage(){
             document.getElementById("chatarea").style.backgroundColor= "blue";
             // prev = document.getElementById("chatarea").value;
-            text = document.getElementById("usermessage").value + "\n";
-            // value = prev + text;
-            let myMessage = {
-                content: text,
-                type: "text"
+            // text = document.getElementById("usermessage").value + "\n";
+            // // value = prev + text;
+            // let myMessage = {
+            //     content: text,
+            //     type: "text"
             }
 
             //mySocket.send(JSON.stringify(myMessage));
 
         }
     </script>
-</head>
 
 </html>
 <table id="mytable">
