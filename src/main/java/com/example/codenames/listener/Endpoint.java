@@ -1,7 +1,5 @@
 package com.example.codenames.listener;
-import com.example.codenames.model.Player;
-import com.example.codenames.model.Room;
-import com.example.codenames.model.User;
+import com.example.codenames.model.*;
 import com.example.codenames.model.Player;
 import com.example.codenames.model.Room;
 import com.example.codenames.model.User;
@@ -45,7 +43,34 @@ public class Endpoint {
 
     @OnMessage
     public void onMessage(Session session, String message) throws Exception{
-
+        String roomID = session.getRequestParameterMap().get(NameConstants.ROOM_ID).get(0);
+        HttpSession httpSession = (HttpSession) session.getUserProperties().get(SESSION);
+        Map<String, Room> roomMap = (Map<String, Room>) httpSession.getServletContext().getAttribute(NameConstants.ROOM_MAP);
+        Room room = roomMap.get(roomID);
+        User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
+        String role = message.substring(message.indexOf(':') + 2, message.length() - 2);
+        role = role.substring(0, role.indexOf(' ')) + '_' + role.substring(role.indexOf(' ') + 1);
+        PlayerRole playerRole = PlayerRole.NOT_SELECTED;
+        switch (role) {
+            case "Red_Spymaster":
+                playerRole = PlayerRole.RED_SPYMASTER;
+                break;
+            case "Red_Operative":
+                playerRole = PlayerRole.RED_OPERATIVE;
+                break;
+            case "Blue_Spymaster":
+                playerRole = PlayerRole.BLUE_SPYMASTER;
+                break;
+            case "Blue_Operative":
+                playerRole = PlayerRole.BLUE_OPERATIVE;
+                break;
+        }
+        room.getPlayerByUsername(user.getUsername()).setPlayerRole(playerRole);
+        String json = new Gson().toJson(room);
+        Set<Session> sessions = sessionsMap.get(roomID);
+        for (Session playerSession : sessions) {
+            playerSession.getAsyncRemote().sendText("AddUserRole " + json);
+        }
     }
 
     @OnClose
@@ -57,11 +82,10 @@ public class Endpoint {
         Map<String, Room> roomMap = (Map<String, Room>) httpSession.getServletContext().getAttribute(NameConstants.ROOM_MAP);
         Room room = roomMap.get(roomID);
         User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
-        System.out.println(room.removePlayer(new Player(user, roomID)));
+        room.removePlayer(room.getPlayerByUsername(user.getUsername()));
         String json = new Gson().toJson(room);
         for(Session playerSession : sessions){
             playerSession.getAsyncRemote().sendText("RemoveUser " + json);
-            System.out.println("SENT!");
         }
     }
 }

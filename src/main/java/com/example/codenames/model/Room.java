@@ -7,7 +7,7 @@ public class Room {
     private Player owner;
     private String ID;
     Set<Player> allPlayers;
-    private static final int SIZE = 2;
+    private static final int SIZE = 10;
 
     public Room(Player owner, String ID) {
         this.owner = owner;
@@ -99,5 +99,12 @@ public class Room {
 
     public boolean removePlayer(Player player) {
         return allPlayers.remove(player);
+    }
+
+    public Player getPlayerByUsername(String username) {
+        for (Player player : allPlayers) {
+            if (player.getUser().getUsername().equals(username)) return player;
+        }
+        return null;
     }
 }
