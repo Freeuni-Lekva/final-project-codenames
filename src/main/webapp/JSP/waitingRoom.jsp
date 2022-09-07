@@ -1,4 +1,7 @@
-<%@ page import="com.example.codenames.listener.NameConstants" %><%--
+<%@ page import="com.example.codenames.listener.NameConstants" %>
+<%@ page import="com.example.codenames.model.User" %>
+<%@ page import="com.example.codenames.model.Room" %>
+<%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
   User: keti
   Date: 01.09.22
@@ -54,7 +57,18 @@
 
     </div>
 </ul>
-<%--<script src="<%=request.getContextPath()%>/JSP/waitingRoom.js"> </script>--%>
+<%
+    User user = (User) session.getAttribute(User.ATTRIBUTE);
+    Map<String, Room> roomMap = (Map<String, Room>) application.getAttribute(NameConstants.ROOM_MAP);
+    Room room = roomMap.getOrDefault(request.getParameter(NameConstants.ROOM_ID), null);
+    String ownerUsername = room.getOwner().getUser().getUsername();
+    if(room.getOwner().getUser().equals(user)){
+
+%>
+    <button id="start-game" disabled>Start Game</button>
+<%
+    }
+%>
 </body>
 </html>
 <script>
@@ -90,11 +104,11 @@
     function onMessage(e){
         const message = e.data;
         var type = e.data.substr(0, e.data.indexOf(" "));
+        var data = JSON.parse(e.data.substr(e.data.indexOf(" ") + 1));
         if (type == "NewUser" || type == "RemoveUser"){
             while (users.hasChildNodes()){
                 users.removeChild(users.lastChild);
             }
-            var data = JSON.parse(e.data.substr(e.data.indexOf(" ") + 1));
             var fragment = document.createDocumentFragment();
             for (var i=0; i<data.allPlayers.length; i++){
                 var name = data.allPlayers[i].user.username;
@@ -116,6 +130,18 @@
             displayMembers(blueSpymasters, e);
             displayMembers(blueOperatives, e);
         }
+        var rs = displayMembers(redSpymasters, e);
+        var ro = displayMembers(redOperatives, e);
+        var bs = displayMembers(blueSpymasters, e);
+        var bo = displayMembers(blueOperatives, e);
+        if(data.owner.user.username === "<%=user.getUsername()%>"){
+            var startButton = document.getElementById("start-game");
+            if (rs && ro && bs && bo) {
+                startButton.disabled = false;
+            } else {
+                startButton.disabled = true;
+            }
+        }
     }
 
     function onClose(e){
@@ -135,6 +161,7 @@
         }
         var data = JSON.parse(e.data.substr(e.data.indexOf(" ") + 1));
         var fragment = document.createDocumentFragment();
+        var cnt = 0;
         for (var i=0; i<data.allPlayers.length; i++){
             var name = data.allPlayers[i].user.username;
             var userRole = data.allPlayers[i].playerRole;
@@ -143,7 +170,8 @@
             if (userRole !== roleStr) {
                 console.log("not equal");
                 continue;
-            };
+            }
+            cnt++;
             var li = document.createElement("li");
             li.textContent = name;
             li.style.color = "black";
@@ -151,6 +179,7 @@
             fragment.appendChild(li);
         }
         role.appendChild(fragment);
+        return cnt > 0;
     }
 
     function roleToString(role){
