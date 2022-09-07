@@ -120,6 +120,15 @@
                 fragment.appendChild(li);
             }
             users.appendChild(fragment);
+            displayMembers(redSpymasters, e);
+            displayMembers(redOperatives, e);
+            displayMembers(blueSpymasters, e);
+            displayMembers(blueOperatives, e);
+        } else if (type == "AddUserRole") {
+            displayMembers(redSpymasters, e);
+            displayMembers(redOperatives, e);
+            displayMembers(blueSpymasters, e);
+            displayMembers(blueOperatives, e);
         }
         var rs = displayMembers(redSpymasters, e);
         var ro = displayMembers(redOperatives, e);
