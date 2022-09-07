@@ -1,5 +1,10 @@
 package com.example.codenames.listener;
 
+import com.example.codenames.Servlets.GameplayServlet;
+import com.example.codenames.engine.GameEngine;
+import com.example.codenames.engine.GameEvent;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.util.List;
@@ -10,29 +15,34 @@ public class GameplayWsEndpoint {
 
     private static final ConcurrentHashMap<String, ConcurrentHashMap<Session, Boolean>> sessionsByRoomId = new ConcurrentHashMap<>();
 
-    private static final ConcurrentHashMap<String, ConcurrentHashMap<String, Boolean>> eventStoreByRoomId = new ConcurrentHashMap<>();
+//    private static final ConcurrentHashMap<String, ConcurrentHashMap<GameEvent, Boolean>> eventStoreByRoomId = new ConcurrentHashMap<>();
+
+    private ObjectMapper om = new ObjectMapper();
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig endpointConfig) throws Exception {
         String roomId = getRoomId(session);
         ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>());
         roomSessions.put(session, true);
-        ConcurrentHashMap<String, Boolean> events = eventStoreByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>());
-        RemoteEndpoint.Basic remote = session.getBasicRemote();
-        for (String event : events.keySet()) {
-            remote.sendText(event);
-        }
+//        ConcurrentHashMap<GameEvent, Boolean> events = eventStoreByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>());
+//        RemoteEndpoint.Basic remote = session.getBasicRemote();
+//        for (GameEvent event : events.keySet()) {
+//            remote.sendText(om.writeValueAsString(event));
+//        }
     }
 
     @OnMessage
     public void onMessage(Session session, String message) throws Exception {
         String roomId = getRoomId(session);
-        ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.get(roomId);
-        eventStoreByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>())
-                        .put(message, true);
-        roomSessions.forEach((roomMemberSession, b) -> {
-            roomMemberSession.getAsyncRemote().sendText(message);
-        });
+        GameEngine gameEngine = GameplayServlet.gameEngineByRoomId.get(roomId);
+        int index = Integer.parseInt(message);
+        GameEvent gameEvent = gameEngine.registerMove(index);
+        if (gameEvent != null) {
+            ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.get(roomId);
+            for (Session roomMemberSession : roomSessions.keySet()) {
+                roomMemberSession.getAsyncRemote().sendText(om.writeValueAsString(gameEvent));
+            }
+        }
     }
 
     @OnClose
@@ -40,9 +50,9 @@ public class GameplayWsEndpoint {
         String roomId = getRoomId(session);
         ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.get(roomId);
         roomSessions.remove(session);
-        if (roomSessions.isEmpty()) {
-            eventStoreByRoomId.remove(roomId);
-        }
+//        if (roomSessions.isEmpty()) {
+//            eventStoreByRoomId.remove(roomId);
+//        }
     }
 
     private static String getRoomId(Session session) {
@@ -50,7 +60,6 @@ public class GameplayWsEndpoint {
         if (roomIdList.size() != 1) {
             throw new IllegalStateException("Room id should be passed during socket creation");
         }
-        String roomId = roomIdList.get(0);
-        return roomId;
+        return roomIdList.get(0);
     }
 }

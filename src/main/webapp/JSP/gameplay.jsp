@@ -2,7 +2,8 @@
 <%@ page import="com.example.codenames.listener.NameConstants" %>
 <%@ page import="com.example.codenames.model.Board" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.codenames.model.WordColor" %><%--
+<%@ page import="com.example.codenames.model.WordColor" %>
+<%@ page import="com.example.codenames.model.Word" %><%--
   Created by IntelliJ IDEA.
   User: mariam
   Date: 04.09.22
@@ -18,8 +19,8 @@
     <title>Title</title>
 </head>
 <body>
-<%  Board board = (Board) request.getAttribute(NameConstants.BOARD);
-    List<String> words = board.getWords();
+<%
+    List<String> words = (List<String>) request.getAttribute(NameConstants.WORDS);
 
 %>
 
@@ -28,10 +29,9 @@
 <script>
     function onMessageColorSocket (event) {
         console.log(event.data);
-        let index = parseInt(event.data);
-        var x = document.getElementById("mytable").getElementsByTagName("td");
-        var colorss = JSON.parse('${colors}');
-        x[index].style.backgroundColor = colorss[index];
+        let gameEvent = JSON.parse(event.data);
+        let x = document.getElementById("mytable").getElementsByTagName("td");
+        x[gameEvent.openedIndex].style.backgroundColor = gameEvent.colorOfIndex;
     }
 
     function onMessageChatSocket (event) {

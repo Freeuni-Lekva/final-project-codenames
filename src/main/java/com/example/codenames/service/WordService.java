@@ -42,10 +42,4 @@ public interface WordService {
      * @return Word object with the name
      */
     Word getWordByName(String name);
-
-    /**
-     *
-     * @return 25 randomized color corresponding 25 words
-     */
-    List<WordColor> getScheme();
 }

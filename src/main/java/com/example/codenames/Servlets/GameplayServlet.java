@@ -1,5 +1,7 @@
 package com.example.codenames.Servlets;
 
+import com.example.codenames.engine.GameEngine;
+import com.example.codenames.engine.GameEvent;
 import com.example.codenames.listener.NameConstants;
 import com.example.codenames.model.Board;
 import com.example.codenames.model.WordColor;
@@ -19,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @WebServlet(name = "GameplayServlet", value = "/GameplayServlet")
 public class GameplayServlet extends HttpServlet {
 
-    private static final ConcurrentHashMap<String, Board> boardsByRoomId = new ConcurrentHashMap<>();
+    public static final ConcurrentHashMap<String, GameEngine> gameEngineByRoomId = new ConcurrentHashMap<>();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -31,22 +33,19 @@ public class GameplayServlet extends HttpServlet {
     private void setRequestAttrs(HttpServletRequest request) {
         request.setAttribute(NameConstants.ROOM_ID, "ID"); // temp code this should not be needed
         String roomId = getRoomId(request);
-        Board board = boardsByRoomId.computeIfAbsent(roomId, this::createBoard);
-        request.setAttribute("BOARD", board);
-        String json = translateBoardColorsToJson(board.getColors());
-        request.setAttribute("colors", json);
+        GameEngine gameEngine = gameEngineByRoomId.computeIfAbsent(roomId, this::createBoard);
+        request.setAttribute(NameConstants.WORDS, gameEngine.getWords());
     }
 
     private String getRoomId(HttpServletRequest request) {
         return (String) request.getAttribute(NameConstants.ROOM_ID);
     }
 
-    private Board createBoard(String roomId) {
+    private GameEngine createBoard(String roomId) {
         List<String> categories = getRequestedWordCategories();
         WordService wordService = (WordService) getServletContext().getAttribute(NameConstants.WORD_SERVICE);
         List<String> words = wordService.getRandomizedWords(categories);
-        List<WordColor> wordColors = wordService.getScheme();
-        return new Board(words, wordColors);
+        return new GameEngine(words);
     }
 
     private static List<String> getRequestedWordCategories() {
@@ -54,23 +53,5 @@ public class GameplayServlet extends HttpServlet {
         categories.add("SPORTS");
         categories.add("FOOD");
         return categories;
-    }
-
-    private static String translateBoardColorsToJson(List<WordColor> wordColors) {
-        JSONObject json = new JSONObject();
-        for(int i = 0; i < 25; i++) {
-            String color = "";
-            if(wordColors.get(i) == WordColor.BLUE){
-                color = "blue";
-            } else if(wordColors.get(i) == WordColor.RED){
-                color = "red";
-            } else if(wordColors.get(i) == WordColor.BLACK){
-                color = "black";
-            } else if(wordColors.get(i) == WordColor.BEIGE){
-                color = "yellow";
-            }
-            json.put(Integer.toString(i), color);
-        }
-        return json.toString();
     }
 }
