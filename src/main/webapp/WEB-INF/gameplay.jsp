@@ -12,6 +12,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <link rel="stylesheet" href="JSP/forGameplay.css">
+<%--<script type="application/javascript" src="gameroom.js"></script>--%>
+<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--%>
 <head>
     <title>Title</title>
 </head>
@@ -24,16 +26,39 @@
 
 
 <html>
-<head>
     <script>
-        function changeBack(index, color){
+        var mySocket = undefined
+
+        window.onload = () => {
+            mySocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/GameplayServlet");
+            mySocket.onmessage = function (event) {
+                const myMessage = JSON.parse(event.data);
+                document.getElementById("chatarea").style.backgroundColor= "red";
+                document.getElementById("chatarea").value = myMessage;
+            }
+
+        }
+        function changeBack(index){
             var x = document.getElementById("mytable").getElementsByTagName("td");
             var colorss = JSON.parse('${colors}');
            // var key = 'a';
             x[index].style.backgroundColor = colorss[index];
         }
+
+        function sendMessage(){
+            document.getElementById("chatarea").style.backgroundColor= "blue";
+            // prev = document.getElementById("chatarea").value;
+            // text = document.getElementById("usermessage").value + "\n";
+            // // value = prev + text;
+            // let myMessage = {
+            //     content: text,
+            //     type: "text"
+            }
+
+            //mySocket.send(JSON.stringify(myMessage));
+
+        }
     </script>
-</head>
 
 </html>
 <table id="mytable">
@@ -73,5 +98,25 @@
         <td onclick="changeBack(24);"> <% out.print(words.get(24)); %></td>
     </tr>
 </table>
+
+
+
+<br>
+
+    <textarea id="chatarea" rows="20" cols="30">
+    </textarea>
+<br>
+
+
+<div id="wrapper">
+<%--    <div id="chatbox"></div>--%>
+
+    <form name="message" action="">
+        <input name="usermessage" type="text" id="usermessage" />
+        <input onclick="sendMessage();" name="submitmessage" type="button" id="submitmessage" value="Send" />
+    </form>
+</div>
+
+
 </body>
 </html>
