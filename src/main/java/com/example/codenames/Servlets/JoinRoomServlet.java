@@ -17,8 +17,8 @@ import java.util.Map;
 @WebServlet(name = "JoinRoomServlet", value = "/JoinRoomServlet")
 public class JoinRoomServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("JSP/joinRoom.jsp");
     }
 
     @Override
@@ -28,7 +28,6 @@ public class JoinRoomServlet extends HttpServlet {
         Map<String, Room> roomMap = (Map<String, Room>) servletContext.getAttribute(NameConstants.ROOM_MAP);
         String roomID = (String) request.getParameter(NameConstants.ROOM_ID);
         if(roomMap.containsKey(roomID)){
-            System.out.println("contains");
             Room room = roomMap.get(roomID);
             Player player = new Player(user, roomID);
             if (room.addPlayer(player)) {
