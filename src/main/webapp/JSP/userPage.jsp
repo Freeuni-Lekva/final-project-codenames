@@ -19,17 +19,17 @@
             position: absolute;
             height: 10%;
             width: 100%;
-            background-color: ivory;
+            background-color: chocolate;
             margin: 0;
         }
         #game_history {
-            border: 5px black;
-            right: 10px;
+            border: 5px dashed orangered;
+            right: 5px;
             position: absolute;
             margin: 1%;
             top: 10%;
             width: 48.5%;
-            border-radius: 15px;
+            border-radius: 10px;
         }
         #personal_info {
             border: 5px black;
@@ -49,16 +49,6 @@
             left: 50%;
             width: 48.5%;
             border-radius: 10px;
-        }
-        img.background{
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            z-index: -1;
-            width: 100%;
-            height: 100%;
-            -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-            filter: blur(10px);
         }
         #headLine {
             margin: 0;
@@ -81,7 +71,45 @@
             font-size: 1.4vw;
             color: black;
         }
-        .button {
+        #leaderboard_border {
+            border: 2px dashed orangered;
+            position: absolute;
+            margin: 1%;
+            left: 1px;
+            border-radius: 10px;
+            height: 200px;
+            width: 250px;
+        }
+        #create_border {
+            border: 2px dashed orangered;
+            position: absolute;
+            margin: 1%;
+            left: 265px;
+            border-radius: 10px;
+            height: 200px;
+            width: 250px;
+        }
+        #join_border {
+            border: 2px dashed orangered;
+            position: absolute;
+            margin: 1%;
+            left: 1px;
+            top: 600px;
+            border-radius: 10px;
+            height: 200px;
+            width: 250px;
+        }
+        #join_Random_border {
+            border: 2px dashed orangered;
+            position: absolute;
+            margin: 1%;
+            left: 265px;
+            top: 600px;
+            border-radius: 10px;
+            height: 200px;
+            width: 250px;
+        }
+        .button_leaderboard {
             display: inline-block;
             padding: 15px 25px;
             font-size: 24px;
@@ -96,9 +124,78 @@
             box-shadow: 0 9px #999;
         }
 
-        .button:hover {background-color: #3e8e41}
+        .button_leaderboard:hover {background-color: #3e8e41}
 
-        .button:active {
+        .button_leaderboard:active {
+            background-color: orangered;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+        .button_createRoom {
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 3px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: ivory;
+            background-color: orangered;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        .button_createRoom:hover {background-color: #3e8e41}
+
+        .button_createRoom:active {
+            background-color: orangered;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+        .button_joinRoom{
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 3px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: ivory;
+            background-color: orangered;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        .button_joinRoom:hover {background-color: #3e8e41}
+
+        .button_joinRoom:active {
+            background-color: orangered;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+        .button_joinRandomRoom{
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 3px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: ivory;
+            background-color: orangered;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        .button_joinRandomRoom:hover {background-color: #3e8e41}
+
+        .button_joinRandomRoom:active {
             background-color: orangered;
             box-shadow: 0 5px #666;
             transform: translateY(4px);
@@ -116,7 +213,6 @@
 %>
 
 <body>
-<img class = "background" src="backgroundForIndex.jpg" >
     <div id="upper_part">
         <div id="headLine">Welcome <%=user.getUsername()%> </div>
     </div>
@@ -174,15 +270,47 @@
             Black words selected: <%=user.getBlackWordCounter()%><br>
             Winning rate: <%=user.getWinningRate()%><br>
             Registration date : <%=user.getRegistrationDate()%><br>
-            <h4>See leaderboard</h4>
+            <div id = "leaderboard_border" >
+                <div align="center">
+                    <h4>See leaderboard</h4>
+                    <a href="JSP/leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
+                </div>
+            </div>
+            <div id = "create_border" >
+                <div align="center">
+                    <h4>Create new room</h4>
+                    <form action="CreateRoomServlet" method="post">
+                        <button class="button_createRoom">Create room</button><br>
+                    </form>
 
-            <a href="JSP/leaderboard.jsp" class="button">Leaderboard</a>
+                </div>
+            </div>
+            <div id = "join_border" >
+                <div align="center">
+                    <h4>Join the room</h4>
+                    <form action="JoinRoomServlet" method="post">
+                        <button class="button_joinRoom">Join</button><br>
+                    </form>
+                </div>
+            </div>
+
+            <div id = "join_Random_border" >
+                <div align="center">
+                    <h4>Join random room</h4>
+                    <form action="JoinRandomRoomServlet" method="post">
+                        <button class="button_joinRandomRoom">Join</button><br>
+                    </form>
+
+                </div>
+            </div>
+
+
         </div>
 
     </div>
 
 
-
+z
 
 
 
