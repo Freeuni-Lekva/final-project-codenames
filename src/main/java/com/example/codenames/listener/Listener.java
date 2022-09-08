@@ -18,6 +18,7 @@ import com.example.codenames.service.implementation.UserServiceImpl;
 import com.example.codenames.service.implementation.WordServiceImpl;
 import com.example.codenames.service.implementation.PlayerHistoryServiceImpl;
 
+import javax.naming.Name;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSessionListener;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @WebListener
 public class Listener implements ServletContextListener, HttpSessionListener, HttpSessionAttributeListener {
@@ -45,7 +47,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         PlayerHistoryDao playerHistoryDAO = new SqlPlayerHistoryDao(dbConnection);
         PlayerHistoryService playerHistoryService = new PlayerHistoryServiceImpl(playerHistoryDAO);
         servletContext.setAttribute(NameConstants.PLAYER_HISTORY_SERVICE, playerHistoryService);
-        Map<String, Room> roomMap = new HashMap<>();
+        ConcurrentHashMap<String, Room> roomMap = new ConcurrentHashMap<>();
         servletContext.setAttribute(NameConstants.ROOM_MAP, roomMap);
         WordDAO wordDAO = new SqlWordDAO(dbConnection);
         WordService wordService = new WordServiceImpl(wordDAO);

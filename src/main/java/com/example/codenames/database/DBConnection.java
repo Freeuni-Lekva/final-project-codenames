@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBConnection {
-    public static final String PASSWORD = "sqlsql123";
+    public static final String PASSWORD = "rootroot";
     private Connection connection;
 
     public DBConnection(){

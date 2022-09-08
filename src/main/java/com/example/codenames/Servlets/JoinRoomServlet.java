@@ -38,6 +38,8 @@ public class JoinRoomServlet extends HttpServlet {
             } else {
                 response.getWriter().println("Cannot join room");
             }
+        } else {
+            response.getWriter().println("Cannot join room");
         }
     }
 

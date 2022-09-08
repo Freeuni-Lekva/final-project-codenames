@@ -1,7 +1,9 @@
 <%@ page import="com.example.codenames.listener.NameConstants" %>
 <%@ page import="com.example.codenames.model.User" %>
 <%@ page import="com.example.codenames.model.Room" %>
-<%@ page import="java.util.Map" %><%--
+<%@ page import="java.util.Map" %>
+<%@ page import="static com.example.codenames.listener.NameConstants.ROOM_ID" %>
+<%@ page import="java.io.IOException" %><%--
   Created by IntelliJ IDEA.
   User: keti
   Date: 01.09.22
@@ -60,27 +62,41 @@
 <%
     User user = (User) session.getAttribute(User.ATTRIBUTE);
     Map<String, Room> roomMap = (Map<String, Room>) application.getAttribute(NameConstants.ROOM_MAP);
-    Room room = roomMap.getOrDefault(request.getParameter(NameConstants.ROOM_ID), null);
+    Room room = roomMap.getOrDefault(request.getParameter(ROOM_ID), null);
     String ownerUsername = room.getOwner().getUser().getUsername();
     if(room.getOwner().getUser().equals(user)){
 
 %>
-    <button id="start-game" disabled>Start Game</button>
+<button id="start-game" disabled onclick="startGame()">Start Game</button>
+<input type="hidden" name="<%=ROOM_ID%>" value="<%=request.getParameter(ROOM_ID)%>">
 <%
+    }
+%>
+
+<%!
+    public String redirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("GameplayServlet?" + ROOM_ID + "=" + request.getParameter(ROOM_ID));
+        return "";
     }
 %>
 </body>
 </html>
 <script>
-    var socket = undefined
+    var socket = undefined;
+    var startGameSocket = undefined;
+    const artifact = "Codenames_war_exploded";
     var users = document.querySelector("#users");
     var redSpymasters = document.querySelector("#redSpymasters");
     var redOperatives = document.querySelector("#redOperatives");
     var blueSpymasters = document.querySelector("#blueSpymasters");
     var blueOperatives = document.querySelector("#blueOperatives");
+
     window.onload = () => {
         var room = JSON.parse('${JSON}');
         socket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/room?roomID="+room.ID);
+        startGameSocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/start-game?roomID="+room.ID);
+        startGameSocket.onopen = undefined;
+        startGameSocket.onmessage = onMessageStartGameSocket;
         socket.onopen = onOpen;
         socket.onmessage = onMessage;
         socket.onclose = onClose;
@@ -182,7 +198,7 @@
         return cnt > 0;
     }
 
-    function roleToString(role){
+    function roleToString(role) {
         if (role === redSpymasters) {
             return "RED_SPYMASTER";
         } else if (role === redOperatives) {
@@ -193,5 +209,16 @@
             return "BLUE_OPERATIVE";
         }
         return "NOT_SELECTED";
+    }
+
+    function startGame() {
+        startGameSocket.send("START-GAME");
+    }
+
+    function onMessageStartGameSocket(e) {
+        const msg = e.data;
+        if (msg === "START-GAME") {
+            window.location.replace("http://" + location.host + "/" + artifact + "/GameplayServlet?roomID=" + rooom.ID);
+        }
     }
 </script>
