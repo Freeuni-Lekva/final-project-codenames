@@ -18,6 +18,7 @@ import com.example.codenames.service.implementation.UserServiceImpl;
 import com.example.codenames.service.implementation.WordServiceImpl;
 import com.example.codenames.service.implementation.PlayerHistoryServiceImpl;
 
+import javax.naming.Name;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -50,6 +51,8 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         WordDAO wordDAO = new SqlWordDAO(dbConnection);
         WordService wordService = new WordServiceImpl(wordDAO);
         servletContext.setAttribute(NameConstants.WORD_SERVICE, wordService);
+        Map<String, Room> gameroomMap = new HashMap<>();
+        servletContext.setAttribute(NameConstants.GAME_ROOMS_MAP, gameroomMap);
     }
 
     @Override

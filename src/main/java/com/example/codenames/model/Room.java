@@ -92,12 +92,12 @@ public class Room {
         player.setPlayerRole(PlayerRole.BLUE_OPERATIVE);
     }
 
-    public boolean addPlayer(Player player) {
+    public synchronized boolean addPlayer(Player player) {
         if (allPlayers.size() >= SIZE) return false;
         return allPlayers.add(player);
     }
 
-    public boolean removePlayer(Player player) {
+    public synchronized boolean removePlayer(Player player) {
         return allPlayers.remove(player);
     }
 

@@ -65,7 +65,10 @@
     if(room.getOwner().getUser().equals(user)){
 
 %>
-    <button id="start-game" disabled>Start Game</button>
+    <form action="" method="">
+        <button id="start-game" disabled>Start Game</button>
+        <input type="hidden" name="<%=NameConstants.ROOM_ID%>" value="<%=request.getParameter(NameConstants.ROOM_ID)%>">
+    </form>
 <%
     }
 %>
