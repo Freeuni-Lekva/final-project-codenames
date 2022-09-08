@@ -4,6 +4,7 @@ import com.example.codenames.engine.GameEngine;
 import com.example.codenames.engine.GameEvent;
 import com.example.codenames.listener.NameConstants;
 import com.example.codenames.model.Board;
+import com.example.codenames.model.Room;
 import com.example.codenames.model.WordColor;
 import com.example.codenames.service.WordService;
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @WebServlet(name = "GameplayServlet", value = "/GameplayServlet")
@@ -31,9 +33,9 @@ public class GameplayServlet extends HttpServlet {
     }
 
     private void setRequestAttrs(HttpServletRequest request) {
-        request.setAttribute(NameConstants.ROOM_ID, "ID"); // temp code this should not be needed
-        String roomId = getRoomId(request);
-        GameEngine gameEngine = gameEngineByRoomId.computeIfAbsent(roomId, this::createBoard);
+        String roomID = request.getParameter(NameConstants.ROOM_ID);
+        request.setAttribute(NameConstants.ROOM_ID, roomID);
+        GameEngine gameEngine = gameEngineByRoomId.computeIfAbsent(roomID, this::createBoard);
         request.setAttribute(NameConstants.WORDS, gameEngine.getWords());
     }
 
