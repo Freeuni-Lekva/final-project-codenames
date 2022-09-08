@@ -35,7 +35,13 @@
     }
 
     function onMessageChatSocket (event) {
-        console.log(event.data);
+        let chatMessage = JSON.parse(event.data);
+        let name = chatMessage.username;
+        let message = chatMessage.message;
+        let prev = document.getElementById("chatarea").value;
+        let newValue = prev + name + ": " + message + "\n" ;
+        document.getElementById("chatarea").value = newValue;
+        console.log(name);
     }
 
     let colorSocket = null;
@@ -53,8 +59,8 @@
     }
 
     function sendMessage(){
-        document.getElementById("chatarea").style.backgroundColor= "blue";
-        chatSocket.send("message");
+        let userMessage = document.getElementById("usermessage").value;
+        chatSocket.send(userMessage);
     }
 </script>
 

@@ -3,12 +3,16 @@ package com.example.codenames.listener.chat;
 import com.example.codenames.listener.EndpointConfigurator;
 import com.example.codenames.listener.NameConstants;
 import com.example.codenames.listener.chat.dto.ChatMessage;
+import com.example.codenames.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.example.codenames.listener.NameConstants.SESSION;
 
 @ServerEndpoint(value = "/chat_ws", configurator = EndpointConfigurator.class)
 public class ChatWsEndpoint {
@@ -33,7 +37,7 @@ public class ChatWsEndpoint {
 
     @OnMessage
     public void onMessage(Session session, String message) throws Exception {
-        ChatMessage chatMessage = new ChatMessage(getCallerUsername(), message);
+        ChatMessage chatMessage = new ChatMessage(getCallerUsername(session), message);
         String roomId = getRoomId(session);
         ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.get(roomId);
         messageStoreByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>())
@@ -61,7 +65,9 @@ public class ChatWsEndpoint {
         return roomIdList.get(0);
     }
 
-    private static String getCallerUsername() {
-        return "user";
+    private static String getCallerUsername(Session session) {
+        HttpSession httpSession = (HttpSession) session.getUserProperties().get(SESSION);
+        User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
+        return user.getUsername();
     }
 }
