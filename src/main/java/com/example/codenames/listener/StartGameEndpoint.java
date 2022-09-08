@@ -49,6 +49,7 @@ public class StartGameEndpoint {
             } else {
                 //
             }
+            roomMap.remove(roomID);
         }
 
     }
