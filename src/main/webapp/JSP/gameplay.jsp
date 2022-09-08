@@ -2,7 +2,8 @@
 <%@ page import="com.example.codenames.listener.NameConstants" %>
 <%@ page import="com.example.codenames.model.Board" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.codenames.model.WordColor" %><%--
+<%@ page import="com.example.codenames.model.WordColor" %>
+<%@ page import="com.example.codenames.model.Word" %><%--
   Created by IntelliJ IDEA.
   User: mariam
   Date: 04.09.22
@@ -18,47 +19,50 @@
     <title>Title</title>
 </head>
 <body>
-<%  Board board = (Board) request.getAttribute(NameConstants.BOARD);
-    List<String> words = board.getWords();
-    List<WordColor> colors = board.getColors();
+<%
+    List<String> words = (List<String>) request.getAttribute(NameConstants.WORDS);
 
 %>
 
 
 <html>
-    <script>
-        var mySocket = undefined
+<script>
+    function onMessageColorSocket (event) {
+        console.log(event.data);
+        let gameEvent = JSON.parse(event.data);
+        let x = document.getElementById("mytable").getElementsByTagName("td");
+        x[gameEvent.openedIndex].style.backgroundColor = gameEvent.colorOfIndex;
+    }
 
-        window.onload = () => {
-            mySocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/GameplayServlet");
-            mySocket.onmessage = function (event) {
-                const myMessage = JSON.parse(event.data);
-                document.getElementById("chatarea").style.backgroundColor= "red";
-                document.getElementById("chatarea").value = myMessage;
-            }
+    function onMessageChatSocket (event) {
+        let chatMessage = JSON.parse(event.data);
+        let name = chatMessage.username;
+        let message = chatMessage.message;
+        let prev = document.getElementById("chatarea").value;
+        let newValue = prev + name + ": " + message + "\n" ;
+        document.getElementById("chatarea").value = newValue;
+        console.log(name);
+    }
 
-        }
-        function changeBack(index){
-            var x = document.getElementById("mytable").getElementsByTagName("td");
-            var colorss = JSON.parse('${colors}');
-           // var key = 'a';
-            x[index].style.backgroundColor = colorss[index];
-        }
+    let colorSocket = null;
+    let chatSocket = null;
+    window.onload = () => {
+        colorSocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/gameplay_ws?${NameConstants.ROOM_ID}=${roomID}");
+        colorSocket.onmessage = onMessageColorSocket;
 
-        function sendMessage(){
-            document.getElementById("chatarea").style.backgroundColor= "blue";
-            // prev = document.getElementById("chatarea").value;
-            // text = document.getElementById("usermessage").value + "\n";
-            // // value = prev + text;
-            // let myMessage = {
-            //     content: text,
-            //     type: "text"
-            }
+        chatSocket = new WebSocket("ws://"+location.host + "/Codenames_war_exploded/chat_ws?${NameConstants.ROOM_ID}=${roomID}");
+        chatSocket.onmessage = onMessageChatSocket;
+    }
 
-            //mySocket.send(JSON.stringify(myMessage));
+    function changeBack(index){
+        colorSocket.send(index);
+    }
 
-        }
-    </script>
+    function sendMessage(){
+        let userMessage = document.getElementById("usermessage").value;
+        chatSocket.send(userMessage);
+    }
+</script>
 
 </html>
 <table id="mytable">
@@ -103,13 +107,13 @@
 
 <br>
 
-    <textarea id="chatarea" rows="20" cols="30">
+<textarea id="chatarea" rows="20" cols="30">
     </textarea>
 <br>
 
 
 <div id="wrapper">
-<%--    <div id="chatbox"></div>--%>
+    <%--    <div id="chatbox"></div>--%>
 
     <form name="message" action="">
         <input name="usermessage" type="text" id="usermessage" />
