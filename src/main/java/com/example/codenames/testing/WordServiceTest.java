@@ -94,4 +94,19 @@ public class WordServiceTest extends TestCase {
         categories.add("B");
         assertThrows(NotEnoughWordsException.class, () -> wordService.getRandomizedWords(categories));
     }
+
+    public void testGetAllCategories() {
+        assertTrue(wordService.addWord("a", "A"));
+        assertTrue(wordService.addWord("b", "A"));
+        assertEquals(1, wordService.getAllCategories().size());
+        assertEquals("A", wordService.getAllCategories().get(0));
+        assertTrue(wordService.removeWord("a"));
+        assertTrue(wordService.removeWord("b"));
+
+        assertTrue(wordService.addWord("a", "A"));
+        assertTrue(wordService.addWord("a", "B"));
+        assertTrue(wordService.addWord("b", "A"));
+        List<String> categories = wordService.getAllCategories();
+        assertEquals(2, categories.size());
+    }
 }

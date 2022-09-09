@@ -45,7 +45,6 @@ public class UserServiceImpl implements UserService {
         if(logedIn == null){
             throw new InvalidCredentialsException(credentials.getUsername());
         }
-        System.out.println(logedIn);
         return logedIn;
     }
 

@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -22,7 +23,7 @@ public class WordDAOTest extends TestCase {
         super.setUp();
 
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  "RameParoli#11");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root",  DBConnection.PASSWORD);
         ScriptRunner runner = new ScriptRunner(connection);
         runner.setLogWriter(null);
         Reader reader = new BufferedReader(new FileReader("src/main/resources/For_Testing.sql"));
@@ -73,5 +74,20 @@ public class WordDAOTest extends TestCase {
         assertTrue(wordDAO.addWord("a", "B"));
         assertEquals(1, wordDAO.getWordsFromCategory("B").size());
         assertEquals(0, wordDAO.getWordsFromCategory("C").size());
+    }
+
+    public void testGetAllCategories() {
+        assertTrue(wordDAO.addWord("a", "A"));
+        assertTrue(wordDAO.addWord("b", "A"));
+        assertEquals(1, wordDAO.getAllCategories().size());
+        assertEquals("A", wordDAO.getAllCategories().get(0));
+        assertTrue(wordDAO.removeWord("a"));
+        assertTrue(wordDAO.removeWord("b"));
+
+        assertTrue(wordDAO.addWord("a", "A"));
+        assertTrue(wordDAO.addWord("a", "B"));
+        assertTrue(wordDAO.addWord("b", "A"));
+        List<String> categories = wordDAO.getAllCategories();
+        assertEquals(2, categories.size());
     }
 }

@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.example.codenames.listener.NameConstants.ROOM_MAP;
+
 @WebServlet(name = "GameplayServlet", value = "/GameplayServlet")
 public class GameplayServlet extends HttpServlet {
 
@@ -29,31 +31,30 @@ public class GameplayServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         setRequestAttrs(request);
         request.getRequestDispatcher("/JSP/gameplay.jsp")
-               .forward(request, response);
+                .forward(request, response);
     }
 
     private void setRequestAttrs(HttpServletRequest request) {
         String roomID = request.getParameter(NameConstants.ROOM_ID);
         request.setAttribute(NameConstants.ROOM_ID, roomID);
-        GameEngine gameEngine = gameEngineByRoomId.computeIfAbsent(roomID, this::createBoard);
+        GameEngine gameEngine = gameEngineByRoomId.computeIfAbsent(roomID, (id) -> createBoard(request, id));
         request.setAttribute(NameConstants.WORDS, gameEngine.getWords());
     }
 
     private String getRoomId(HttpServletRequest request) {
-        return (String) request.getAttribute(NameConstants.ROOM_ID);
+        return (String) request.getParameter(NameConstants.ROOM_ID);
     }
 
-    private GameEngine createBoard(String roomId) {
-        List<String> categories = getRequestedWordCategories();
+    private GameEngine createBoard(HttpServletRequest request, String roomId) {
+        List<String> categories = getRequestedWordCategories(request);
         WordService wordService = (WordService) getServletContext().getAttribute(NameConstants.WORD_SERVICE);
         List<String> words = wordService.getRandomizedWords(categories);
         return new GameEngine(words);
     }
 
-    private static List<String> getRequestedWordCategories() {
-        List<String> categories = new ArrayList<>();
-        categories.add("SPORTS");
-        categories.add("FOOD");
-        return categories;
+    private List<String> getRequestedWordCategories(HttpServletRequest request) {
+        Map<String, Room> roomMap = (Map<String, Room>) request.getServletContext().getAttribute(ROOM_MAP);
+        Room room = roomMap.get(getRoomId(request));
+        return room.getCategories();
     }
 }

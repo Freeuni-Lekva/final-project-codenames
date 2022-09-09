@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
+import static com.example.codenames.listener.NameConstants.ROOM;
 import static com.example.codenames.listener.NameConstants.SESSION;
 
 @ServerEndpoint(value = "/room", configurator = EndpointConfigurator.class)
@@ -84,6 +85,7 @@ public class Endpoint {
             Room room = roomMap.get(roomID);
             User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
             room.removePlayer(room.getPlayerByUsername(user.getUsername()));
+            httpSession.removeAttribute(ROOM);
             String json = new Gson().toJson(room);
             for(Session playerSession : sessions){
                 playerSession.getAsyncRemote().sendText("RemoveUser " + json);

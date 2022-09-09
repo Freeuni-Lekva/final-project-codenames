@@ -6,14 +6,18 @@ public class Room {
 
     private Player owner;
     private String ID;
-    Set<Player> allPlayers;
+    private Set<Player> allPlayers;
     private static final int SIZE = 10;
+    private boolean available = true;
+
+    private List<String> categories;
 
     public Room(Player owner, String ID) {
         this.owner = owner;
         this.ID = ID;
         allPlayers = new HashSet<>(SIZE);
         allPlayers.add(owner);
+        categories = new ArrayList<>();
     }
 
     public Player getOwner() {
@@ -22,6 +26,14 @@ public class Room {
 
     public String getID() {
         return ID;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 
     public List<Player> getRedSpymasters() {
@@ -106,5 +118,13 @@ public class Room {
             if (player.getUser().getUsername().equals(username)) return player;
         }
         return null;
+    }
+
+    public synchronized boolean isAvailable() {
+        return available;
+    }
+
+    public synchronized void lock() {
+        available = false;
     }
 }

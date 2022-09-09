@@ -41,4 +41,10 @@ public interface WordDAO {
      * @return Word object with the name
      */
     Word getWordByName(String name);
+
+    /**
+     *
+     * @return List of all categories in the database
+     */
+    List<String> getAllCategories();
 }
