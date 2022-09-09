@@ -16,17 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "DeleteUserServlet", value = "/DeleteUserServlet")
-public class DeleteUserServlet extends HttpServlet {
+@WebServlet(name = "DeleteServlet", value = "/DeleteServlet")
+public class DeleteServlet extends HttpServlet {
 
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        ServletContext servletContext = getServletContext();
-        UserService userService = (UserService) servletContext.getAttribute(NameConstants.USER_SERVICE);
-        int id = Integer.valueOf(request.getParameter(NameConstants.USER_ID));
         try {
-            userService.deleteUser(id);
             request.getRequestDispatcher(ServletUtils.DELETE_PAGE).forward(request, response);
         } catch (UserNotFoundException e){
             e.printStackTrace();

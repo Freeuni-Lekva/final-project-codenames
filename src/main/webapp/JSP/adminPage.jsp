@@ -24,23 +24,6 @@
             background-color: chocolate;
             margin: 0;
         }
-        #user_list{
-            border: 5px dashed orangered;
-            position: absolute;
-            margin: 1%;
-            top: 10%;
-            width: 48.5%;
-            border-radius: 10px;
-        }
-        #personal_info {
-            border: 5px black;
-            left:5px;
-            position: absolute;
-            margin: 1%;
-            top: 10%;
-            width: 48.5%;
-            border-radius: 15px;
-        }
         #headLine {
             margin: 0;
             position: absolute;
@@ -51,34 +34,25 @@
             text-align: center;
             font-size: 3vw;
         }
-        .title_text {
-            text-align: center;
-            font-size: 1.8vw;
-            margin-bottom: 1.5vw;
-            margin-top: 1.5vw;
-        }
-        .personal_texts{
-            text-align: left;
-            font-size: 1.4vw;
-            color: black;
-        }
-        #leaderboard_border {
+        #delete_border {
             border: 2px dashed orangered;
             position: absolute;
             margin: 1%;
             left: 1px;
+            top: 150px;
             border-radius: 10px;
             height: 200px;
-            width: 250px;
+            width: 350px;
         }
-        #create_border {
+        #add_word_border {
             border: 2px dashed orangered;
             position: absolute;
             margin: 1%;
-            left: 265px;
+            left: 1px;
+            top: 400px;
             border-radius: 10px;
             height: 200px;
-            width: 250px;
+            width: 350px;
         }
         #join_border {
             border: 2px dashed orangered;
@@ -145,7 +119,7 @@
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
-        .button_joinRoom{
+        .add_word{
             display: inline-block;
             padding: 15px 25px;
             margin: 3px;
@@ -161,18 +135,18 @@
             box-shadow: 0 9px #999;
         }
 
-        .button_joinRoom:hover {background-color: #3e8e41}
+        .add_word:hover {background-color: #3e8e41}
 
-        .button_joinRoom:active {
+        .add_word:active {
             background-color: orangered;
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
         .delete{
             display: inline-block;
-            padding: 3px 5px;
-            margin: 0.5px;
-            font-size: 3px;
+            padding: 15px 25px;
+            margin: 3px;
+            font-size: 24px;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
@@ -180,67 +154,45 @@
             color: ivory;
             background-color: orangered;
             border: none;
-            border-radius: 3px;
-            box-shadow: 0 3px #999;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
         }
 
         .delete:hover {background-color: #3e8e41}
 
         .delete:active {
             background-color: orangered;
-            box-shadow: 0 2px #666;
-            transform: translateY(1px);
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
         }
     </style>
-
-    <div id="head_part">
-        <div id="headLine">Welcome Admin</div>
-    </div>
-
-    <div id="user_list">
-
-        <div align="center">
-            <table border="1" cellpadding="5"  WIDTH=700>
-                <tr>
-                    <th>Rating</th>
-                    <th>Username</th>
-                    <th>Points</th>
-                    <th>Delete</th>
-                </tr>
-                <%
-                    ServletContext sc = request.getServletContext();
-                    UserServiceImpl service = (UserServiceImpl) sc.getAttribute(NameConstants.USER_SERVICE);
-                    List<User> users = service.getUsersByPoints(true);
-                    int i = 1;
-                    for(User user : users) {%>
-                <tr>
-                    <td><%=i%></td>
-                    <td><%=user.getUsername()%></td>
-                    <td><%=user.getPoints()%></td>
-                    <td>
-                        <form action="DeleteUserServlet" method="post">
-                            <input type="image" name="Name of image button" src="https://as1.ftcdn.net/v2/jpg/03/46/38/40/1000_F_346384068_e06I3cC4n0BCyB8f5PZ9cG2YR3N68ZYc.jpg" style="width: 40px; height: 40px"  alt="delete">
-                            <input type="hidden" id=<%=NameConstants.USER_ID%> name=<%=NameConstants.USER_ID%> value=<%=user.getUserID()%>>
-                        </form>
-
-                    </td>
-                </tr>
-                <% i++;
-                } %>
-
-            </table>
-        </div>
-
-
-
-
-
-    </div>
-
-
 </head>
+
 <body>
 
+    <div id="head_part">
+        <div id="headLine">Welcome Admin !!</div>
+    </div>
+
+    <div id = "delete_border" >
+        <div align="center">
+            <h3>If you want to delete users click here</h3>
+            <form action="DeleteServlet" method="post">
+                <button class="delete">Delete users</button><br>
+            </form>
+
+        </div>
+    </div>
+
+    <div id = "add_word_border" >
+        <div align="center">
+            <h3>If you want to add words click here</h3>
+            <form action="AddWordsServlet" method="post">
+                <button class="add_word">Add Words</button><br>
+            </form>
+
+        </div>
+    </div>
 
 </body>
 </html>

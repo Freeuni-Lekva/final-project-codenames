@@ -12,6 +12,7 @@ public class ServletUtils {
     public static final String ADMIN_USERNAME = "Admin";
 
     public static final String ADMIN_PAGE = "JSP/adminPage.jsp";
+    public static final String DELETE_PAGE = "JSP/deleteUser.jsp";
 
 
 
