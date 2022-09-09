@@ -16,7 +16,7 @@
 <%--<script type="application/javascript" src="gameroom.js"></script>--%>
 <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--%>
 <head>
-    <title>Title</title>
+    <title>Codenames</title>
 </head>
 <body>
 <%
@@ -31,7 +31,19 @@
         console.log(event.data);
         let gameEvent = JSON.parse(event.data);
         let x = document.getElementById("mytable").getElementsByTagName("td");
-        x[gameEvent.openedIndex].style.backgroundColor = gameEvent.colorOfIndex;
+        if(gameEvent.openedIndex != -1) {
+            x[gameEvent.openedIndex].style.backgroundColor = gameEvent.colorOfIndex;
+        }
+        let turnColor = gameEvent.sideNow;
+        if(turnColor == "RED"){
+            document.getElementById("turn").innerHTML = "It is Red Team's Turn";
+        } else {
+            document.getElementById("turn").innerHTML = "It is Blue Team's Turn";
+        }
+        let rred = gameEvent.remainingRed.toString();
+        let rblue = gameEvent.remainingBlue.toString();
+        document.getElementById("red").innerHTML = "Red Words Left: " + rred;
+        document.getElementById("blue").innerHTML = "Blue Words Left: " + rblue;
     }
 
     function onMessageChatSocket (event) {
@@ -63,6 +75,18 @@
         chatSocket.send(userMessage);
     }
 </script>
+
+
+<b id="turn">It is Blue Teams' Turn</b>
+
+
+<input onclick="changeBack(-1);" name="endturn" type="button" id="endturn" value="End Turn" /><br>
+<b id="red">Red Words Left: </b> <br>
+<b id="blue"> Blue Words Left: </b> <br>
+
+
+
+
 
 </html>
 <table id="mytable">
