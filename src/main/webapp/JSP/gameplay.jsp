@@ -31,7 +31,11 @@
         console.log(event.data);
         let gameEvent = JSON.parse(event.data);
         let x = document.getElementById("mytable").getElementsByTagName("td");
-        x[gameEvent.openedIndex].style.backgroundColor = gameEvent.colorOfIndex;
+        if(gameEvent.openedIndex != -1) {
+            x[gameEvent.openedIndex].style.backgroundColor = gameEvent.colorOfIndex;
+        }
+        let turnColor = gameEvent.sideNow;
+        document.getElementById("turn").value = turnColor;
     }
 
     function onMessageChatSocket (event) {
@@ -121,6 +125,9 @@
     </form>
 </div>
 
+<input onclick="changeBack(-1);" name="skipmove" type="button" id="skipmove" value="Skip" />
 
+
+<textarea id ="turn" rows="1" cols="20"></textarea>
 </body>
 </html>

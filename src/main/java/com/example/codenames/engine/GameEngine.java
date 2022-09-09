@@ -14,6 +14,11 @@ public class GameEngine {
 
     private final Room room;
     private final Board board;
+
+    public WordColor getSideToPlay() {
+        return sideToPlay;
+    }
+
     private WordColor sideToPlay;
     private final Set<Integer> opened;
 
@@ -51,6 +56,9 @@ public class GameEngine {
     }
 
      private synchronized GameEvent registerMoveInternal(int index) {
+        if(index == -1){
+            return skipTheMove();
+        }
         if (opened.contains(index)) {
             return null;
         }
@@ -103,6 +111,9 @@ public class GameEngine {
         return colors;
     }
 
+    public GameEvent startEvent(){
+        return new GameEvent(getSideToPlay());
+    }
 
 
 }

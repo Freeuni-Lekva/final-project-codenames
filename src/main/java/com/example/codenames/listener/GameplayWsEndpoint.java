@@ -3,6 +3,8 @@ package com.example.codenames.listener;
 import com.example.codenames.Servlets.GameplayServlet;
 import com.example.codenames.engine.GameEngine;
 import com.example.codenames.engine.GameEvent;
+import com.example.codenames.model.Game;
+import com.example.codenames.model.WordColor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.websocket.*;
@@ -24,6 +26,11 @@ public class GameplayWsEndpoint {
         String roomId = getRoomId(session);
         ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>());
         roomSessions.put(session, true);
+        GameEngine gameEngine = GameplayServlet.gameEngineByRoomId.get(roomId);
+        GameEvent startEvent = gameEngine.startEvent();
+        for (Session roomMemberSession : roomSessions.keySet()) {
+            roomMemberSession.getAsyncRemote().sendText(om.writeValueAsString(startEvent));
+        }
 //        ConcurrentHashMap<GameEvent, Boolean> events = eventStoreByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>());
 //        RemoteEndpoint.Basic remote = session.getBasicRemote();
 //        for (GameEvent event : events.keySet()) {

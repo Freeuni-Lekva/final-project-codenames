@@ -12,7 +12,10 @@ public class GameEvent {
 
     private WordColor winner;
 
+    
+
     public GameEvent(WordColor sideNow) {
+        this.openedIndex = -1;
         this.sideNow = sideNow;
     }
 
