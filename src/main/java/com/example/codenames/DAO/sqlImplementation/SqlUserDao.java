@@ -3,6 +3,7 @@ package com.example.codenames.DAO.sqlImplementation;
 
 import com.example.codenames.DAO.UserDao;
 import com.example.codenames.database.DBConnection;
+import com.example.codenames.model.PlayerHistory;
 import com.example.codenames.model.Role;
 import com.example.codenames.model.User;
 
@@ -184,7 +185,26 @@ public class SqlUserDao implements UserDao {
                     User.TABLE_USER_ID));
             statement.setInt(1, id);
 
-            if(statement.executeUpdate() == 1){
+            PreparedStatement statementFindUser = connection.prepareStatement(String.format(
+                    "SELECT* FROM %s WHERE %s = ? ;",
+                    PlayerHistory.TABLE_NAME,
+                    PlayerHistory.TABLE_USER_ID));
+            statementFindUser.setInt(1, id);
+
+            ResultSet resultSet = statementFindUser.executeQuery();
+            boolean flag = true;
+            if(resultSet.next()){
+                flag = false;
+                PreparedStatement statementForPlayerHistory = connection.prepareStatement(String.format(
+                        "DELETE FROM %s WHERE %s = ? ;",
+                        PlayerHistory.TABLE_NAME,
+                        PlayerHistory.TABLE_USER_ID));
+                statementForPlayerHistory.setInt(1, id);
+                if(statementForPlayerHistory.executeUpdate() == 1){
+                    flag = true;
+                }
+            }
+            if(statement.executeUpdate() == 1 && flag){
                 return true;
             }
             else{
