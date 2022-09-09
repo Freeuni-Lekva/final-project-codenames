@@ -1,6 +1,9 @@
 package com.example.codenames.engine;
 
 import com.example.codenames.model.WordColor;
+import com.google.gson.Gson;
+
+import java.util.List;
 
 public class GameEvent {
 
@@ -24,14 +27,23 @@ public class GameEvent {
 
     private Integer remainingBlue;
 
+    public boolean isSpy() {
+        return isSpy;
+    }
 
-    public GameEvent(WordColor sideNow, int remainingRed, int remainingBlue) {
+    private boolean isSpy;
+
+
+
+
+    public GameEvent(WordColor sideNow, int remainingRed, int remainingBlue, boolean isSpy) {
         this.sideNow = sideNow;
         this.colorOfIndex = null;
         this.winner = null;
         this.openedIndex = -1;
         this.remainingRed = remainingRed;
         this.remainingBlue = remainingBlue;
+        this.isSpy = isSpy;
     }
 
     public GameEvent(int openedIndex, WordColor colorOfIndex, WordColor sideNow, int remainingRed, int remainingBlue) {
@@ -41,6 +53,7 @@ public class GameEvent {
         this.winner = null;
         this.remainingRed = remainingRed;
         this.remainingBlue = remainingBlue;
+        this.isSpy = false;
     }
 
     public GameEvent(int openedIndex, WordColor colorOfIndex, WordColor sideNow, WordColor winner, int remainingRed, int remainingBlue) {
@@ -50,6 +63,7 @@ public class GameEvent {
         this.winner = winner;
         this.remainingRed = remainingRed;
         this.remainingBlue = remainingBlue;
+        this.isSpy = false;
     }
 
     public Integer getOpenedIndex() {

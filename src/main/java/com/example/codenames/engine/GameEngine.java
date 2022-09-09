@@ -30,10 +30,18 @@ public class GameEngine {
 
     private int remainingBlue;
 
+    public List<WordColor> getColors() {
+        return colors;
+    }
+
+    private List<WordColor> colors;
+
+
     public GameEngine(List<String> words) {
         this.room = null; // TODO: 08.09.22 will need this during housekeeping
         WordColor startsTheGame = rand.nextBoolean() ? WordColor.RED : WordColor.BLUE;
         List<WordColor> colors = generateColors(startsTheGame);
+        this.colors = colors;
         this.sideToPlay = startsTheGame;
         this.board = new Board(words, colors);
         this.remainingRed = SECOND_TEAM_NUM + (startsTheGame == WordColor.RED ? 1 : 0);
@@ -46,14 +54,10 @@ public class GameEngine {
         User curUser = (User)(httpSession.getAttribute(User.ATTRIBUTE));
         String curUserName = curUser.getUsername();
         if(sideToPlay == WordColor.RED){
-            System.out.println(getRoom() != null);
-            System.out.println(getRoom().getRedOperatives().size());
             if(!this.room.redOperativeNames().contains(curUserName)){
                 return null;
             }
         } else {
-            System.out.println(getRoom() != null);
-            System.out.println(getRoom().getBlueOperatives().size());
             if(!this.room.blueOperativeNames().contains(curUserName)){
                 return null;
             }
@@ -68,7 +72,7 @@ public class GameEngine {
 
     public synchronized GameEvent skipTheMove() {
         twistSide();
-        return new GameEvent(this.sideToPlay, this.remainingRed, this.remainingBlue);
+        return new GameEvent(this.sideToPlay, this.remainingRed, this.remainingBlue, false);
     }
 
     public List<String> getWords() {
@@ -78,7 +82,7 @@ public class GameEngine {
      private synchronized GameEvent registerMoveInternal(int index) {
         if(index == -1){
             skipTheMove();
-            return new GameEvent(sideToPlay, this.remainingRed, this.remainingBlue);
+            return new GameEvent(sideToPlay, this.remainingRed, this.remainingBlue, false);
         }
         if (opened.contains(index)) {
             return null;
@@ -140,8 +144,14 @@ public class GameEngine {
         return remainingBlue;
     }
 
-    public GameEvent startEvent(){
-        return new GameEvent(sideToPlay, remainingRed, remainingBlue);
+    public GameEvent startEvent(HttpSession httpSession){
+        User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
+        String username = user.getUsername();
+        boolean isSpy = false;
+        if(!room.redOperativeNames().contains(username) && !room.blueOperativeNames().contains(username)){
+            isSpy = true;
+        }
+        return new GameEvent(sideToPlay, remainingRed, remainingBlue, isSpy);
     }
 
 }

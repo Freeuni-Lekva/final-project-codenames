@@ -40,6 +40,11 @@ public class GameplayServlet extends HttpServlet {
         GameEngine gameEngine = gameEngineByRoomId.computeIfAbsent(roomID, (id) -> createBoard(request, id));
         Room room = (Room)(request.getServletContext().getAttribute(roomID));
         gameEngine.setRoom(room);
+        List<WordColor> colors = gameEngine.getColors();
+        GameEvent startEvent = gameEngine.startEvent(request.getSession());
+        boolean isSpy = startEvent.isSpy();
+        request.setAttribute("colors", colors);
+        request.setAttribute("isSpy", isSpy);
         System.out.println(gameEngine.getRoom() == null);
         System.out.println(gameEngine.getRoom().getRedOperatives().size());
         request.setAttribute(NameConstants.WORDS, gameEngine.getWords());
