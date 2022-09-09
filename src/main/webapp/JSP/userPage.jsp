@@ -300,13 +300,13 @@
             <div id = "leaderboard_border" >
                 <div align="center">
                     <h4>See leaderboard</h4>
-                    <a href="JSP/leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
+                    <a href="leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
                 </div>
             </div>
             <div id = "create_border" >
                 <div align="center">
                     <h4>Create new room</h4>
-                    <form action="JSP/chooseCategories.jsp" method="post">
+                    <form action="chooseCategories.jsp" method="post">
                         <button class="button_createRoom">Create room</button><br>
                     </form>
 
@@ -315,7 +315,7 @@
             <div id = "join_border" >
                 <div align="center">
                     <h4>Join the room</h4>
-                    <form action="JoinRoomServlet" method="get">
+                    <form action="../JoinRoomServlet" method="get">
                         <button class="button_joinRoom">Join</button><br>
                     </form>
                 </div>
@@ -324,7 +324,7 @@
             <div id = "join_Random_border" >
                 <div align="center">
                     <h4>Join random room</h4>
-                    <form action="JoinRandomRoomServlet" method="post">
+                    <form action="../JoinRandomRoomServlet" method="post">
                         <button class="button_joinRandomRoom">Join</button><br>
                     </form>
 
@@ -335,9 +335,6 @@
         </div>
 
     </div>
-
-
-z
 
 
 

@@ -117,5 +117,8 @@ public class GameEngine {
         return remainingBlue;
     }
 
+    public GameEvent startEvent(){
+        return new GameEvent(sideToPlay, remainingRed, remainingBlue);
+    }
 
 }

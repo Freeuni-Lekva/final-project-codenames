@@ -26,11 +26,9 @@ public class GameplayWsEndpoint {
         String roomId = getRoomId(session);
         ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>());
         roomSessions.put(session, true);
-//        ConcurrentHashMap<GameEvent, Boolean> events = eventStoreByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>());
-//        RemoteEndpoint.Basic remote = session.getBasicRemote();
-//        for (GameEvent event : events.keySet()) {
-//            remote.sendText(om.writeValueAsString(event));
-//        }
+        GameEngine gameEngine = GameplayServlet.gameEngineByRoomId.get(roomId);
+        GameEvent startEvent = gameEngine.startEvent();
+        session.getAsyncRemote().sendText(om.writeValueAsString(startEvent));
     }
 
     @OnMessage
