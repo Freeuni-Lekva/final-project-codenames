@@ -26,7 +26,7 @@ public class SqlWordDAO implements WordDAO {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "INSERT INTO " + TABLE_NAME + " (word, category) " +
-                    "VALUES (?, ?);");
+                            "VALUES (?, ?);");
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, category);
             return preparedStatement.executeUpdate() == 1;
@@ -101,5 +101,24 @@ public class SqlWordDAO implements WordDAO {
         } catch (SQLException e) {
             throw new WordNotFoundException("Word " + name + " not found");
         }
+    }
+
+    @Override
+    public List<String> getAllCategories() {
+        List<String> categories = new ArrayList<>();
+        Connection connection = dbconnection.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT DISTINCT category from " + TABLE_NAME + ";"
+            );
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                categories.add(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return categories;
     }
 }

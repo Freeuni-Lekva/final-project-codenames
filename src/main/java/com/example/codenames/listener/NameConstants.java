@@ -13,6 +13,8 @@ public class NameConstants {
     public static final String WORD_SERVICE = "WORD_SERVICE";
     public static final String ROOM_MAP = "ROOM_MAP";
     public static final String ROOM_ID = "roomID";
+    public static final String ROOM = "ROOM";
     public static final String JSON = "JSON";
     public static final String SESSION = "SESSION";
+    public static final String CATEGORIES_LIST = "CATEGORIES_LIST";
 }

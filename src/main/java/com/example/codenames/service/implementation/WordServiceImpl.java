@@ -78,4 +78,13 @@ public class WordServiceImpl implements WordService {
             return null;
         }
     }
+
+    @Override
+    public List<String> getAllCategories() {
+        try {
+            return wordDAO.getAllCategories();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
 }

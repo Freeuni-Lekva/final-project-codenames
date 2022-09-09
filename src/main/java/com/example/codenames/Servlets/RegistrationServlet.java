@@ -34,7 +34,6 @@ public class RegistrationServlet extends HttpServlet {
             UserCredentialsDto userCredentialsDto = new UserCredentialsDto(username, password);
             User user = userService.registerUser(userCredentialsDto);
             request.getSession().setAttribute(User.ATTRIBUTE, user);
-            System.out.println(user.toString());
             request.getRequestDispatcher(ServletUtils.USER_PAGE).forward(request, response);
         } catch (UserRegistrationException e){
             request.getSession().setAttribute(NameConstants.REGISTRATION_ERROR, e.getMessage());

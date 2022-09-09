@@ -33,7 +33,6 @@ public class SqlPlayerHistoryDao implements PlayerHistoryDao {
                        " WHERE user_id = " + userID +
                        " ORDER BY " + GAME_TABLE_NAME + " .date_played DESC");
             ResultSet resultSet = statement.executeQuery();
-            System.out.println(resultSet.getFetchSize());
             while (resultSet.next()) {
                 result.add(resultSet.getInt(1));
                 if(result.size() == num){

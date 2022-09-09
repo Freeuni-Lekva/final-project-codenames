@@ -30,7 +30,6 @@ public class StartGameEndpoint {
             currentRoomSessions.add(session);
             sessions.put(roomID, currentRoomSessions);
         }
-        System.out.println("One user entered");
     }
 
     @OnMessage
@@ -43,13 +42,13 @@ public class StartGameEndpoint {
             User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
             if (room.getOwner().getUser().equals(user)) {
                 Set<Session> roomSessions = StartGameEndpoint.sessions.get(roomID);
+                roomMap.get(roomID).lock();
                 for (Session player : roomSessions) {
                     player.getAsyncRemote().sendText("START-GAME");
                 }
             } else {
                 //
             }
-            roomMap.remove(roomID);
         }
 
     }

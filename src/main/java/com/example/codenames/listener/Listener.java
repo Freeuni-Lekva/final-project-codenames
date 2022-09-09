@@ -47,7 +47,7 @@ public class Listener implements ServletContextListener, HttpSessionListener, Ht
         PlayerHistoryDao playerHistoryDAO = new SqlPlayerHistoryDao(dbConnection);
         PlayerHistoryService playerHistoryService = new PlayerHistoryServiceImpl(playerHistoryDAO);
         servletContext.setAttribute(NameConstants.PLAYER_HISTORY_SERVICE, playerHistoryService);
-        ConcurrentHashMap<String, Room> roomMap = new ConcurrentHashMap<>();
+        Map<String, Room> roomMap = new ConcurrentHashMap<>();
         servletContext.setAttribute(NameConstants.ROOM_MAP, roomMap);
         WordDAO wordDAO = new SqlWordDAO(dbConnection);
         WordService wordService = new WordServiceImpl(wordDAO);

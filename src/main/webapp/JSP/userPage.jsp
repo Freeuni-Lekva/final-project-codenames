@@ -279,7 +279,7 @@
             <div id = "create_border" >
                 <div align="center">
                     <h4>Create new room</h4>
-                    <form action="CreateRoomServlet" method="post">
+                    <form action="JSP/chooseCategories.jsp" method="post">
                         <button class="button_createRoom">Create room</button><br>
                     </form>
 
