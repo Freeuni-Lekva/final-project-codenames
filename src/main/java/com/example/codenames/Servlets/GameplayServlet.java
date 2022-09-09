@@ -39,12 +39,9 @@ public class GameplayServlet extends HttpServlet {
         request.setAttribute(NameConstants.ROOM_ID, roomID);
         GameEngine gameEngine = gameEngineByRoomId.computeIfAbsent(roomID, (id) -> createBoard(request, id));
         Room room = (Room)(request.getServletContext().getAttribute(roomID));
-        System.out.println(room + "vbfasd");
         gameEngine.setRoom(room);
         System.out.println(gameEngine.getRoom() == null);
         System.out.println(gameEngine.getRoom().getRedOperatives().size());
-//        System.out.println(gameEngine.getRoom().blueOperativeNames().size());
-//        System.out.println(gameEngine.getRoom().isAvailable());
         request.setAttribute(NameConstants.WORDS, gameEngine.getWords());
     }
 

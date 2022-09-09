@@ -47,7 +47,7 @@ public class GameplayWsEndpoint {
                 roomMemberSession.getAsyncRemote().sendText(om.writeValueAsString(gameEvent));
             }
         }
-        if(gameEvent.getWinner() != null){
+        if(gameEvent != null && gameEvent.getWinner() != null){
 
         }
     }

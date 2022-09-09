@@ -43,26 +43,22 @@ public class GameEngine {
 
 
     public GameEvent registerMove(HttpSession httpSession, int index) {
-        if(index != -1){
-            System.out.println("vaa");
-            User curUser = (User)(httpSession.getAttribute(User.ATTRIBUTE));
-            String curUserName = curUser.getUsername();
-            System.out.println("vin var me");
-            System.out.println(curUserName);
-            if(sideToPlay == WordColor.RED){
-                System.out.println(getRoom() != null);
-                System.out.println(getRoom().getRedOperatives().size());
-                if(!this.room.redOperativeNames().contains(curUserName)){
-                    return null;
-                }
-            } else {
-                System.out.println(getRoom() != null);
-                System.out.println(getRoom().getBlueOperatives().size());
-                if(!this.room.blueOperativeNames().contains(curUserName)){
-                    return null;
-                }
+        User curUser = (User)(httpSession.getAttribute(User.ATTRIBUTE));
+        String curUserName = curUser.getUsername();
+        if(sideToPlay == WordColor.RED){
+            System.out.println(getRoom() != null);
+            System.out.println(getRoom().getRedOperatives().size());
+            if(!this.room.redOperativeNames().contains(curUserName)){
+                return null;
+            }
+        } else {
+            System.out.println(getRoom() != null);
+            System.out.println(getRoom().getBlueOperatives().size());
+            if(!this.room.blueOperativeNames().contains(curUserName)){
+                return null;
             }
         }
+
         GameEvent gameEvent = registerMoveInternal(index);
         if (gameEvent != null && gameEvent.getWinner() != null) {
             // TODO: 08.09.22 do the all housekeeping for the ended game
