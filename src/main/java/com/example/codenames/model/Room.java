@@ -127,4 +127,22 @@ public class Room {
     public synchronized void lock() {
         available = false;
     }
+
+    public Set<String> redOperativeNames(){
+        Set<String> result = new HashSet<>();
+        for(Player player : getRedOperatives()){
+            System.out.println("ager");
+            System.out.println(player.getUser().getUsername());
+            result.add(player.getUser().getUsername());
+        }
+        return result;
+    }
+
+    public Set<String> blueOperativeNames(){
+        Set<String> result = new HashSet<>();
+        for(Player player : getBlueOperatives()){
+            result.add(player.getUser().getUsername());
+        }
+        return result;
+    }
 }

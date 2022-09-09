@@ -7,10 +7,13 @@ import com.example.codenames.model.Game;
 import com.example.codenames.model.WordColor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.example.codenames.listener.NameConstants.SESSION;
 
 @ServerEndpoint(value = "/gameplay_ws", configurator = EndpointConfigurator.class)
 public class GameplayWsEndpoint {
@@ -27,7 +30,8 @@ public class GameplayWsEndpoint {
         ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.computeIfAbsent(roomId, k -> new ConcurrentHashMap<>());
         roomSessions.put(session, true);
         GameEngine gameEngine = GameplayServlet.gameEngineByRoomId.get(roomId);
-        GameEvent startEvent = gameEngine.startEvent();
+        HttpSession httpSession = (HttpSession) session.getUserProperties().get(SESSION);
+        GameEvent startEvent = gameEngine.startEvent(httpSession);
         session.getAsyncRemote().sendText(om.writeValueAsString(startEvent));
     }
 
@@ -36,12 +40,16 @@ public class GameplayWsEndpoint {
         String roomId = getRoomId(session);
         GameEngine gameEngine = GameplayServlet.gameEngineByRoomId.get(roomId);
         int index = Integer.parseInt(message);
-        GameEvent gameEvent = gameEngine.registerMove(index);
+        HttpSession httpSession = (HttpSession) session.getUserProperties().get(SESSION);
+        GameEvent gameEvent = gameEngine.registerMove(httpSession, index);
         if (gameEvent != null) {
             ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.get(roomId);
             for (Session roomMemberSession : roomSessions.keySet()) {
                 roomMemberSession.getAsyncRemote().sendText(om.writeValueAsString(gameEvent));
             }
+        }
+        if(gameEvent != null && gameEvent.getWinner() != null){
+
         }
     }
 

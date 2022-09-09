@@ -39,7 +39,10 @@ public class StartGameEndpoint {
             HttpSession httpSession = (HttpSession) session.getUserProperties().get(SESSION);
             Map<String, Room> roomMap = (Map<String, Room>) httpSession.getServletContext().getAttribute(NameConstants.ROOM_MAP);
             Room room = roomMap.get(roomID);
+            System.out.println(room + "ip");
+            System.out.println(room.getBlueOperatives().size());
             User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
+            httpSession.getServletContext().setAttribute(roomID, room);
             if (room.getOwner().getUser().equals(user)) {
                 Set<Session> roomSessions = StartGameEndpoint.sessions.get(roomID);
                 roomMap.get(roomID).lock();

@@ -21,12 +21,15 @@
 <body>
 <%
     List<String> words = (List<String>) request.getAttribute(NameConstants.WORDS);
-
+    List<WordColor> colors = (List<WordColor>) request.getAttribute("colors");
+    boolean isSpy = (boolean) request.getAttribute("isSpy");
+    WordColor color0 = colors.get(0);
 %>
 
 
 <html>
 <script>
+
     function onMessageColorSocket (event) {
         console.log(event.data);
         let gameEvent = JSON.parse(event.data);
@@ -44,7 +47,37 @@
         let rblue = gameEvent.remainingBlue.toString();
         document.getElementById("red").innerHTML = "Red Words Left: " + rred;
         document.getElementById("blue").innerHTML = "Blue Words Left: " + rblue;
+        if(${isSpy}){
+            x[0].style.backgroundColor = "${colors.get(0)}";
+            x[1].style.backgroundColor = "${colors.get(1)}";
+            x[2].style.backgroundColor = "${colors.get(2)}";
+            x[3].style.backgroundColor = "${colors.get(3)}";
+            x[4].style.backgroundColor = "${colors.get(4)}";
+            x[5].style.backgroundColor = "${colors.get(5)}";
+            x[6].style.backgroundColor = "${colors.get(6)}";
+            x[7].style.backgroundColor = "${colors.get(7)}";
+            x[8].style.backgroundColor = "${colors.get(8)}";
+            x[9].style.backgroundColor = "${colors.get(9)}";
+
+            x[10].style.backgroundColor = "${colors.get(10)}";
+            x[11].style.backgroundColor = "${colors.get(11)}";
+            x[12].style.backgroundColor = "${colors.get(12)}";
+            x[13].style.backgroundColor = "${colors.get(13)}";
+            x[14].style.backgroundColor = "${colors.get(14)}";
+            x[15].style.backgroundColor = "${colors.get(15)}";
+            x[16].style.backgroundColor = "${colors.get(16)}";
+            x[17].style.backgroundColor = "${colors.get(17)}";
+            x[18].style.backgroundColor = "${colors.get(18)}";
+            x[19].style.backgroundColor = "${colors.get(19)}";
+
+            x[20].style.backgroundColor = "${colors.get(20)}";
+            x[21].style.backgroundColor = "${colors.get(21)}";
+            x[22].style.backgroundColor = "${colors.get(22)}";
+            x[23].style.backgroundColor = "${colors.get(23)}";
+            x[24].style.backgroundColor = "${colors.get(24)}";
+        }
     }
+
 
     function onMessageChatSocket (event) {
         let chatMessage = JSON.parse(event.data);
