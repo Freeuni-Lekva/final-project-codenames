@@ -22,6 +22,10 @@ CREATE TABLE users(
 
 );
 
+INSERT INTO users (user_name, hashed_password, games_won, games_lost, games_played, winning_rate, black_word_selected, registration_date, status, points)
+VALUES ('Admin', '7af2d10b73ab7cd8f603937f7697cb5fe432c7ff', 0, 0, 0, 0.0, 0, sysdate(), 'ADMIN', 0);
+# Admin password is the following: Admin123
+
 CREATE TABLE game_history(
     id                      INT       NOT NULL AUTO_INCREMENT,
     winner                  VARCHAR(50)      NOT NULL,
