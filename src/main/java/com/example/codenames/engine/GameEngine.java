@@ -43,7 +43,7 @@ public class GameEngine {
 
     public synchronized GameEvent skipTheMove() {
         twistSide();
-        return new GameEvent(this.sideToPlay);
+        return new GameEvent(this.sideToPlay, this.remainingRed, this.remainingBlue);
     }
 
     public List<String> getWords() {
@@ -51,6 +51,12 @@ public class GameEngine {
     }
 
      private synchronized GameEvent registerMoveInternal(int index) {
+         System.out.println(this.remainingRed);
+         System.out.println( this.remainingBlue);
+        if(index == -1){
+            skipTheMove();
+            return new GameEvent(sideToPlay, this.remainingRed, this.remainingBlue);
+        }
         if (opened.contains(index)) {
             return null;
         }
@@ -60,10 +66,10 @@ public class GameEngine {
         switch (wordColor) {
             case BLACK:
                 twistSide();
-                return new GameEvent(index, WordColor.BLACK, this.sideToPlay, this.sideToPlay);
+                return new GameEvent(index, WordColor.BLACK, this.sideToPlay, this.sideToPlay, this.remainingRed, this.remainingBlue);
             case BEIGE:
                 twistSide();
-                return new GameEvent(index, WordColor.BEIGE, this.sideToPlay);
+                return new GameEvent(index, WordColor.BEIGE, this.sideToPlay, this.remainingRed, this.remainingBlue);
             default:
                 int remaining = 0;
                 if (wordColor == WordColor.RED) {
@@ -77,7 +83,7 @@ public class GameEngine {
                     twistSide();
                 }
                 WordColor winner = remaining == 0 ? wordColor : null;
-                return new GameEvent(index, wordColor, sideToPlay, winner);
+                return new GameEvent(index, wordColor, sideToPlay, winner, this.remainingRed, this.remainingBlue);
         }
     }
 
@@ -103,6 +109,13 @@ public class GameEngine {
         return colors;
     }
 
+    public int getRemainingRed() {
+        return remainingRed;
+    }
+
+    public int getRemainingBlue() {
+        return remainingBlue;
+    }
 
 
 }

@@ -12,22 +12,44 @@ public class GameEvent {
 
     private WordColor winner;
 
-    public GameEvent(WordColor sideNow) {
-        this.sideNow = sideNow;
+    private Integer remainingRed;
+
+    public Integer getRemainingRed() {
+        return remainingRed;
     }
 
-    public GameEvent(int openedIndex, WordColor colorOfIndex, WordColor sideNow) {
+    public Integer getRemainingBlue() {
+        return remainingBlue;
+    }
+
+    private Integer remainingBlue;
+
+
+    public GameEvent(WordColor sideNow, int remainingRed, int remainingBlue) {
+        this.sideNow = sideNow;
+        this.colorOfIndex = null;
+        this.winner = null;
+        this.openedIndex = -1;
+        this.remainingRed = remainingRed;
+        this.remainingBlue = remainingBlue;
+    }
+
+    public GameEvent(int openedIndex, WordColor colorOfIndex, WordColor sideNow, int remainingRed, int remainingBlue) {
         this.openedIndex = openedIndex;
         this.colorOfIndex = colorOfIndex;
         this.sideNow = sideNow;
         this.winner = null;
+        this.remainingRed = remainingRed;
+        this.remainingBlue = remainingBlue;
     }
 
-    public GameEvent(int openedIndex, WordColor colorOfIndex, WordColor sideNow, WordColor winner) {
+    public GameEvent(int openedIndex, WordColor colorOfIndex, WordColor sideNow, WordColor winner, int remainingRed, int remainingBlue) {
         this.openedIndex = openedIndex;
         this.colorOfIndex = colorOfIndex;
         this.sideNow = sideNow;
         this.winner = winner;
+        this.remainingRed = remainingRed;
+        this.remainingBlue = remainingBlue;
     }
 
     public Integer getOpenedIndex() {

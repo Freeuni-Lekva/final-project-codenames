@@ -3,6 +3,8 @@ package com.example.codenames.listener;
 import com.example.codenames.Servlets.GameplayServlet;
 import com.example.codenames.engine.GameEngine;
 import com.example.codenames.engine.GameEvent;
+import com.example.codenames.model.Game;
+import com.example.codenames.model.WordColor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.websocket.*;
