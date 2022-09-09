@@ -15,4 +15,5 @@ public class NameConstants {
     public static final String ROOM_ID = "roomID";
     public static final String JSON = "JSON";
     public static final String SESSION = "SESSION";
+    public static final String USER_ID = "USER_ID";
 }

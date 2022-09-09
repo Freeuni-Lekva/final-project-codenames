@@ -1,19 +1,17 @@
-<%@ page import="com.example.codenames.service.PlayerHistoryService" %>
-<%@ page import="com.example.codenames.listener.NameConstants" %>
-<%@ page import="com.example.codenames.model.Game" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.example.codenames.service.implementation.PlayerHistoryServiceImpl" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="com.example.codenames.DTO.UserGamesDto" %>
 <%@ page import="com.example.codenames.model.User" %>
+<%@ page import="com.example.codenames.service.implementation.UserServiceImpl" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.codenames.listener.NameConstants" %><%--
+  Created by IntelliJ IDEA.
+  User: ruska-ubuntu
+  Date: 08.09.22
+  Time: 20:57
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%
-        ServletContext sc = request.getServletContext();
-        User user = (User) request.getSession().getAttribute(User.ATTRIBUTE);
-    %>
-    <title><%=user.getUsername()%></title>
+    <title>Admin</title>
     <style>
         body {
             margin: 0;
@@ -26,9 +24,8 @@
             background-color: chocolate;
             margin: 0;
         }
-        #game_history {
+        #user_list{
             border: 5px dashed orangered;
-            right: 5px;
             position: absolute;
             margin: 1%;
             top: 10%;
@@ -171,11 +168,11 @@
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
-        .button_joinRandomRoom{
+        .delete{
             display: inline-block;
-            padding: 15px 25px;
-            margin: 3px;
-            font-size: 24px;
+            padding: 3px 5px;
+            margin: 0.5px;
+            font-size: 3px;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
@@ -183,127 +180,67 @@
             color: ivory;
             background-color: orangered;
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 9px #999;
+            border-radius: 3px;
+            box-shadow: 0 3px #999;
         }
 
-        .button_joinRandomRoom:hover {background-color: #3e8e41}
+        .delete:hover {background-color: #3e8e41}
 
-        .button_joinRandomRoom:active {
+        .delete:active {
             background-color: orangered;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
+            box-shadow: 0 2px #666;
+            transform: translateY(1px);
         }
-
-
-
     </style>
 
-</head>
-
-
-
-<body>
     <div id="head_part">
-        <div id="headLine">Welcome <%=user.getUsername()%> </div>
+        <div id="headLine">Welcome Admin</div>
     </div>
-    <div id="game_history">
-        <div class="title_text">
-            Your Games
-            <div align="center">
-            <table border="1" cellpadding="5"  WIDTH=700 >
+
+    <div id="user_list">
+
+        <div align="center">
+            <table border="1" cellpadding="5"  WIDTH=700>
                 <tr>
-                    <th>Game_id</th>
-                    <th>Winner</th>
-                    <th>My team</th>
-                    <th>Points gained</th>
-                    <th>Date</th>
+                    <th>Rating</th>
+                    <th>Username</th>
+                    <th>Points</th>
+                    <th>Delete</th>
                 </tr>
                 <%
-                    PlayerHistoryServiceImpl service = (PlayerHistoryServiceImpl) sc.getAttribute(NameConstants.PLAYER_HISTORY_SERVICE);
-                    List<UserGamesDto> games = service.getSortedGames(user.getUserID());
+                    ServletContext sc = request.getServletContext();
+                    UserServiceImpl service = (UserServiceImpl) sc.getAttribute(NameConstants.USER_SERVICE);
+                    List<User> users = service.getUsersByPoints(true);
                     int i = 1;
-                    for(UserGamesDto game : games) {
-                        String pattern = "MM-dd-yyyy";
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-                        int points = 0;
-                        if(game.getGames().getWinner().equals(game.getUserTeam())){
-                            points = 1;
-                        }
-                        else{
-                            if(game.getGames().isBlackWordSelected()) {
-                                points = -1;
-                            }
-                        }
-                        %>
+                    for(User user : users) {%>
                 <tr>
-                    <td><%=game.getGames().getGameID()%></td>
-                    <td><%=game.getGames().getWinner()%></td>
-                    <td><%=game.getUserTeam()%></td>
-                    <td><%=points%></td>
-                    <td><%=simpleDateFormat.format(game.getGames().getDate())%></td>
+                    <td><%=i%></td>
+                    <td><%=user.getUsername()%></td>
+                    <td><%=user.getPoints()%></td>
+                    <td>
+                        <form action="DeleteUserServlet" method="post">
+                            <button type="submit"><img src="delete.png" style="width: 40%" >
+                            </button><br>
+                            <input type="hidden" id=<%=NameConstants.USER_ID%> name=<%=NameConstants.USER_ID%> value=<%=user.getUserID()%>>
+                        </form>
+
+                    </td>
                 </tr>
                 <% i++;
                 } %>
+
             </table>
         </div>
-        </div>
-    </div>
-
-    <div id="personal_info">
-        <div class="personal_texts">
-            <h3>Personal information</h3>
-            Name: <%=user.getUsername()%><br>
-            Points: <%=user.getPoints()%><br>
-            Games played: <%=user.getGamesPlayed()%><br>
-            Games won: <%=user.getGamesWon()%><br>
-            Games lost: <%=user.getGamesLost()%><br>
-            Black words selected: <%=user.getBlackWordCounter()%><br>
-            Winning rate: <%=user.getWinningRate()%><br>
-            Registration date : <%=user.getRegistrationDate()%><br>
-            <div id = "leaderboard_border" >
-                <div align="center">
-                    <h4>See leaderboard</h4>
-                    <a href="JSP/leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
-                </div>
-            </div>
-            <div id = "create_border" >
-                <div align="center">
-                    <h4>Create new room</h4>
-                    <form action="CreateRoomServlet" method="post">
-                        <button class="button_createRoom">Create room</button><br>
-                    </form>
-
-                </div>
-            </div>
-            <div id = "join_border" >
-                <div align="center">
-                    <h4>Join the room</h4>
-                    <form action="JoinRoomServlet" method="post">
-                        <button class="button_joinRoom">Join</button><br>
-                    </form>
-                </div>
-            </div>
-
-            <div id = "join_Random_border" >
-                <div align="center">
-                    <h4>Join random room</h4>
-                    <form action="JoinRandomRoomServlet" method="post">
-                        <button class="button_joinRandomRoom">Join</button><br>
-                    </form>
-
-                </div>
-            </div>
 
 
-        </div>
+
+
 
     </div>
 
 
-z
-
-
+</head>
+<body>
 
 
 </body>

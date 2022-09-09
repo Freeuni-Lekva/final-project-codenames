@@ -8,6 +8,7 @@ public class ServletUtils {
 
     public static final String LEADERBOARD_PAGE = "JSP/leaderboard.jsp";
     public static final String USER_PAGE = "JSP/userPage.jsp";
+    public static final String ADMIN_PAGE = "JSP/adminPage.jsp";
 
     protected static void setEncoding(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         response.setContentType("text/html;charset=UTF-8");

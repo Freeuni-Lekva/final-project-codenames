@@ -15,4 +15,5 @@ public interface UserService {
     List<User> getUsersByPoints(Boolean flag);
 
     boolean updateUser(User user);
+    boolean deleteUser(int userId);
 }

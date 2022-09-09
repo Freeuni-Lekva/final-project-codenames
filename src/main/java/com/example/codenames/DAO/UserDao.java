@@ -13,4 +13,6 @@ public interface UserDao {
     List<User> getUsersByPoints(String order);
     boolean updateUser(User user);
 
+    boolean deleteUser(int id);
+
 }

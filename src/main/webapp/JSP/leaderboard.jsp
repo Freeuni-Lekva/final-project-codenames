@@ -30,7 +30,7 @@
         <%
             ServletContext sc = request.getServletContext();
             UserServiceImpl service = (UserServiceImpl) sc.getAttribute(NameConstants.USER_SERVICE);
-            List<User> users = service.getUsersByPoints(true);
+            List<User> users = service.getUsersByPoints(false);
             int i = 1;
             for(User user : users) {%>
             <tr>

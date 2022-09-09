@@ -174,5 +174,28 @@ public class SqlUserDao implements UserDao {
 
     }
 
+    @Override
+    public boolean deleteUser(int id) {
+        Connection connection = dbconnection.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(String.format(
+                    "DELETE FROM %s WHERE %s = ? ;",
+                    User.TABLE_NAME,
+                    User.TABLE_USER_ID));
+            statement.setInt(1, id);
+
+            if(statement.executeUpdate() == 1){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
 }
