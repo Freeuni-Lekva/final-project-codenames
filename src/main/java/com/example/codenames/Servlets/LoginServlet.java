@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
             UserCredentialsDto userCredentialsDto = new UserCredentialsDto(username, password);
             User user = userService.loginUser(userCredentialsDto);
             request.getSession().setAttribute(User.ATTRIBUTE, user);
-            request.getRequestDispatcher(ServletUtils.USER_PAGE).forward(request, response);
+            response.sendRedirect(ServletUtils.USER_PAGE);
         } catch (InvalidCredentialsException e){
             request.getSession().setAttribute(NameConstants.LOGIN_ERROR, e.getMessage());
             response.setHeader("Refresh", "0; URL=http://localhost:8080/Codenames_war_exploded/");

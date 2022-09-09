@@ -1,4 +1,5 @@
 <%@ page import="com.example.codenames.listener.NameConstants" %>
+<%@ page import="com.example.codenames.model.User" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -11,6 +12,11 @@
     %>
     <title>Codenames</title>
 </head>
+<%
+    if(session.getAttribute(User.ATTRIBUTE) != null){
+        response.sendRedirect("JSP/userPage.jsp");
+    }
+%>
 <body>
 <h1>Welcome to Codenames! </h1> <br/>
 <p> Please log in: </p>
