@@ -219,8 +219,7 @@
                     <td><%=user.getPoints()%></td>
                     <td>
                         <form action="DeleteUserServlet" method="post">
-                            <button type="submit"><img src="delete.png" style="width: 40%" >
-                            </button><br>
+                            <input type="image" name="Name of image button" src="https://as1.ftcdn.net/v2/jpg/03/46/38/40/1000_F_346384068_e06I3cC4n0BCyB8f5PZ9cG2YR3N68ZYc.jpg" style="width: 40px; height: 40px"  alt="delete">
                             <input type="hidden" id=<%=NameConstants.USER_ID%> name=<%=NameConstants.USER_ID%> value=<%=user.getUserID()%>>
                         </form>
 
