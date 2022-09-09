@@ -2,6 +2,7 @@ package com.example.codenames.engine;
 
 import com.example.codenames.model.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 public class GameEngine {
@@ -12,7 +13,15 @@ public class GameEngine {
 
     private static final Random rand = new Random(System.currentTimeMillis());
 
-    private final Room room;
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    private Room room;
     private final Board board;
     private WordColor sideToPlay;
     private final Set<Integer> opened;
@@ -33,7 +42,27 @@ public class GameEngine {
     }
 
 
-    public GameEvent registerMove(int index) {
+    public GameEvent registerMove(HttpSession httpSession, int index) {
+        if(index != -1){
+            System.out.println("vaa");
+            User curUser = (User)(httpSession.getAttribute(User.ATTRIBUTE));
+            String curUserName = curUser.getUsername();
+            System.out.println("vin var me");
+            System.out.println(curUserName);
+            if(sideToPlay == WordColor.RED){
+                System.out.println(getRoom() != null);
+                System.out.println(getRoom().getRedOperatives().size());
+                if(!this.room.redOperativeNames().contains(curUserName)){
+                    return null;
+                }
+            } else {
+                System.out.println(getRoom() != null);
+                System.out.println(getRoom().getBlueOperatives().size());
+                if(!this.room.blueOperativeNames().contains(curUserName)){
+                    return null;
+                }
+            }
+        }
         GameEvent gameEvent = registerMoveInternal(index);
         if (gameEvent != null && gameEvent.getWinner() != null) {
             // TODO: 08.09.22 do the all housekeeping for the ended game
@@ -51,8 +80,6 @@ public class GameEngine {
     }
 
      private synchronized GameEvent registerMoveInternal(int index) {
-         System.out.println(this.remainingRed);
-         System.out.println( this.remainingBlue);
         if(index == -1){
             skipTheMove();
             return new GameEvent(sideToPlay, this.remainingRed, this.remainingBlue);

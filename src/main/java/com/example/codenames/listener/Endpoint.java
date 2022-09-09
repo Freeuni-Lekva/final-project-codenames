@@ -84,7 +84,7 @@ public class Endpoint {
             Map<String, Room> roomMap = (Map<String, Room>) httpSession.getServletContext().getAttribute(NameConstants.ROOM_MAP);
             Room room = roomMap.get(roomID);
             User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
-            room.removePlayer(room.getPlayerByUsername(user.getUsername()));
+            //room.removePlayer(room.getPlayerByUsername(user.getUsername()));
             httpSession.removeAttribute(ROOM);
             String json = new Gson().toJson(room);
             for(Session playerSession : sessions){
