@@ -288,7 +288,7 @@
             <div id = "join_border" >
                 <div align="center">
                     <h4>Join the room</h4>
-                    <form action="JoinRoomServlet" method="post">
+                    <form action="JoinRoomServlet" method="get">
                         <button class="button_joinRoom">Join</button><br>
                     </form>
                 </div>

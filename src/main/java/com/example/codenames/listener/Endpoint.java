@@ -79,13 +79,17 @@ public class Endpoint {
         Set<Session> sessions = sessionsMap.get(roomID);
         sessions.remove(session);
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(SESSION);
-        Map<String, Room> roomMap = (Map<String, Room>) httpSession.getServletContext().getAttribute(NameConstants.ROOM_MAP);
-        Room room = roomMap.get(roomID);
-        User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
-        room.removePlayer(room.getPlayerByUsername(user.getUsername()));
-        String json = new Gson().toJson(room);
-        for(Session playerSession : sessions){
-            playerSession.getAsyncRemote().sendText("RemoveUser " + json);
+        try {
+            Map<String, Room> roomMap = (Map<String, Room>) httpSession.getServletContext().getAttribute(NameConstants.ROOM_MAP);
+            Room room = roomMap.get(roomID);
+            User user = (User) httpSession.getAttribute(User.ATTRIBUTE);
+            room.removePlayer(room.getPlayerByUsername(user.getUsername()));
+            String json = new Gson().toJson(room);
+            for(Session playerSession : sessions){
+                playerSession.getAsyncRemote().sendText("RemoveUser " + json);
+            }
+        } catch (NullPointerException ignored) {
+
         }
     }
 }
