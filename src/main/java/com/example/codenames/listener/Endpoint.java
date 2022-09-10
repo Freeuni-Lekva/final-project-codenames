@@ -87,9 +87,9 @@ public class Endpoint {
 //            room.removePlayer(room.getPlayerByUsername(user.getUsername()));
             httpSession.removeAttribute(ROOM);
             String json = new Gson().toJson(room);
-            for(Session playerSession : sessions){
-                playerSession.getAsyncRemote().sendText("RemoveUser " + json);
-            }
+//            for(Session playerSession : sessions){
+//                playerSession.getAsyncRemote().sendText("RemoveUser " + json);
+//            }
         } catch (NullPointerException ignored) {
 
         }
