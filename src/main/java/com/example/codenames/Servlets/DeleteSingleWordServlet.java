@@ -5,6 +5,7 @@ import com.example.codenames.DTO.UserCredentialsDto;
 import com.example.codenames.exception.InvalidCredentialsException;
 import com.example.codenames.exception.UserNotFoundException;
 import com.example.codenames.listener.NameConstants;
+import com.example.codenames.model.Role;
 import com.example.codenames.model.User;
 import com.example.codenames.service.UserService;
 import com.example.codenames.service.WordService;
@@ -24,13 +25,22 @@ public class DeleteSingleWordServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ServletContext servletContext = getServletContext();
-        WordService service = (WordService) servletContext.getAttribute(NameConstants.WORD_SERVICE);
-        String word = request.getParameter(NameConstants.WORDS);
-        try {
-            service.removeWord(word);
-            response.sendRedirect(ServletUtils.DELETE_WORDS_PAGE);
-        } catch (UserNotFoundException e){
-            e.printStackTrace();
+        User user = (User)request.getSession().getAttribute(User.ATTRIBUTE);
+        if(user == null){
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
+        else if(user.getRole().equals(Role.PLAYER)){
+            response.sendRedirect(ServletUtils.USER_PAGE);
+        }
+        else {
+            WordService service = (WordService) servletContext.getAttribute(NameConstants.WORD_SERVICE);
+            String word = request.getParameter(NameConstants.WORDS);
+            try {
+                service.removeWord(word);
+                response.sendRedirect(ServletUtils.DELETE_WORDS_PAGE);
+            } catch (UserNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 
