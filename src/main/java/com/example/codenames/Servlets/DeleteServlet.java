@@ -23,7 +23,7 @@ public class DeleteServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            request.getRequestDispatcher(ServletUtils.DELETE_PAGE).forward(request, response);
+            response.sendRedirect(ServletUtils.DELETE_PAGE);
         } catch (UserNotFoundException e){
             e.printStackTrace();
         }
