@@ -47,7 +47,7 @@ public class StartGameEndpoint {
                 Set<Session> roomSessions = StartGameEndpoint.sessions.get(roomID);
                 roomMap.get(roomID).lock();
                 for (Session player : roomSessions) {
-                    player.getAsyncRemote().sendText("START-GAME");
+                   player.getAsyncRemote().sendText("START-GAME");
                 }
             } else {
                 //

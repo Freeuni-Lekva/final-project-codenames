@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.example.codenames.listener.NameConstants.GAME_SERVICE;
-import static com.example.codenames.listener.NameConstants.SESSION;
+import static com.example.codenames.listener.NameConstants.*;
 
 @ServerEndpoint(value = "/gameplay_ws", configurator = EndpointConfigurator.class)
 public class GameplayWsEndpoint {
@@ -70,12 +69,12 @@ public class GameplayWsEndpoint {
         ServletContext servletContext = httpSession.getServletContext();
         GameService gameService = (GameService) servletContext.getAttribute(GAME_SERVICE);
         int gameID = gameService.addGame(whoWon.toString(), whoLost.toString(), lostWithBlackTile);
-
+        UserService userService = (UserService) servletContext.getAttribute(USER_SERVICE);
 
         PlayerHistoryService playerHistoryService = (PlayerHistoryService) servletContext.getAttribute(NameConstants.PLAYER_HISTORY_SERVICE);
         Set<Player> playersSet = gameEngine.getRoom().getAllPlayers();
         for(Player player : playersSet){
-            User user = player.getUser();
+            User user = userService.getUserByUsername(player.getUser().getUsername());
             String team = "";
             if(player.getPlayerRole() == PlayerRole.BLUE_OPERATIVE ||
                     player.getPlayerRole() == PlayerRole.BLUE_SPYMASTER){
@@ -108,7 +107,6 @@ public class GameplayWsEndpoint {
             User updatedUser = new User(user.getUserID(), user.getUsername(), user.getHashedPassword(),
                     gamesWon, gamesLost, gamesPlayed, winningRate, blackWordCounter,
                     user.getRegistrationDate(), user.getRole(), points);
-            UserService userService = (UserService) servletContext.getAttribute(NameConstants.USER_SERVICE);
             userService.updateUser(updatedUser);
             httpSession.removeAttribute(User.ATTRIBUTE);
             User newUser = userService.getUserByUsername(user.getUsername());
