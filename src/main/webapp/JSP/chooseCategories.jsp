@@ -9,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<style><%@include file="/JSP/forCategories.css"%></style>
 <head>
     <title>Choose Categories</title>
 </head>
@@ -23,13 +24,13 @@
         <input type="checkbox" id="<%="checkbox" + i%>" name ="<%="checkbox" + i%>"
                value="<%=allCategories.get(i)%>">
         <label for="<%="checkbox" + i%>"><%=allCategories.get(i)%></label>
-        <br>
+        <br> <br> <br>
         <%
             }
         %>
     </div>
     <div>
-        <button type="submit">Submit</button>
+        <button class="button_submit" role="button">Submit</button>
     </div>
 </form>
 </body>
