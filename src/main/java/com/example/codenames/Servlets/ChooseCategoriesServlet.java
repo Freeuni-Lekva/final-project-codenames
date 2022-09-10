@@ -1,8 +1,10 @@
 package com.example.codenames.Servlets;
 
+import com.example.codenames.exception.NotEnoughWordsException;
 import com.example.codenames.listener.NameConstants;
 import com.example.codenames.model.Room;
 import com.example.codenames.model.User;
+import com.example.codenames.service.WordService;
 
 import javax.naming.Name;
 import javax.servlet.ServletContext;
@@ -33,6 +35,12 @@ public class ChooseCategoriesServlet extends HttpServlet {
         }
         Map<String, String[]> parameterMap = request.getParameterMap();
         List<String> categories = parameterMap.keySet().stream().map( e -> parameterMap.get(e)[0]).collect(Collectors.toList());
+        try {
+            List<String> words = ((WordService) request.getServletContext().getAttribute(NameConstants.WORD_SERVICE)).getRandomizedWords(categories);
+        } catch (NotEnoughWordsException e) {
+            categories.add("ALL");
+            System.out.println("adding all words because chosen categories do not contain 25 words");
+        }
         if(categories.isEmpty()){
             categories.add("ALL");
         }
