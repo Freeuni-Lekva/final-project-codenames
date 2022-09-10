@@ -177,7 +177,7 @@
     <div id = "delete_border" >
         <div align="center">
             <h3>If you want to delete users click here</h3>
-            <form action="DeleteServlet" method="post">
+            <form action="../DeleteServlet" method="post">
                 <button class="delete">Delete users</button><br>
             </form>
 
