@@ -6,12 +6,15 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.example.codenames.DTO.UserGamesDto" %>
 <%@ page import="com.example.codenames.model.User" %>
+<%@ page import="com.example.codenames.service.UserService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <%
         ServletContext sc = request.getServletContext();
         User user = (User) request.getSession().getAttribute(User.ATTRIBUTE);
+        UserService userService = (UserService) sc.getAttribute(NameConstants.USER_SERVICE);
+        user = userService.getUserByUsername(user.getUsername());
     %>
     <title><%=user.getUsername()%></title>
     <style>
