@@ -36,6 +36,8 @@ public class GameEngine {
 
     private List<WordColor> colors;
 
+    private boolean gameIsEnded;
+
 
     public GameEngine(List<String> words) {
         this.room = null; // TODO: 08.09.22 will need this during housekeeping
@@ -47,10 +49,14 @@ public class GameEngine {
         this.remainingRed = SECOND_TEAM_NUM + (startsTheGame == WordColor.RED ? 1 : 0);
         this.remainingBlue = SECOND_TEAM_NUM + (startsTheGame == WordColor.BLUE ? 1 : 0);
         this.opened = new HashSet<>();
+        this.gameIsEnded = false;
     }
 
 
     public GameEvent registerMove(HttpSession httpSession, int index) {
+        if(gameIsEnded == true){
+            return null;
+        }
         User curUser = (User)(httpSession.getAttribute(User.ATTRIBUTE));
         String curUserName = curUser.getUsername();
         if(sideToPlay == WordColor.RED){
@@ -65,7 +71,9 @@ public class GameEngine {
 
         GameEvent gameEvent = registerMoveInternal(index);
         if (gameEvent != null && gameEvent.getWinner() != null) {
+            this.gameIsEnded = true;
             // TODO: 08.09.22 do the all housekeeping for the ended game
+
         }
         return gameEvent;
     }

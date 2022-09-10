@@ -33,3 +33,19 @@ td
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
+
+#redSpymasters{
+    color: RED;
+}
+
+#redOperatives{
+    color: RED;
+}
+
+#blueSpymasters{
+    color: BLUE;
+}
+
+#blueOperatives{
+    color: BLUE;
+}

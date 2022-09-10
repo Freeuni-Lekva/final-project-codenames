@@ -30,7 +30,6 @@ public class GameplayWsEndpoint {
 //    private static final ConcurrentHashMap<String, ConcurrentHashMap<GameEvent, Boolean>> eventStoreByRoomId = new ConcurrentHashMap<>();
 
     private ObjectMapper om = new ObjectMapper();
-    private boolean isEnded;
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig endpointConfig) throws Exception {
@@ -41,28 +40,26 @@ public class GameplayWsEndpoint {
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(SESSION);
         GameEvent startEvent = gameEngine.startEvent(httpSession);
         session.getAsyncRemote().sendText(om.writeValueAsString(startEvent));
-        this.isEnded = false;
     }
 
     @OnMessage
     public void onMessage(Session session, String message) throws Exception {
-        if(!isEnded) {
-            String roomId = getRoomId(session);
-            GameEngine gameEngine = GameplayServlet.gameEngineByRoomId.get(roomId);
-            int index = Integer.parseInt(message);
-            HttpSession httpSession = (HttpSession) session.getUserProperties().get(SESSION);
-            GameEvent gameEvent = gameEngine.registerMove(httpSession, index);
-            if (gameEvent != null) {
-                ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.get(roomId);
-                for (Session roomMemberSession : roomSessions.keySet()) {
-                    roomMemberSession.getAsyncRemote().sendText(om.writeValueAsString(gameEvent));
-                }
-            }
-            if (gameEvent != null && gameEvent.getWinner() != null) {
-                registerGame(gameEvent, gameEngine, httpSession);
-                isEnded = true;
+        String roomId = getRoomId(session);
+        GameEngine gameEngine = GameplayServlet.gameEngineByRoomId.get(roomId);
+        int index = Integer.parseInt(message);
+        HttpSession httpSession = (HttpSession) session.getUserProperties().get(SESSION);
+        GameEvent gameEvent = gameEngine.registerMove(httpSession, index);
+        if (gameEvent != null) {
+            ConcurrentHashMap<Session, Boolean> roomSessions = sessionsByRoomId.get(roomId);
+            for (Session roomMemberSession : roomSessions.keySet()) {
+                roomMemberSession.getAsyncRemote().sendText(om.writeValueAsString(gameEvent));
             }
         }
+        if (gameEvent != null && gameEvent.getWinner() != null) {
+            registerGame(gameEvent, gameEngine, httpSession);
+
+        }
+
     }
 
     private void registerGame(GameEvent gameEvent, GameEngine gameEngine, HttpSession httpSession) {
@@ -100,10 +97,9 @@ public class GameplayWsEndpoint {
 
             if(endedWithBlackTile && !didWin){
                 blackWordCounter++;
-            } else if(!didWin){
+                points--;
+            } else if(didWin){
                 points++;
-            } else {
-                points += 3;
             }
             double winningRate = (double) gamesWon / (double) gamesPlayed;
 
@@ -114,7 +110,9 @@ public class GameplayWsEndpoint {
                     user.getRegistrationDate(), user.getRole(), points);
             UserService userService = (UserService) servletContext.getAttribute(NameConstants.USER_SERVICE);
             userService.updateUser(updatedUser);
-            httpSession.setAttribute(User.ATTRIBUTE, updatedUser);
+            httpSession.removeAttribute(User.ATTRIBUTE);
+            User newUser = userService.getUserByUsername(user.getUsername());
+            httpSession.setAttribute(User.ATTRIBUTE, newUser);
         }
 
     }
