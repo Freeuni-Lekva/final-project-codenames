@@ -9,13 +9,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>UserPage</title>
+    <%
+        ServletContext sc = request.getServletContext();
+        User user = (User) request.getSession().getAttribute(User.ATTRIBUTE);
+    %>
+    <title><%=user.getUsername()%></title>
     <style>
         body {
             margin: 0;
             overflow-x: hidden;
         }
-        #upper_part {
+        #head_part {
             position: absolute;
             height: 10%;
             width: 100%;
@@ -39,16 +43,6 @@
             top: 10%;
             width: 48.5%;
             border-radius: 15px;
-        }
-
-        #second_part {
-            border: 2px dashed lightgreen;
-            position: absolute;
-            margin: 1%;
-            top: 10%;
-            left: 50%;
-            width: 48.5%;
-            border-radius: 10px;
         }
         #headLine {
             margin: 0;
@@ -231,12 +225,10 @@
 
 </head>
 
-<%
-    ServletContext sc = request.getServletContext();
-    User user = (User) request.getSession().getAttribute(User.ATTRIBUTE);
-%>
+
 
 <body>
+    <div id="head_part">
     <div id="upper_part">
         <form style="vertical-align: center" action="../LogoutServlet" method="post">
             <button class="button_logout" >Log Out</button>

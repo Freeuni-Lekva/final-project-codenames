@@ -102,6 +102,16 @@ public class UserServiceTest extends TestCase {
         assertEquals(user2.getUsername(), userList2.get(1).getUsername());
         assertEquals(user3.getUsername(), userList2.get(0).getUsername());
 
+        userService.deleteUser(user1.getUserID());
+        assertThrows(InvalidCredentialsException.class, () -> userService.getUserByUsername(user1.getUsername()));
+        userService.deleteUser(user2.getUserID());
+        assertThrows(InvalidCredentialsException.class, () -> userService.getUserByUsername(user2.getUsername()));
+        userService.deleteUser(user3.getUserID());
+        assertThrows(InvalidCredentialsException.class, () -> userService.getUserByUsername(user3.getUsername()));
+
+
+
+
 
     }
 

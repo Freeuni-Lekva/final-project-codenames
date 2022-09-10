@@ -80,5 +80,16 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public boolean deleteUser(int userId) {
+        if(userDao.deleteUser(userId)){
+            return true;
+        }
+        else{
+            throw new UserNotFoundException(String.valueOf(userId));
+        }
+
+    }
+
 
 }

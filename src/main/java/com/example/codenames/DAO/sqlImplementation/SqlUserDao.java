@@ -3,6 +3,7 @@ package com.example.codenames.DAO.sqlImplementation;
 
 import com.example.codenames.DAO.UserDao;
 import com.example.codenames.database.DBConnection;
+import com.example.codenames.model.PlayerHistory;
 import com.example.codenames.model.Role;
 import com.example.codenames.model.User;
 
@@ -126,7 +127,7 @@ public class SqlUserDao implements UserDao {
         List<User> userList = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(String.format(
-                    "SELECT * FROM " + TABLE_NAME + " ORDER BY %s " + order + " ;",
+                    "SELECT * FROM " + TABLE_NAME + " WHERE status = 'PLAYER' ORDER BY %s " + order + " ;",
                     User.TABLE_POINTS));
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
@@ -168,6 +169,48 @@ public class SqlUserDao implements UserDao {
                     else{
                         return false;
                     }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public boolean deleteUser(int id) {
+        Connection connection = dbconnection.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement(String.format(
+                    "DELETE FROM %s WHERE %s = ? ;",
+                    User.TABLE_NAME,
+                    User.TABLE_USER_ID));
+            statement.setInt(1, id);
+
+            PreparedStatement statementFindUser = connection.prepareStatement(String.format(
+                    "SELECT* FROM %s WHERE %s = ? ;",
+                    PlayerHistory.TABLE_NAME,
+                    PlayerHistory.TABLE_USER_ID));
+            statementFindUser.setInt(1, id);
+
+            ResultSet resultSet = statementFindUser.executeQuery();
+            boolean flag = true;
+            if(resultSet.next()){
+                flag = false;
+                PreparedStatement statementForPlayerHistory = connection.prepareStatement(String.format(
+                        "DELETE FROM %s WHERE %s = ? ;",
+                        PlayerHistory.TABLE_NAME,
+                        PlayerHistory.TABLE_USER_ID));
+                statementForPlayerHistory.setInt(1, id);
+                if(statementForPlayerHistory.executeUpdate() == 1){
+                    flag = true;
+                }
+            }
+            if(statement.executeUpdate() == 1 && flag){
+                return true;
+            }
+            else{
+                return false;
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
