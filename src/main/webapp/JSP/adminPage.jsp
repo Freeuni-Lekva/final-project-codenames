@@ -187,7 +187,7 @@
     <div id = "add_word_border" >
         <div align="center">
             <h3>If you want to add words click here</h3>
-            <form action="AddWordsServlet" method="post">
+            <form action="../AddWordsServlet" method="post">
                 <button class="add_word">Add Words</button><br>
             </form>
 
@@ -197,7 +197,7 @@
     <div id = "delete_word_border" >
         <div align="center">
             <h3>If you want to delete words click here</h3>
-            <form action="DeleteWordsServlet" method="post">
+            <form action="../DeleteWordsServlet" method="post">
                 <button class="button_delete_word">Delete Words</button><br>
             </form>
 
@@ -206,7 +206,7 @@
     <div id = "leaderboard_border" >
         <div align="center">
              <h3>See leaderboard</h3>
-            <a href="JSP/leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
+            <a href="leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
         </div>
     </div>
 

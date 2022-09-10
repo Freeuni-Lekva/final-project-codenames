@@ -29,9 +29,9 @@
         #game_history {
             border: 5px dashed orangered;
             right: 5px;
+            top:100px;
             position: absolute;
             margin: 1%;
-            top: 10%;
             width: 48.5%;
             border-radius: 10px;
         }
@@ -197,7 +197,7 @@
 
         .button_logout{
             display: inline-block;
-            padding: 15px 25px;
+            padding: 12px 22px;
             margin: 3px;
             font-size: 24px;
             cursor: pointer;
@@ -231,10 +231,11 @@
     <div id="head_part">
     <div id="upper_part">
         <div id="headLine">Welcome <%=user.getUsername()%> </div>
-    </div>
         <form style="vertical-align: center" action="../LogoutServlet" method="post">
             <button class="button_logout" >Log Out</button>
         </form>
+    </div>
+
     <div id="game_history">
         <div class="title_text">
             Your Games
