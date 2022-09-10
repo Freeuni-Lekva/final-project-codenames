@@ -21,4 +21,5 @@ public class NameConstants {
     public static final String SESSION = "SESSION";
     public static final String USER_ID = "USER_ID";
     public static final String CATEGORIES_LIST = "CATEGORIES_LIST";
+    public static final String GAME_SERVICE = "GAME_SERVICE";
 }
