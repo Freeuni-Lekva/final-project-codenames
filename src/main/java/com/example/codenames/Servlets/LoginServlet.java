@@ -33,10 +33,10 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute(User.ATTRIBUTE, user);
             System.out.println(user.toString());
             if(username.equals(ServletUtils.ADMIN_USERNAME)){
-                request.getRequestDispatcher(ServletUtils.ADMIN_PAGE).forward(request, response);
+                response.sendRedirect(ServletUtils.ADMIN_PAGE);
             }
             else {
-                request.getRequestDispatcher(ServletUtils.USER_PAGE).forward(request, response);
+                response.sendRedirect(ServletUtils.USER_PAGE);
             }
         } catch (InvalidCredentialsException e){
             request.getSession().setAttribute(NameConstants.LOGIN_ERROR, e.getMessage());

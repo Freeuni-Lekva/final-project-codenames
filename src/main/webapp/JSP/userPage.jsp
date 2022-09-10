@@ -230,11 +230,11 @@
 <body>
     <div id="head_part">
     <div id="upper_part">
+        <div id="headLine">Welcome <%=user.getUsername()%> </div>
+    </div>
         <form style="vertical-align: center" action="../LogoutServlet" method="post">
             <button class="button_logout" >Log Out</button>
         </form>
-        <div id="headLine">Welcome <%=user.getUsername()%> </div>
-    </div>
     <div id="game_history">
         <div class="title_text">
             Your Games
