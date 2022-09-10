@@ -54,25 +54,25 @@
             height: 200px;
             width: 350px;
         }
-        #join_border {
+        #delete_word_border {
             border: 2px dashed orangered;
             position: absolute;
             margin: 1%;
-            left: 1px;
-            top: 600px;
+            left: 400px;
+            top: 150px;
             border-radius: 10px;
             height: 200px;
-            width: 250px;
+            width: 350px;
         }
-        #join_Random_border {
+        #leaderboard_border {
             border: 2px dashed orangered;
             position: absolute;
             margin: 1%;
-            left: 265px;
-            top: 600px;
+            left: 400px;
+            top: 400px;
             border-radius: 10px;
             height: 200px;
-            width: 250px;
+            width: 350px;
         }
         .button_leaderboard {
             display: inline-block;
@@ -96,7 +96,7 @@
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
-        .button_createRoom {
+        .button_delete_word {
             display: inline-block;
             padding: 15px 25px;
             margin: 3px;
@@ -112,9 +112,9 @@
             box-shadow: 0 9px #999;
         }
 
-        .button_createRoom:hover {background-color: #3e8e41}
+        .button_delete_word:hover {background-color: #3e8e41}
 
-        .button_createRoom:active {
+        .button_delete_word:active {
             background-color: orangered;
             box-shadow: 0 5px #666;
             transform: translateY(4px);
@@ -191,6 +191,22 @@
                 <button class="add_word">Add Words</button><br>
             </form>
 
+        </div>
+    </div>
+
+    <div id = "delete_word_border" >
+        <div align="center">
+            <h3>If you want to delete words click here</h3>
+            <form action="DeleteWordsServlet" method="post">
+                <button class="button_delete_word">Delete Words</button><br>
+            </form>
+
+        </div>
+    </div>
+    <div id = "leaderboard_border" >
+        <div align="center">
+             <h3>See leaderboard</h3>
+            <a href="JSP/leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
         </div>
     </div>
 

@@ -40,25 +40,16 @@
       width: 80%;
       border-radius: 10px;
     }
-    p{
-      text-align: center;
-      font-size: 24px;
-    }
 
-    form{
-      text-align: center;
-      margin-right: 60px;
-    }
 
-    input[type=submit] {
-      margin-top: 12px;
-      margin-left: 80px;
-      padding:5px 15px;
-      background:#ccc;
-      border:black 5px;
-      cursor:pointer;
-      -webkit-border-radius: 5px;
-      border-radius: 5px;
+
+
+    input[type=text] {
+        top:200px;
+        width: 50%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
     }
   </style>
 
@@ -68,13 +59,11 @@
     <div id="headLine">Add words</div>
   </div>
 
-  <form action="../AddSingleWordServlet" method="post">
-
-      <label Enter Word to add: > </label> <input type="text" name="word"> <br>
-      <label Enter Category > </label>  <input type="text" name = "category">
-      <input type="submit" name="Addword" value="Addword">
-
-
+  <form>
+      <label for="word">Word to add</label>
+      <input type="text" id="word" name="word">
+      <label for="category">Category</label>
+      <input type="text" id="category" name="category">
   </form>
 
 </body>

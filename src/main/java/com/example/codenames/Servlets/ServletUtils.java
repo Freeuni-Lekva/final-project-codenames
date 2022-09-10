@@ -14,6 +14,7 @@ public class ServletUtils {
     public static final String ADMIN_PAGE = "JSP/adminPage.jsp";
     public static final String DELETE_PAGE = "JSP/deleteUser.jsp";
     public static final String ADD_WORDS_PAGE = "JSP/addWords.jsp";
+    public static final String DELETE_WORDS_PAGE = "JSP/deleteWords.jsp";
 
 
 
