@@ -127,7 +127,7 @@ public class SqlUserDao implements UserDao {
         List<User> userList = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(String.format(
-                    "SELECT * FROM " + TABLE_NAME + " ORDER BY %s " + order + " ;",
+                    "SELECT * FROM " + TABLE_NAME + " WHERE status = 'PLAYER' ORDER BY %s " + order + " ;",
                     User.TABLE_POINTS));
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
