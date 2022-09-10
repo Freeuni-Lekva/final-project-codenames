@@ -1,9 +1,7 @@
 <%@ page import="javax.naming.Name" %>
 <%@ page import="com.example.codenames.listener.NameConstants" %>
-<%@ page import="com.example.codenames.model.Board" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.codenames.model.WordColor" %>
-<%@ page import="com.example.codenames.model.Word" %><%--
+<%@ page import="com.example.codenames.model.*" %><%--
   Created by IntelliJ IDEA.
   User: mariam
   Date: 04.09.22
@@ -24,6 +22,7 @@
     List<WordColor> colors = (List<WordColor>) request.getAttribute("colors");
     boolean isSpy = (boolean) request.getAttribute("isSpy");
     WordColor color0 = colors.get(0);
+    Room room = (Room)request.getAttribute("myRoom");
 %>
 
 
@@ -76,6 +75,11 @@
             x[23].style.backgroundColor = "${colors.get(23)}";
             x[24].style.backgroundColor = "${colors.get(24)}";
         }
+        let won = gameEvent.winner;
+        if(won != null){
+            alert(won + " TEAM WON!");
+            window.location.replace("http://localhost:8080/Codenames_war_exploded/JSP/userPage.jsp");
+        }
     }
 
 
@@ -118,9 +122,47 @@
 <b id="blue"> Blue Words Left: </b> <br>
 
 
+<b id="redSpymasters">Red Spymasters:
+    <%
+        for(int i = 0; i < room.getRedSpymasters().size(); i++){
+            Player curPlayer = room.getRedSpymasters().get(i);
+            String curUsername = curPlayer.getUser().getUsername();
+            out.print(curUsername + " ");
+        }
+
+    %>
+</b> <br>
+<b id="redOperatives">Red Operatives:
+    <%
+        for(int i = 0; i < room.getRedOperatives().size(); i++){
+            Player curPlayer = room.getRedOperatives().get(i);
+            String curUsername = curPlayer.getUser().getUsername();
+            out.print(curUsername + " ");
+        }
+    %>
 
 
+</b> <br>
+<b id="blueSpymasters">Blue Spymasters:
+    <%
+        for(int i = 0; i < room.getBlueSpymasters().size(); i++){
+            Player curPlayer = room.getBlueSpymasters().get(i);
+            String curUsername = curPlayer.getUser().getUsername();
+            out.print(curUsername + " ");
+        }
 
+    %>
+</b> <br>
+<b id="blueOperatives">Blue Operatives:
+    <%
+        for(int i = 0; i < room.getBlueOperatives().size(); i++){
+            Player curPlayer = room.getBlueOperatives().get(i);
+            String curUsername = curPlayer.getUser().getUsername();
+            out.print(curUsername + " ");
+        }
+
+    %>
+</b> <br>
 </html>
 <table id="mytable">
     <tr>

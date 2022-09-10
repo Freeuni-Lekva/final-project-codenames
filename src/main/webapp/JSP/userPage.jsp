@@ -291,7 +291,7 @@
             Games won: <%=user.getGamesWon()%><br>
             Games lost: <%=user.getGamesLost()%><br>
             Black words selected: <%=user.getBlackWordCounter()%><br>
-            Winning rate: <%=user.getWinningRate()%><br>
+            Winning rate: <%=(double)((double)user.getGamesWon() / (double) user.getGamesPlayed())%><br>
             Registration date : <%=user.getRegistrationDate()%><br>
             <div id = "leaderboard_border" >
                 <div align="center">

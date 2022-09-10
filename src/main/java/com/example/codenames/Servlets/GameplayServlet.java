@@ -45,8 +45,7 @@ public class GameplayServlet extends HttpServlet {
         boolean isSpy = startEvent.isSpy();
         request.setAttribute("colors", colors);
         request.setAttribute("isSpy", isSpy);
-        System.out.println(gameEngine.getRoom() == null);
-        System.out.println(gameEngine.getRoom().getRedOperatives().size());
+        request.setAttribute("myRoom", gameEngine.getRoom());
         request.setAttribute(NameConstants.WORDS, gameEngine.getWords());
     }
 
