@@ -1,4 +1,6 @@
-<%--
+<%@ page import="com.example.codenames.service.WordService" %>
+<%@ page import="com.example.codenames.listener.NameConstants" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: ruska-ubuntu
   Date: 10.09.22
@@ -9,6 +11,7 @@
 <html>
 <head>
     <title>DeleteWords</title>
+    <title>Delete</title>
     <style>
         body {
             margin: 0;
@@ -41,10 +44,46 @@
             border-radius: 10px;
         }
     </style>
+
 </head>
 <body>
 <div id="head">
     <div id="headLine">Delete words</div>
+</div>
+
+
+<div align="center">
+    <div id="user_list">
+
+        <div align="center">
+            <table border="1" cellpadding="5"  WIDTH=850>
+                <tr>
+                    <th>Word number</th>
+                    <th>Word</th>
+                    <th>Delete</th>
+                </tr>
+                <%
+                    ServletContext sc = request.getServletContext();
+                    WordService service = (WordService) sc.getAttribute(NameConstants.WORD_SERVICE);
+                    List<String> words = service.getAllWords();
+                    int i = 1;
+                    for(String word : words) {%>
+                <tr>
+                    <td><%=i%></td>
+                    <td><%=word%></td>
+                    <td>
+                        <form action="../DeleteSingleWordServlet" method="post">
+                            <input type="image" name="Name of image button" src="https://as1.ftcdn.net/v2/jpg/03/46/38/40/1000_F_346384068_e06I3cC4n0BCyB8f5PZ9cG2YR3N68ZYc.jpg" style="width: 40px; height: 40px"  alt="delete">
+                            <input type="hidden" id=<%=NameConstants.WORDS%> name=<%=NameConstants.WORDS%> value=<%=word%>>                        </form>
+
+                    </td>
+                </tr>
+                <% i++;
+                } %>
+
+            </table>
+        </div>
+    </div>
 </div>
 
 </body>

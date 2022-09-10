@@ -90,6 +90,12 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public List<String> getAllWords() {
-        return null;
+        List<String> ans = wordDAO.getAllWords();
+        if(ans != null){
+            return ans;
+        }
+        else{
+            throw new WordNotFoundException("");
+        }
     }
 }

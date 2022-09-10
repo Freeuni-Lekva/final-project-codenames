@@ -128,9 +128,8 @@ public class SqlWordDAO implements WordDAO {
         Connection connection = dbconnection.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT DISTINCT ? from " + TABLE_NAME + ";"
+                    "SELECT DISTINCT word from " + TABLE_NAME + " ORDER BY  word ASC;"
             );
-            preparedStatement.setString(1, Word.TABLE_WORDS_COLUMN);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 words.add(resultSet.getString(1));
