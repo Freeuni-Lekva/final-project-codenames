@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.example.codenames.Servlets.ServletUtils" %>
+<%@ page import="com.example.codenames.listener.NameConstants" %><%--
   Created by IntelliJ IDEA.
   User: ruska-ubuntu
   Date: 10.09.22
@@ -31,40 +32,51 @@
       text-align: center;
       font-size: 3vw;
     }
-    #user_list{
-      border: 5px dashed orangered;
-      position: absolute;
-      margin: 1%;
-      top: 10%;
-      left: 150px;
-      width: 80%;
-      border-radius: 10px;
-    }
-
-
-
-
-    input[type=text] {
-        top:200px;
-        width: 50%;
+    input[type=text], select {
+        width: 100%;
         padding: 12px 20px;
         margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
         box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    div {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
     }
   </style>
 
 </head>
 <body>
-  <div id="head">
-    <div id="headLine">Add words</div>
-  </div>
 
-  <form>
-      <label for="word">Word to add</label>
-      <input type="text" id="word" name="word">
-      <label for="category">Category</label>
-      <input type="text" id="category" name="category">
-  </form>
+<div>
+    <form action="AddSingleWordServlet" method="post">
+        <label for="word">Word to add</label>
+        <input type="text" placeholder="Your word.." id="word" name=<%=NameConstants.ADD_WORD_PARAMETER%>>
+
+        <label for="category">Category </label>
+        <input type="text" placeholder="Category.." id="category" name=<%=NameConstants.ADD_CATEGORY_PARAMETER%>>
+        <input type="submit" name = "Submit" value="Submit">
+    </form>
+</div>
 
 </body>
 </html>
