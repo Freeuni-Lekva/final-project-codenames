@@ -14,11 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
+import static com.example.codenames.listener.NameConstants.ROOM;
+
 @WebServlet(name = "JoinRoomServlet", value = "/JoinRoomServlet")
 public class JoinRoomServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.sendRedirect("JSP/joinRoom.jsp");
     }
 
     @Override
@@ -27,17 +29,23 @@ public class JoinRoomServlet extends HttpServlet {
         ServletContext servletContext = request.getServletContext();
         Map<String, Room> roomMap = (Map<String, Room>) servletContext.getAttribute(NameConstants.ROOM_MAP);
         String roomID = (String) request.getParameter(NameConstants.ROOM_ID);
-        if(roomMap.containsKey(roomID)){
-            System.out.println("contains");
+        if (request.getSession().getAttribute(ROOM) != null) {
+            response.getWriter().println("You are already in a different room.");
+            return;
+        }
+        if (roomMap.containsKey(roomID)) {
             Room room = roomMap.get(roomID);
             Player player = new Player(user, roomID);
-            if (room.addPlayer(player)) {
+            if (room.isAvailable() && room.addPlayer(player)) {
+                request.getSession().setAttribute(ROOM, room);
                 String json = new Gson().toJson(room);
                 request.setAttribute(NameConstants.JSON, json);
                 request.getRequestDispatcher("/JSP/waitingRoom.jsp?" + NameConstants.ROOM_ID + "=" + roomID).forward(request, response);
             } else {
                 response.getWriter().println("Cannot join room");
             }
+        } else {
+            response.getWriter().println("Cannot join room");
         }
     }
 

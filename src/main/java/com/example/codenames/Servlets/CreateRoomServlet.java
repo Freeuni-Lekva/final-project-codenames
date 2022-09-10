@@ -14,7 +14,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+
+import static com.example.codenames.listener.NameConstants.CATEGORIES_LIST;
+import static com.example.codenames.listener.NameConstants.ROOM;
 
 @WebServlet(name = "CreateRoomServlet", value = "/CreateRoomServlet")
 public class CreateRoomServlet extends HttpServlet {
@@ -34,10 +38,12 @@ public class CreateRoomServlet extends HttpServlet {
             randomID = randomizeID(5);
             if (!roomMap.containsKey(randomID)) break;
         }
-        System.out.println(randomID);
         Player player = new Player(user, randomID, PlayerRole.NOT_SELECTED);
         Room room = new Room(player, randomID);
+        room.setCategories((List<String>) request.getSession().getAttribute(CATEGORIES_LIST));
+        request.getSession().removeAttribute(CATEGORIES_LIST);
         roomMap.put(randomID, room);
+        request.getSession().setAttribute(ROOM, room);
         String json = new Gson().toJson(room);
         request.setAttribute(NameConstants.JSON, json);
         request.getRequestDispatcher("/JSP/waitingRoom.jsp?" + NameConstants.ROOM_ID + "=" + randomID).forward(request, response);

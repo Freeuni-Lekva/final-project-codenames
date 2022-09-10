@@ -14,9 +14,6 @@ import java.util.*;
 public class WordServiceImpl implements WordService {
 
     private static final int WORDS_NUM = 25;
-    private static final int BEIGE_WORDS_NUM = 7;
-    private static final int START_TEAM_NUM = 9;
-    private static final int SECOND_TEAM_NUM = 8;
 
     private WordDAO wordDAO;
     private Random rgen;
@@ -82,30 +79,12 @@ public class WordServiceImpl implements WordService {
         }
     }
 
-
     @Override
-    public List<WordColor> getScheme() {
-        List<Integer> lst = new ArrayList<>();
-        for(int i = 0; i < WORDS_NUM; i++){
-            lst.add(i);
+    public List<String> getAllCategories() {
+        try {
+            return wordDAO.getAllCategories();
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
-        Collections.shuffle(lst);
-        List<WordColor> ans = new ArrayList<>();
-        for(int i = 0; i < WORDS_NUM; i++){
-            ans.add(WordColor.NONE);
-        }
-        ans.set(lst.get(0), WordColor.BLACK);
-        for(int i = 1; i < 1 + BEIGE_WORDS_NUM; i++){
-            ans.set(lst.get(i), WordColor.BEIGE);
-        }
-        WordColor startTeam = rgen.nextBoolean() ? WordColor.BLUE : WordColor.RED;
-        WordColor secondTeam = startTeam.equals(WordColor.BLUE) ? WordColor.RED : WordColor.BLUE;
-        for(int i = 1 + BEIGE_WORDS_NUM; i < 1 + BEIGE_WORDS_NUM + START_TEAM_NUM; i++) {
-            ans.set(lst.get(i), startTeam);
-        }
-        for(int i = 1 + BEIGE_WORDS_NUM + START_TEAM_NUM; i < WORDS_NUM; i++) {
-            ans.set(lst.get(i), secondTeam);
-        }
-        return ans;
     }
 }

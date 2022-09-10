@@ -5,5 +5,4 @@ public enum WordColor {
     RED,
     BEIGE,
     BLACK,
-    NONE
 }

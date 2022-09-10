@@ -6,14 +6,18 @@ public class Room {
 
     private Player owner;
     private String ID;
-    Set<Player> allPlayers;
-    private static final int SIZE = 2;
+    private Set<Player> allPlayers;
+    private static final int SIZE = 10;
+    private boolean available = true;
+
+    private List<String> categories;
 
     public Room(Player owner, String ID) {
         this.owner = owner;
         this.ID = ID;
         allPlayers = new HashSet<>(SIZE);
         allPlayers.add(owner);
+        categories = new ArrayList<>();
     }
 
     public Player getOwner() {
@@ -22,6 +26,14 @@ public class Room {
 
     public String getID() {
         return ID;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 
     public List<Player> getRedSpymasters() {
@@ -92,12 +104,45 @@ public class Room {
         player.setPlayerRole(PlayerRole.BLUE_OPERATIVE);
     }
 
-    public boolean addPlayer(Player player) {
+    public synchronized boolean addPlayer(Player player) {
         if (allPlayers.size() >= SIZE) return false;
         return allPlayers.add(player);
     }
 
-    public boolean removePlayer(Player player) {
+    public synchronized boolean removePlayer(Player player) {
         return allPlayers.remove(player);
+    }
+
+    public Player getPlayerByUsername(String username) {
+        for (Player player : allPlayers) {
+            if (player.getUser().getUsername().equals(username)) return player;
+        }
+        return null;
+    }
+
+    public synchronized boolean isAvailable() {
+        return available;
+    }
+
+    public synchronized void lock() {
+        available = false;
+    }
+
+    public Set<String> redOperativeNames(){
+        Set<String> result = new HashSet<>();
+        for(Player player : getRedOperatives()){
+            System.out.println("ager");
+            System.out.println(player.getUser().getUsername());
+            result.add(player.getUser().getUsername());
+        }
+        return result;
+    }
+
+    public Set<String> blueOperativeNames(){
+        Set<String> result = new HashSet<>();
+        for(Player player : getBlueOperatives()){
+            result.add(player.getUser().getUsername());
+        }
+        return result;
     }
 }

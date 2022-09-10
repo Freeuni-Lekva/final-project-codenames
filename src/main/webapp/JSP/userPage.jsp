@@ -195,6 +195,30 @@
             transform: translateY(4px);
         }
 
+        .button_logout{
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 3px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            outline: none;
+            text-decoration: none;
+            color: chocolate;
+            background-color: black;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        .button_logout:hover {background-color: #3e8e41}
+
+        .button_logout:active {
+            background-color: black;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
 
 
     </style>
@@ -205,6 +229,10 @@
 
 <body>
     <div id="head_part">
+    <div id="upper_part">
+        <form style="vertical-align: center" action="../LogoutServlet" method="post">
+            <button class="button_logout" >Log Out</button>
+        </form>
         <div id="headLine">Welcome <%=user.getUsername()%> </div>
     </div>
     <div id="game_history">
@@ -264,13 +292,13 @@
             <div id = "leaderboard_border" >
                 <div align="center">
                     <h4>See leaderboard</h4>
-                    <a href="JSP/leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
+                    <a href="leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
                 </div>
             </div>
             <div id = "create_border" >
                 <div align="center">
                     <h4>Create new room</h4>
-                    <form action="CreateRoomServlet" method="post">
+                    <form action="chooseCategories.jsp" method="post">
                         <button class="button_createRoom">Create room</button><br>
                     </form>
 
@@ -279,7 +307,7 @@
             <div id = "join_border" >
                 <div align="center">
                     <h4>Join the room</h4>
-                    <form action="JoinRoomServlet" method="post">
+                    <form action="../JoinRoomServlet" method="get">
                         <button class="button_joinRoom">Join</button><br>
                     </form>
                 </div>
@@ -288,7 +316,7 @@
             <div id = "join_Random_border" >
                 <div align="center">
                     <h4>Join random room</h4>
-                    <form action="JoinRandomRoomServlet" method="post">
+                    <form action="../JoinRandomRoomServlet" method="post">
                         <button class="button_joinRandomRoom">Join</button><br>
                     </form>
 
@@ -299,9 +327,6 @@
         </div>
 
     </div>
-
-
-z
 
 
 

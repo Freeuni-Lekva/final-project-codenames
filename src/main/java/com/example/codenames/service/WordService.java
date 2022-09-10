@@ -45,7 +45,7 @@ public interface WordService {
 
     /**
      *
-     * @return 25 randomized color corresponding 25 words
+     * @return List of all categories in the database
      */
-    List<WordColor> getScheme();
+    List<String> getAllCategories();
 }

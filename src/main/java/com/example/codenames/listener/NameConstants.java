@@ -12,11 +12,13 @@ public class NameConstants {
     public static final String ADD_CATEGORY_PARAMETER = "category";
 
     public static final String PLAYER_HISTORY_SERVICE = "PLAYER_HISTORY_SERVICE";
-    public static final String BOARD = "BOARD";
+    public static final String WORDS = "WORDS";
     public static final String WORD_SERVICE = "WORD_SERVICE";
     public static final String ROOM_MAP = "ROOM_MAP";
     public static final String ROOM_ID = "roomID";
+    public static final String ROOM = "ROOM";
     public static final String JSON = "JSON";
     public static final String SESSION = "SESSION";
     public static final String USER_ID = "USER_ID";
+    public static final String CATEGORIES_LIST = "CATEGORIES_LIST";
 }

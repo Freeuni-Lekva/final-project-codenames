@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.codenames.listener.NameConstants" %><%--
   Created by IntelliJ IDEA.
   User: keti
   Date: 04.09.22
@@ -14,7 +14,7 @@
 <body>
 <h1>Enter ID below to join room</h1>
 <form action="../JoinRoomServlet" method="post">
-    <h2>Room ID: <input type="text" name="roomID">
+    <h2>Room ID: <input type="text" name="<%=NameConstants.ROOM_ID%>">
     <input type="submit" name="Join" value="Join"></h2>
 </form>
 </body>
