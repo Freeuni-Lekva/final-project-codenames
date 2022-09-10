@@ -38,7 +38,7 @@
             border: 2px dashed orangered;
             position: absolute;
             margin: 1%;
-            left: 1px;
+            left: 350px;
             top: 150px;
             border-radius: 10px;
             height: 200px;
@@ -48,7 +48,7 @@
             border: 2px dashed orangered;
             position: absolute;
             margin: 1%;
-            left: 1px;
+            left: 520px;
             top: 400px;
             border-radius: 10px;
             height: 200px;
@@ -58,17 +58,28 @@
             border: 2px dashed orangered;
             position: absolute;
             margin: 1%;
-            left: 400px;
+            left: 730px;
             top: 150px;
             border-radius: 10px;
             height: 200px;
             width: 350px;
         }
+        #delete_word_from_cat_border {
+            border: 2px dashed orangered;
+            position: absolute;
+            margin: 1%;
+            left: 1110px;
+            top: 150px;
+            border-radius: 10px;
+            height: 200px;
+            width: 350px;
+
+        }
         #leaderboard_border {
             border: 2px dashed orangered;
             position: absolute;
             margin: 1%;
-            left: 400px;
+            left: 900px;
             top: 400px;
             border-radius: 10px;
             height: 200px;
@@ -165,6 +176,29 @@
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
+        .delete_word_from_category{
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 3px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: ivory;
+            background-color: orangered;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        .delete_word_from_category:hover {background-color: #3e8e41}
+
+        .delete_word_from_category:active {
+            background-color: orangered;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
     </style>
 </head>
 
@@ -176,7 +210,7 @@
 
     <div id = "delete_border" >
         <div align="center">
-            <h3>If you want to delete users click here</h3>
+            <h3>If you want to delete users from database click here</h3>
             <form action="../DeleteServlet" method="post">
                 <button class="delete">Delete users</button><br>
             </form>
@@ -196,7 +230,7 @@
 
     <div id = "delete_word_border" >
         <div align="center">
-            <h3>If you want to delete words click here</h3>
+            <h3>If you want to delete words from database click here</h3>
             <form action="../DeleteWordsServlet" method="post">
                 <button class="button_delete_word">Delete Words</button><br>
             </form>
@@ -207,6 +241,16 @@
         <div align="center">
              <h3>See leaderboard</h3>
             <a href="leaderboard.jsp" class="button_leaderboard">Leaderboard</a>
+        </div>
+    </div>
+
+    <div id = "delete_word_from_cat_border" >
+        <div align="center">
+            <h3>If you want to delete word from category click here</h3>
+            <form action="../DeleteWordFromCategoryButtonServlet" method="post">
+                <button class="delete_word_from_category">Delete Word</button><br>
+            </form>
+
         </div>
     </div>
 

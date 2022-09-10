@@ -16,14 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "DeleteWordsServlet", value = "/DeleteWordsServlet")
-public class DeleteWordsServlet extends HttpServlet {
+@WebServlet(name = "DeleteWordFromCategoryButtonServlet", value = "/DeleteWordFromCategoryButtonServlet")
+public class DeleteWordFromCategoryButtonServlet extends HttpServlet {
 
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            response.sendRedirect(ServletUtils.DELETE_WORDS_PAGE);
+            response.sendRedirect(ServletUtils.DELETE_WORDS_FROM_CAT_PAGE);
         } catch (UserNotFoundException e){
             e.printStackTrace();
         }

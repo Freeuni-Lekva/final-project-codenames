@@ -1,5 +1,6 @@
 package com.example.codenames.service;
 
+import com.example.codenames.DTO.WordAndCategoryDto;
 import com.example.codenames.model.Word;
 import com.example.codenames.model.WordColor;
 
@@ -50,4 +51,6 @@ public interface WordService {
     List<String> getAllCategories();
 
     List<String> getAllWords();
+
+    List<WordAndCategoryDto> getWordsWithCategories();
 }
