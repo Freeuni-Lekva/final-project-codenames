@@ -17,4 +17,5 @@ public class NameConstants {
     public static final String JSON = "JSON";
     public static final String SESSION = "SESSION";
     public static final String CATEGORIES_LIST = "CATEGORIES_LIST";
+    public static final String GAME_SERVICE = "GAME_SERVICE";
 }
