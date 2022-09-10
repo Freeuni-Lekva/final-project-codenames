@@ -1,6 +1,7 @@
 package com.example.codenames.service.implementation;
 
 import com.example.codenames.DAO.WordDAO;
+import com.example.codenames.DTO.WordAndCategoryDto;
 import com.example.codenames.exception.NotEnoughWordsException;
 import com.example.codenames.exception.WordNotAddedException;
 import com.example.codenames.exception.WordNotFoundException;
@@ -91,6 +92,17 @@ public class WordServiceImpl implements WordService {
     @Override
     public List<String> getAllWords() {
         List<String> ans = wordDAO.getAllWords();
+        if(ans != null){
+            return ans;
+        }
+        else{
+            throw new WordNotFoundException("");
+        }
+    }
+
+    @Override
+    public List<WordAndCategoryDto> getWordsWithCategories() {
+        List<WordAndCategoryDto> ans = wordDAO.getWordsWithCategories();
         if(ans != null){
             return ans;
         }

@@ -1,5 +1,6 @@
 package com.example.codenames.DAO;
 
+import com.example.codenames.DTO.WordAndCategoryDto;
 import com.example.codenames.model.Word;
 
 import java.util.List;
@@ -49,4 +50,7 @@ public interface WordDAO {
     List<String> getAllCategories();
 
     List<String> getAllWords();
+
+    List<WordAndCategoryDto> getWordsWithCategories();
+
 }

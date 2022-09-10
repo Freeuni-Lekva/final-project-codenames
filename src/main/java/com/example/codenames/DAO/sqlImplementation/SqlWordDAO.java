@@ -1,6 +1,7 @@
 package com.example.codenames.DAO.sqlImplementation;
 
 import com.example.codenames.DAO.WordDAO;
+import com.example.codenames.DTO.WordAndCategoryDto;
 import com.example.codenames.database.DBConnection;
 import com.example.codenames.exception.WordNotAddedException;
 import com.example.codenames.exception.WordNotFoundException;
@@ -139,6 +140,26 @@ public class SqlWordDAO implements WordDAO {
         }
 
         return words;
+    }
+
+    @Override
+    public List<WordAndCategoryDto> getWordsWithCategories() {
+        List<WordAndCategoryDto> ans = new ArrayList<>();
+        Connection connection = dbconnection.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT word, category from " + TABLE_NAME + ";"
+            );
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                WordAndCategoryDto dto = new WordAndCategoryDto(resultSet.getString(1), resultSet.getString(2));
+                ans.add(dto);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ans;
     }
 
 

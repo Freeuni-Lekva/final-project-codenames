@@ -16,6 +16,8 @@ public class ServletUtils {
     public static final String ADD_WORDS_PAGE = "JSP/addWords.jsp";
     public static final String DELETE_WORDS_PAGE = "JSP/deleteWords.jsp";
 
+    public static final String DELETE_WORDS_FROM_CAT_PAGE = "JSP/deleteWordsFromCategory.jsp";
+
 
 
 
