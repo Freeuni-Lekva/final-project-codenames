@@ -87,4 +87,9 @@ public class WordServiceImpl implements WordService {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public List<String> getAllWords() {
+        return null;
+    }
 }

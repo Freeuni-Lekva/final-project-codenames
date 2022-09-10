@@ -48,4 +48,6 @@ public interface WordService {
      * @return List of all categories in the database
      */
     List<String> getAllCategories();
+
+    List<String> getAllWords();
 }

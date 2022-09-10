@@ -27,7 +27,7 @@ public class DeleteUserServlet extends HttpServlet {
         int id = Integer.valueOf(request.getParameter(NameConstants.USER_ID));
         try {
             userService.deleteUser(id);
-            request.getRequestDispatcher(ServletUtils.DELETE_PAGE).forward(request, response);
+            response.sendRedirect(ServletUtils.DELETE_PAGE);
         } catch (UserNotFoundException e){
             e.printStackTrace();
         }
